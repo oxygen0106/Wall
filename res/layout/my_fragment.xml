@@ -4,99 +4,147 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <!-- 上半部分 -->
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
+        android:background="@drawable/my_image_bg"
         android:orientation="vertical" >
+
+        <!-- 空 -->
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
             android:orientation="vertical" >
+        </LinearLayout>
 
-            <RelativeLayout
+        <!-- 内容 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="5"
+            android:orientation="vertical" >
+
+            <!-- 个人头像 -->
+
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="#EEEEEE" >
-
-                <!-- 个人头像 -->
+                android:layout_height="0dip"
+                android:layout_weight="4.5"
+                android:orientation="vertical" >
 
                 <FrameLayout
                     android:id="@+id/layout_my_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" >
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center" >
 
-                    <ImageView
+                    <com.oxygen.my.MyRoundView
                         android:id="@+id/my_image"
-                        android:layout_width="80dip"
-                        android:layout_height="80dip"
-                        android:background="#aeae00" />
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/my_image" />
                 </FrameLayout>
+            </LinearLayout>
+            <!-- 名字信息 -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/layout_my_image"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="10dip"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="bottom"
                     android:text="Name"
-                    android:textColor="#AEAEAE"
+                    android:textColor="#ffffff"
                     android:textSize="14sp" />
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
+        <!-- 空 -->
 
         <LinearLayout
-            android:id="@+id/layout_mid_btn"
             android:layout_width="fill_parent"
-            android:layout_height="40dip"
-            android:layout_weight="0"
-            android:orientation="horizontal"
-            android:background="#ffffff" >
+            android:layout_height="0dip"
+            android:layout_weight="0.5"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <!-- 中间部分 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1.2"
+            android:background="@drawable/my_mid_bg"
+            android:orientation="horizontal" >
 
             <ImageView
                 android:id="@+id/btn_1"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="#ffffff" />
+                android:layout_weight="1" />
 
             <View
                 android:layout_width="1px"
-                android:layout_marginTop="5dip"
-                android:layout_height="30dip"
-
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginTop="10dip"
                 android:background="#66CCFF" />
 
             <ImageView
                 android:id="@+id/btn_2"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="#ffffff" />
+                android:layout_weight="1" />
 
-            <View 
+            <View
                 android:layout_width="1px"
-                android:layout_marginTop="5dip"
-                android:layout_height="30dip"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginTop="10dip"
                 android:background="#66CCFF" />
 
             <ImageView
                 android:id="@+id/btn_3"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="#ffffff" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
+    <!-- 下半部分 -->
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:layout_weight="1" >
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/my_end_bg" >
+
+            <com.oxygen.my.MyListView
+                android:id="@+id/my_lv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dip"
+                android:background="@drawable/my_lv_bg"
+                android:divider="#ffffff"
+                android:dividerHeight="1px"
+                android:cacheColorHint="#00000000" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
