@@ -15,7 +15,8 @@
                 android:layout_alignParentLeft="true"  
                 android:layout_centerVertical="true"  
                 android:layout_marginLeft="10dp"  
-                android:text="分享"   
+                android:text="分享"
+                android:textSize="16sp"   
                 android:textColor="#ffffff"/>  
       
             <ImageView  

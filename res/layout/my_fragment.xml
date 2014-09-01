@@ -38,11 +38,11 @@
                 android:layout_weight="4.5"
                 android:orientation="vertical" >
 
-                <FrameLayout
+                <RelativeLayout
                     android:id="@+id/layout_my_image"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_gravity="center" >
+                    android:gravity="center" >
 
                     <com.oxygen.my.MyRoundView
                         android:id="@+id/my_image"
@@ -50,7 +50,7 @@
                         android:layout_height="fill_parent"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/my_image" />
-                </FrameLayout>
+                </RelativeLayout>
             </LinearLayout>
             <!-- 名字信息 -->
 
@@ -84,17 +84,45 @@
         <!-- 中间部分 -->
 
         <LinearLayout
+            android:id="@+id/my_mid_layout"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
-            android:layout_weight="1.2"
+            android:layout_weight="1.5"
             android:background="@drawable/my_mid_bg"
             android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/btn_1"
+            <LinearLayout
+                android:id="@+id/my_mid_layout_msg"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/my_mid_layout_selector"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/my_mid_btn_msg"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="8dip"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginTop="9dip"
+                    android:layout_weight="1"
+                    android:paddingLeft="6dip"
+                    android:paddingRight="6dip"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/my_msg_selector" />
+
+                <TextView
+                    android:id="@+id/my_mid_tv_msg"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="消 息"
+                    android:textColor="#808080" />
+            </LinearLayout>
 
             <View
                 android:layout_width="1px"
@@ -103,11 +131,38 @@
                 android:layout_marginTop="10dip"
                 android:background="#66CCFF" />
 
-            <ImageView
-                android:id="@+id/btn_2"
+            <LinearLayout
+                android:id="@+id/my_mid_layout_road"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/my_mid_layout_selector"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/my_mid_btn_road"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="8dip"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginTop="8dip"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:src="@drawable/my_road_selector" />
+
+                <TextView
+                    android:id="@+id/my_mid_tv_road"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="历 程"
+                    android:textColor="#808080" />
+            </LinearLayout>
 
             <View
                 android:layout_width="1px"
@@ -116,11 +171,38 @@
                 android:layout_marginTop="10dip"
                 android:background="#66CCFF" />
 
-            <ImageView
-                android:id="@+id/btn_3"
+            <LinearLayout
+                android:id="@+id/my_mid_layout_zan"
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/my_mid_layout_selector"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/my_mid_btn_zan"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="8dip"
+                    android:layout_marginLeft="8dip"
+                    android:layout_marginTop="8dip"
+                    android:layout_weight="1"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:gravity="center_vertical"
+                    android:src="@drawable/my_zan_selector" />
+
+                <TextView
+                    android:id="@+id/my_mid_tv_zan"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="  赞"
+                    android:textColor="#808080" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <!-- 下半部分 -->
@@ -128,7 +210,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:layout_weight="1">
+        android:layout_weight="1" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -139,11 +221,13 @@
                 android:id="@+id/my_lv"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dip"
+                android:layout_marginLeft="0dip"
+                android:layout_marginRight="0dip"
+                android:layout_marginTop="10dip"
                 android:background="@drawable/my_lv_bg"
+                android:cacheColorHint="#00000000"
                 android:divider="#ffffff"
-                android:dividerHeight="1px"
-                android:cacheColorHint="#00000000" />
+                android:dividerHeight="1px" />
         </LinearLayout>
     </LinearLayout>
 

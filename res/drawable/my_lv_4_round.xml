@@ -10,6 +10,12 @@
        android:angle="270" 
        /> -->
        
+       <gradient  
+       android:startColor="#DBDBDB"  
+       android:endColor="#D8BFD8"  
+       android:angle="270" 
+       />
+       
       <!-- 描边 --> 
       <!--  <stroke android:width="1dip"     
        android:color="@color/blue" 

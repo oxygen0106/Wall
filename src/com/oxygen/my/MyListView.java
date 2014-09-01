@@ -45,7 +45,7 @@ public class MyListView extends ListView {
                 else {  
                     //中间项  
                     setSelector(R.drawable.my_lv_mid_round);  
-                }  
+                }
             }  
             break;  
         case MotionEvent.ACTION_UP:  

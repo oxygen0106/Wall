@@ -9,8 +9,10 @@ package com.oxygen.wall;
 
 public final class R {
     public static final class anim {
-        public static final int radar_anim_enter=0x7f040000;
-        public static final int radar_anim_exit=0x7f040001;
+        public static final int my_pop_enter_anim=0x7f040000;
+        public static final int my_pop_exit_anim=0x7f040001;
+        public static final int radar_anim_enter=0x7f040002;
+        public static final int radar_anim_exit=0x7f040003;
     }
     public static final class attr {
     }
@@ -38,85 +40,113 @@ public final class R {
         public static final int my_head_img_bg=0x7f020005;
         public static final int my_image=0x7f020006;
         public static final int my_image_bg=0x7f020007;
-        public static final int my_lv_2_end_round=0x7f020008;
-        public static final int my_lv_2_top_round=0x7f020009;
-        public static final int my_lv_4_round=0x7f02000a;
-        public static final int my_lv_arrow=0x7f02000b;
-        public static final int my_lv_bg=0x7f02000c;
-        public static final int my_lv_mid_round=0x7f02000d;
-        public static final int my_mid_bg=0x7f02000e;
-        public static final int popup=0x7f02000f;
-        public static final int radarfragment_btn_location=0x7f020010;
-        public static final int route_map_icon_nav=0x7f020011;
-        public static final int skin_tabbar_bg=0x7f020012;
-        public static final int skin_tabbar_bg_click=0x7f020013;
-        public static final int skin_tabbar_bg_middle_black=0x7f020014;
-        public static final int skin_tabbar_btn_middle_white=0x7f020015;
-        public static final int skin_tabbar_icon_ar=0x7f020016;
-        public static final int skin_tabbar_icon_ar_click=0x7f020017;
-        public static final int skin_tabbar_icon_favour=0x7f020018;
-        public static final int skin_tabbar_icon_favour_click=0x7f020019;
-        public static final int skin_tabbar_icon_my=0x7f02001a;
-        public static final int skin_tabbar_icon_my_click=0x7f02001b;
-        public static final int skin_tabbar_icon_radar=0x7f02001c;
-        public static final int skin_tabbar_icon_radar_click=0x7f02001d;
-        public static final int skin_tabbar_icon_walls=0x7f02001e;
-        public static final int skin_tabbar_icon_walls_click=0x7f02001f;
-        public static final int tab_bg_line=0x7f020020;
-        public static final int tab_bg_line_click=0x7f020021;
-        public static final int tab_bg_line_selector=0x7f020022;
-        public static final int tab_favour_btn=0x7f020023;
-        public static final int tab_framelayout_btn=0x7f020024;
-        public static final int tab_middle_btn=0x7f020025;
-        public static final int tab_my_btn=0x7f020026;
-        public static final int tab_radar_btn=0x7f020027;
-        public static final int tab_walls_btn=0x7f020028;
-        public static final int wall_marker=0x7f020029;
+        public static final int my_image_setting=0x7f020008;
+        public static final int my_lv_2_end_round=0x7f020009;
+        public static final int my_lv_2_top_round=0x7f02000a;
+        public static final int my_lv_4_round=0x7f02000b;
+        public static final int my_lv_arrow=0x7f02000c;
+        public static final int my_lv_bg=0x7f02000d;
+        public static final int my_lv_mid_round=0x7f02000e;
+        public static final int my_mid_bg=0x7f02000f;
+        public static final int my_mid_bg_click=0x7f020010;
+        public static final int my_mid_btn_1=0x7f020011;
+        public static final int my_mid_layout_selector=0x7f020012;
+        public static final int my_msg=0x7f020013;
+        public static final int my_msg_click=0x7f020014;
+        public static final int my_msg_selector=0x7f020015;
+        public static final int my_pop_btn=0x7f020016;
+        public static final int my_pop_btn_click=0x7f020017;
+        public static final int my_pop_btn_selector=0x7f020018;
+        public static final int my_road=0x7f020019;
+        public static final int my_road_click=0x7f02001a;
+        public static final int my_road_selector=0x7f02001b;
+        public static final int my_zan=0x7f02001c;
+        public static final int my_zan_click=0x7f02001d;
+        public static final int my_zan_selector=0x7f02001e;
+        public static final int popup=0x7f02001f;
+        public static final int radarfragment_btn_location=0x7f020020;
+        public static final int route_map_icon_nav=0x7f020021;
+        public static final int skin_tabbar_bg=0x7f020022;
+        public static final int skin_tabbar_bg_click=0x7f020023;
+        public static final int skin_tabbar_bg_middle_black=0x7f020024;
+        public static final int skin_tabbar_btn_middle_white=0x7f020025;
+        public static final int skin_tabbar_icon_ar=0x7f020026;
+        public static final int skin_tabbar_icon_ar_click=0x7f020027;
+        public static final int skin_tabbar_icon_favour=0x7f020028;
+        public static final int skin_tabbar_icon_favour_click=0x7f020029;
+        public static final int skin_tabbar_icon_my=0x7f02002a;
+        public static final int skin_tabbar_icon_my_click=0x7f02002b;
+        public static final int skin_tabbar_icon_radar=0x7f02002c;
+        public static final int skin_tabbar_icon_radar_click=0x7f02002d;
+        public static final int skin_tabbar_icon_walls=0x7f02002e;
+        public static final int skin_tabbar_icon_walls_click=0x7f02002f;
+        public static final int tab_bg_line=0x7f020030;
+        public static final int tab_bg_line_click=0x7f020031;
+        public static final int tab_bg_line_selector=0x7f020032;
+        public static final int tab_favour_btn=0x7f020033;
+        public static final int tab_framelayout_btn=0x7f020034;
+        public static final int tab_middle_btn=0x7f020035;
+        public static final int tab_my_btn=0x7f020036;
+        public static final int tab_radar_btn=0x7f020037;
+        public static final int tab_walls_btn=0x7f020038;
+        public static final int wall_marker=0x7f020039;
     }
     public static final class id {
-        public static final int RadarView=0x7f090027;
-        public static final int btn_1=0x7f09001f;
-        public static final int btn_2=0x7f090020;
-        public static final int btn_3=0x7f090021;
-        public static final int btn_location=0x7f090029;
-        public static final int favour_image_line=0x7f090014;
-        public static final int favourfragment=0x7f090003;
-        public static final int fragment_container=0x7f090001;
-        public static final int frameLayout_tab=0x7f090005;
-        public static final int framelayout_ar=0x7f09000f;
-        public static final int framelayout_favour=0x7f090011;
-        public static final int framelayout_my=0x7f090015;
-        public static final int framelayout_radar=0x7f09000b;
-        public static final int framelayout_wall=0x7f090007;
-        public static final int image_ar=0x7f090010;
-        public static final int image_favour=0x7f090012;
-        public static final int image_my=0x7f090016;
-        public static final int image_radar=0x7f09000c;
-        public static final int image_wall=0x7f090008;
-        public static final int iv_system_right=0x7f090024;
-        public static final int layout_btn_location=0x7f090028;
-        public static final int layout_my_image=0x7f09001c;
-        public static final int linearlayout=0x7f090006;
-        public static final int mapview_container=0x7f090025;
-        public static final int marker_arrow=0x7f09001b;
-        public static final int marker_popup_container=0x7f090019;
-        public static final int my_image=0x7f09001d;
-        public static final int my_image_line=0x7f090018;
-        public static final int my_lv=0x7f090022;
-        public static final int myfragment=0x7f090004;
-        public static final int radarViewLayout=0x7f090026;
-        public static final int radar_image_line=0x7f09000e;
-        public static final int title_tv=0x7f09002a;
+        public static final int RadarView=0x7f090033;
+        public static final int btn_location=0x7f090035;
+        public static final int favour_image_line=0x7f090015;
+        public static final int favourfragment=0x7f090004;
+        public static final int fragment_container=0x7f090002;
+        public static final int frameLayout_tab=0x7f090006;
+        public static final int framelayout_ar=0x7f090010;
+        public static final int framelayout_favour=0x7f090012;
+        public static final int framelayout_my=0x7f090016;
+        public static final int framelayout_radar=0x7f09000c;
+        public static final int framelayout_wall=0x7f090008;
+        public static final int image_ar=0x7f090011;
+        public static final int image_favour=0x7f090013;
+        public static final int image_my=0x7f090017;
+        public static final int image_radar=0x7f09000d;
+        public static final int image_wall=0x7f090009;
+        public static final int iv_system_right=0x7f09002c;
+        public static final int layout_btn_location=0x7f090034;
+        public static final int layout_my_image=0x7f09001d;
+        public static final int linearlayout=0x7f090007;
+        public static final int main_layout=0x7f090001;
+        public static final int mapview_container=0x7f090031;
+        public static final int marker_arrow=0x7f09001c;
+        public static final int marker_popup_container=0x7f09001a;
+        public static final int my_image=0x7f09001e;
+        public static final int my_image_line=0x7f090019;
+        public static final int my_lv=0x7f09002a;
+        public static final int my_mid_btn_msg=0x7f090022;
+        public static final int my_mid_btn_road=0x7f090025;
+        public static final int my_mid_btn_zan=0x7f090028;
+        public static final int my_mid_layout=0x7f090020;
+        public static final int my_mid_layout_msg=0x7f090021;
+        public static final int my_mid_layout_road=0x7f090024;
+        public static final int my_mid_layout_zan=0x7f090027;
+        public static final int my_mid_tv_msg=0x7f090023;
+        public static final int my_mid_tv_road=0x7f090026;
+        public static final int my_mid_tv_zan=0x7f090029;
+        public static final int my_pop_btn_camera=0x7f09002e;
+        public static final int my_pop_btn_cancel=0x7f090030;
+        public static final int my_pop_btn_select_photo=0x7f09002f;
+        public static final int myfragment=0x7f090005;
+        public static final int pop_layout=0x7f09002d;
+        public static final int radarViewLayout=0x7f090032;
+        public static final int radar_image_line=0x7f09000f;
+        public static final int title_tv=0x7f090036;
         public static final int tv=0x7f090000;
-        public static final int tv_favour=0x7f090013;
-        public static final int tv_my=0x7f090017;
-        public static final int tv_name=0x7f09001e;
-        public static final int tv_radar=0x7f09000d;
-        public static final int tv_system_title=0x7f090023;
-        public static final int tv_wall=0x7f090009;
-        public static final int tv_wallId=0x7f09001a;
-        public static final int wall_image_line=0x7f09000a;
-        public static final int wallfragment=0x7f090002;
+        public static final int tv_favour=0x7f090014;
+        public static final int tv_my=0x7f090018;
+        public static final int tv_name=0x7f09001f;
+        public static final int tv_radar=0x7f09000e;
+        public static final int tv_system_title=0x7f09002b;
+        public static final int tv_wall=0x7f09000a;
+        public static final int tv_wallId=0x7f09001b;
+        public static final int wall_image_line=0x7f09000b;
+        public static final int wallfragment=0x7f090003;
     }
     public static final class layout {
         public static final int favour_fragment=0x7f030000;
@@ -124,11 +154,12 @@ public final class R {
         public static final int marker_popup=0x7f030002;
         public static final int my_fragment=0x7f030003;
         public static final int my_lv_item=0x7f030004;
-        public static final int radar_fragment=0x7f030005;
-        public static final int radar_view=0x7f030006;
-        public static final int radarfragment_btn_location=0x7f030007;
-        public static final int title_bar=0x7f030008;
-        public static final int wall_fragment=0x7f030009;
+        public static final int my_popwindow=0x7f030005;
+        public static final int radar_fragment=0x7f030006;
+        public static final int radar_view=0x7f030007;
+        public static final int radarfragment_btn_location=0x7f030008;
+        public static final int title_bar=0x7f030009;
+        public static final int wall_fragment=0x7f03000a;
     }
     public static final class string {
         public static final int app_name=0x7f070000;
@@ -140,11 +171,13 @@ public final class R {
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 
 
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
 
 
         
@@ -169,5 +202,8 @@ public final class R {
          */
         public static final int CustomWindowTitleBackground=0x7f080002;
         public static final int myTheme=0x7f080003;
+        /**  MyFragment PopupWindow 动画 
+         */
+        public static final int my_pop_anim=0x7f080004;
     }
 }
