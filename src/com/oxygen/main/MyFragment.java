@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.oxygen.my.MyListView;
 import com.oxygen.my.MyPopWindow;
+import com.oxygen.my.MyTimeLine;
 import com.oxygen.wall.R;
 
 import android.app.Activity;
@@ -128,7 +129,8 @@ public class MyFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(activity, "Test", Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(getActivity(), MyTimeLine.class);
+				startActivity(intent);
 			}
 		});
 		midLayoutZan.setOnClickListener(new OnClickListener() {

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_image_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/my_timeline_user_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" 
+            >
+            <com.oxygen.my.MyRoundView
+            android:id="@+id/my_timeline_user_img"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="50dip"
+            android:layout_marginTop="5dip"
+            android:src="@drawable/my_image" />
+        </RelativeLayout>
+        
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <LinearLayout
+                android:id="@+id/my_timeline_info_num_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/my_timeline_info_num_7" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/my_timeline_info_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/my_timeline_info_num_layout"
+                android:layout_marginLeft="0dip"
+                android:layout_toRightOf="@id/my_timeline_info_num_layout"
+                android:text="条记录"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/my_timeline_info_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:layout_below="@id/my_timeline_info_num_layout"
+                android:text="09/02/2014"
+                android:textColor="#e0fff4f4"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/my_timeline_mid_line"
+        android:layout_width="fill_parent"
+        android:layout_height="10dip" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_centerVertical="true"
+            android:background="#ffffff" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/my_timeline_mid_round_white" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/my_timeline_lv_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="5"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/my_timeline_lv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="#00000000"
+            android:divider="#00000000"
+            android:dividerHeight="0dip"
+            android:scrollbars="none" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

@@ -65,6 +65,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+         <activity
+            android:name="com.oxygen.my.MyTimeLine"
+            android:theme="@style/myTheme"
+             >
+        </activity>
 
         <!-- 定位服务组件 -->
         <!-- :remote 为每个APP应用单独设置service ，若remote前不加分号，为全局service -->
