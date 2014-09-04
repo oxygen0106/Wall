@@ -1,32 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>  
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
-        android:layout_width="fill_parent"  
-        android:layout_height="wrap_content">  
-      
-        <RelativeLayout  
-            android:layout_width="fill_parent"  
-            android:layout_height="50dp"   
-            android:gravity="center_horizontal">  
-      
-            <TextView  
-                android:id="@+id/tv_system_title"  
-                android:layout_width="wrap_content"  
-                android:layout_height="wrap_content"  
-                android:layout_alignParentLeft="true"  
-                android:layout_centerVertical="true"  
-                android:layout_marginLeft="10dp"  
-                android:text="分享"
-                android:textSize="16sp"   
-                android:textColor="#ffffff"/>  
-      
-            <ImageView  
-                android:id="@+id/iv_system_right"  
-                android:layout_width="wrap_content"  
-                android:layout_height="wrap_content"  
-                android:layout_alignParentRight="true"  
-                android:layout_centerVertical="true"  
-                android:layout_marginRight="10dp"  
-                android:src="@drawable/my_lv_arrow" />  
-        </RelativeLayout>  
-      
-    </LinearLayout>  
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/my_lv_item_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColor="#808080"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/my_lv_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/my_lv_arrow" />
+    </RelativeLayout>
+
+</LinearLayout>

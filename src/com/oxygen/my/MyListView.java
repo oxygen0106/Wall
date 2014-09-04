@@ -27,30 +27,32 @@ public class MyListView extends ListView {
         case MotionEvent.ACTION_DOWN:  
             int x = (int) ev.getX();  
             int y = (int) ev.getY();  
-            int itemnum = pointToPosition(x, y);  
-            if (itemnum == AdapterView.INVALID_POSITION)  
+            int itemNum = pointToPosition(x, y);  
+            if (itemNum == AdapterView.INVALID_POSITION)  
                 break;  
             else {  
-                if (itemnum == 0) {  
-                    if (itemnum == (getAdapter().getCount() - 1)) {  
+                if (itemNum == 0) {  
+                    if (itemNum == (getAdapter().getCount() - 1)) {  
                         //只有一项  
-                        setSelector(R.drawable.my_lv_4_round);  
+                        setSelector(R.drawable.my_lv_item_4_selector);  
                     } else {  
                         //第一项  
-                        setSelector(R.drawable.my_lv_2_top_round);  
+                        setSelector(R.drawable.my_lv_item_2_top_selector);  
                     }  
-                } else if (itemnum == (getAdapter().getCount() - 1))  
+                } else if (itemNum == (getAdapter().getCount() - 1))  
                     //最后一项  
-                    setSelector(R.drawable.my_lv_2_end_round);  
+                    setSelector(R.drawable.my_lv_item_2_end_selector);
                 else {  
                     //中间项  
-                    setSelector(R.drawable.my_lv_mid_round);  
+                    setSelector(R.drawable.my_lv_item_mid_selector);  
                 }
             }  
             break;  
-        case MotionEvent.ACTION_UP:  
+        case MotionEvent.ACTION_UP: 
             break;  
         }  
         return super.onInterceptTouchEvent(ev);  
-    }  
+    }
+    
+
 }  

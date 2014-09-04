@@ -3,4 +3,8 @@
 
     <string name="app_name">Wall</string>
 	<string name="noTitle"></string>
+	<string name="pull_to_refresh_tap_label">下拉刷新</string>
+	<string name="pull_to_refresh_release_label">下拉刷新2</string>
+	<string name="pull_to_refresh_pull_label">下拉刷新3</string>
+	<string name="pull_to_refresh_refreshing_label">正在刷新</string>
 </resources>

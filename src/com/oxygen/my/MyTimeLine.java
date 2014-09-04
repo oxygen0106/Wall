@@ -51,7 +51,7 @@ public class MyTimeLine extends Activity {
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("type", "1");
-		map.put("itemText", "Test Left");
+		map.put("itemText", "Test Left ------------------------");
 		map.put("date","09/02/2014");
 		map.put("location", "Chongqing, China.");
 		listData.add(map);

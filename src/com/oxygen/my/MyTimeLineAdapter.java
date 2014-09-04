@@ -27,6 +27,7 @@ public class MyTimeLineAdapter extends BaseAdapter {
 	private List<HashMap<String, String>> list;
 	private Context context;
 	private int type;
+	private int count;
 	private int[] randomBgNum;
 
 	/**
@@ -36,21 +37,20 @@ public class MyTimeLineAdapter extends BaseAdapter {
 	 * @param list
 	 * @param type
 	 */
-	public MyTimeLineAdapter(Context context,
-			List<HashMap<String, String>> list) {
+	public MyTimeLineAdapter(Context context, List<HashMap<String, String>> list) {
 		this.context = context;
 		this.list = list;
-//		this.type = type;
+		this.count = list.size();
+		randomBgNum = new int[count];// 初始化随机背景数组
+		for (int i = 0; i < count; i++) {
+			randomBgNum[i] = getRandom();
+		}
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		int count = list.size();
-		randomBgNum = new int[count];
-		for(int i=0;i<count;i++){
-			randomBgNum[i]=getRandom();
-		}
+
 		return count;
 	}
 
@@ -70,73 +70,97 @@ public class MyTimeLineAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		LayoutInflater mInflater = LayoutInflater.from(context);
-		View view = null;
-		type  = Integer.parseInt(list.get(position).get("type"));
-		// 根据type不同的数据类型构造不同的View
-		if (type == 1) {
-			view = mInflater.inflate(R.layout.my_timeline_lv_left_item, null);
-			TextView itemText = (TextView)view.findViewById(R.id.my_timeline_lv_item_tv);
-			TextView dateText = (TextView)view.findViewById(R.id.my_timeline_lv_item_date_tv);
-			itemText.setText(list.get(position).get("itemText"));
-			dateText.setText(list.get(position).get("date")+"\n"+list.get(position).get("location"));
-			
-			
-			Resources res=context.getResources();
-			int id = res.getIdentifier("my_timeline_lv_item_left_"+randomBgNum[position], "drawable", context.getPackageName());
-			itemText.setBackgroundResource(id);
-				
-				
-//			// 获取城市名称
-//			String cityName = list.get(position).get("data");
-//			ImageView image = (ImageView) view.findViewById(R.id.weather_image);
-//
-//			if (cityName.equals("北京")) {
-//				image.setImageResource(R.drawable.beijing);
-//			} else if (cityName.equals("上海")) {
-//				image.setImageResource(R.drawable.shanghai);
-//
-//			} else if (cityName.equals("广州")) {
-//				image.setImageResource(R.drawable.guangzhou);
-//
-//			} else if (cityName.equals("深圳")) {
-//				image.setImageResource(R.drawable.shenzhen);
-//
-//			}
-//			TextView city = (TextView) view.findViewById(R.id.city);
-//			city.setText(cityName);
-		} else {
-			view = mInflater.inflate(R.layout.my_timeline_lv_right_item, null);
-			TextView itemText = (TextView)view.findViewById(R.id.my_timeline_lv_item_tv);
-			TextView dateText = (TextView)view.findViewById(R.id.my_timeline_lv_item_date_tv);
-			itemText.setText(list.get(position).get("itemText"));
-			dateText.setText(list.get(position).get("date")+"\n"+list.get(position).get("location"));
-			
-			Resources res=context.getResources();
-			int id = res.getIdentifier("my_timeline_lv_item_right_"+randomBgNum[position], "drawable", context.getPackageName());
-			itemText.setBackgroundResource(id);
-			
-			
-//			// 获取数据
-//			String content = list.get(position).get("data");
-//			// 分离数据
-//			String[] items = content.split(",");
-//
-//			TextView weather = (TextView) view.findViewById(R.id.content);
-//			weather.setText(items[0] + "天气: " + items[1] + ";温度:  " + items[2]);
-//			TextView date = (TextView) view.findViewById(R.id.date);
-//			date.setText(items[3]);
+		type = Integer.parseInt(list.get(position).get("type"));
 
+		if (convertView == null) {
+			// 根据type不同的数据类型构造不同的View
+			if (type == 1) {
+				convertView = mInflater.inflate(
+						R.layout.my_timeline_lv_left_item, null);
+				TextView itemText = (TextView) convertView
+						.findViewById(R.id.my_timeline_lv_item_tv);
+				TextView dateText = (TextView) convertView
+						.findViewById(R.id.my_timeline_lv_item_date_tv);
+				itemText.setText(list.get(position).get("itemText"));
+				dateText.setText(list.get(position).get("date") + "\n"
+						+ list.get(position).get("location"));
+
+				Resources res = context.getResources();
+				int id = res.getIdentifier("my_timeline_lv_item_left_"
+						+ randomBgNum[position], "drawable",
+						context.getPackageName());
+				itemText.setBackgroundResource(id);
+
+			} else {
+				convertView = mInflater.inflate(
+						R.layout.my_timeline_lv_right_item, null);
+				TextView itemText = (TextView) convertView
+						.findViewById(R.id.my_timeline_lv_item_tv);
+				TextView dateText = (TextView) convertView
+						.findViewById(R.id.my_timeline_lv_item_date_tv);
+				itemText.setText(list.get(position).get("itemText"));
+				dateText.setText(list.get(position).get("date") + "\n"
+						+ list.get(position).get("location"));
+
+				Resources res = context.getResources();
+				int id = res.getIdentifier("my_timeline_lv_item_right_"
+						+ randomBgNum[position], "drawable",
+						context.getPackageName());
+				itemText.setBackgroundResource(id);
+			}
+		} else {
+			convertView = null;
+			
+			// 根据type不同的数据类型构造不同的View
+			if (type == 1) {
+				convertView = mInflater.inflate(
+						R.layout.my_timeline_lv_left_item, null);
+				TextView itemText = (TextView) convertView
+						.findViewById(R.id.my_timeline_lv_item_tv);
+				TextView dateText = (TextView) convertView
+						.findViewById(R.id.my_timeline_lv_item_date_tv);
+				itemText.setText(list.get(position).get("itemText"));
+				dateText.setText(list.get(position).get("date") + "\n"
+						+ list.get(position).get("location"));
+
+				Resources res = context.getResources();
+				int id = res.getIdentifier("my_timeline_lv_item_left_"
+						+ randomBgNum[position], "drawable",
+						context.getPackageName());
+				itemText.setBackgroundResource(id);
+
+			} else {
+				convertView = mInflater.inflate(
+						R.layout.my_timeline_lv_right_item, null);
+				TextView itemText = (TextView) convertView
+						.findViewById(R.id.my_timeline_lv_item_tv);
+				TextView dateText = (TextView) convertView
+						.findViewById(R.id.my_timeline_lv_item_date_tv);
+				itemText.setText(list.get(position).get("itemText"));
+				dateText.setText(list.get(position).get("date") + "\n"
+						+ list.get(position).get("location"));
+
+				Resources res = context.getResources();
+				int id = res.getIdentifier("my_timeline_lv_item_right_"
+						+ randomBgNum[position], "drawable",
+						context.getPackageName());
+				itemText.setBackgroundResource(id);
+			}
 		}
 
-		return view;
+		return convertView;
 	}
 
-	
-	private int getRandom(){
+	/**
+	 * @param @return
+	 * @return int
+	 * @Description 获得0-3的随机数
+	 */
+	private int getRandom() {
 		Random random = new Random();
-		int max =4;
-		int i = random.nextInt(max);//0~max范围
+		int max = 4;
+		int i = random.nextInt(max);// [0,max)范围
 		return i;
 	}
-	
+
 }

@@ -3,4 +3,7 @@
   <color name="circle_color">#32394A</color>
   <color name="start_color">#ff808080</color> 
   <color name="end_color">#20ffffff</color>
+  <color name="wall_list_head_white">#ffffff</color>
+  <color name="wall_list_head_transparent">#00000000</color>
+  <color name="wall_list_head_gold">#b89766</color>
 </resources>

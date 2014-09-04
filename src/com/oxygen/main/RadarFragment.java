@@ -29,7 +29,7 @@ import com.baidu.mapapi.map.SupportMapFragment;
 import com.baidu.mapapi.model.LatLng;
 import com.oxygen.map.RadarView;
 import com.oxygen.wall.R;
-import com.oxygen.wall.WallInfo;
+import com.oxygen.data.WallInfo;
 //import com.oxygen.map.MyOrientationListener;
 //import com.oxygen.map.MyOrientationListener.OnOrientationListener;
 
@@ -335,14 +335,10 @@ public class RadarFragment extends Fragment {
 		// 1000));//天安门坐标
 		// aroundWalls.add(new WallInfo(1, 007, new LatLng(29.536881,
 		// 106.611048), 1000));//信科坐标
-		aroundWalls.add(new WallInfo(1, 007, new LatLng(29.533881, 106.611048),
-				1000));
-		aroundWalls.add(new WallInfo(2, 007, new LatLng(29.539881, 106.611048),
-				1000));
-		aroundWalls.add(new WallInfo(3, 007, new LatLng(29.536881, 106.608048),
-				1000));
-		aroundWalls.add(new WallInfo(4, 007, new LatLng(29.536881, 106.614048),
-				1000));
+		aroundWalls.add(new WallInfo(1, "", 29.533881, 106.611048,"",0,0,0));
+		aroundWalls.add(new WallInfo(1, "", 29.539881, 106.611048,"",0,0,0));
+		aroundWalls.add(new WallInfo(3, "", 29.536881, 106.608048,"",0,0,0));
+		aroundWalls.add(new WallInfo(4, "", 29.536881, 106.614048,"",0,0,0));
 	}
 
 	/**
@@ -356,7 +352,7 @@ public class RadarFragment extends Fragment {
 		for (int i = 0; i < num; i++) {
 
 			OverlayOptions oo = new MarkerOptions()
-					.position(aroundWalls.get(i).getlocation())
+					.position(aroundWalls.get(i).getLocation())
 					.icon(wallMarkerIcon).zIndex(9 - i);// zIndex()在Z轴上的比例
 			wallMarker[i] = (Marker) (baiduMap.addOverlay(oo));// 在地图中添加标记，并实例化Marker
 		}
@@ -403,7 +399,7 @@ public class RadarFragment extends Fragment {
 				for (int i = 0; i < wallMarker.length; i++) {
 					if (marker == wallMarker[i]) {
 						tvPopup.setText("ID: 00"
-								+ aroundWalls.get(i).getWallId());
+								+ aroundWalls.get(i).getWallID());
 						listener = new OnInfoWindowClickListener() {
 							public void onInfoWindowClick() {// 点击弹窗事件处理
 								clickInfoWindow(); // 弹窗点击事件执行
@@ -493,4 +489,8 @@ public class RadarFragment extends Fragment {
 
 	}
 
+	
+	
+	
+	
 }
