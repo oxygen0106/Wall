@@ -117,11 +117,11 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout1=0x7f090056;
-        public static final int RadarView=0x7f090042;
+        public static final int RadarView=0x7f090044;
         public static final int RelativeLayout1=0x7f090059;
         public static final int authorImage=0x7f090057;
         public static final int authorName=0x7f090058;
-        public static final int btn_location=0x7f090044;
+        public static final int btn_location=0x7f090042;
         public static final int comment=0x7f090060;
         public static final int commentContent=0x7f09004c;
         public static final int commentCreateTime=0x7f09004d;
@@ -155,7 +155,7 @@ public final class R {
         public static final int image_my=0x7f090017;
         public static final int image_radar=0x7f09000d;
         public static final int image_wall=0x7f090009;
-        public static final int layout_btn_location=0x7f090043;
+        public static final int layout_btn_location=0x7f090041;
         public static final int layout_my_image=0x7f09001d;
         public static final int linearlayout=0x7f090007;
         public static final int main_layout=0x7f090001;
@@ -197,7 +197,7 @@ public final class R {
         public static final int my_title_tv=0x7f090030;
         public static final int myfragment=0x7f090005;
         public static final int pop_layout=0x7f090031;
-        public static final int radarViewLayout=0x7f090041;
+        public static final int radarViewLayout=0x7f090043;
         public static final int radar_image_line=0x7f09000f;
         public static final int share=0x7f090061;
         public static final int support=0x7f09005e;
@@ -229,8 +229,8 @@ public final class R {
         public static final int my_timeline_lv_right_item=0x7f03000a;
         public static final int my_title_bar=0x7f03000b;
         public static final int radar_fragment=0x7f03000c;
-        public static final int radar_view=0x7f03000d;
-        public static final int radarfragment_btn_location=0x7f03000e;
+        public static final int radar_fragment_btn_location=0x7f03000d;
+        public static final int radar_view=0x7f03000e;
         public static final int title_bar=0x7f03000f;
         public static final int wall_comment_activity=0x7f030010;
         public static final int wall_comment_item=0x7f030011;

@@ -230,7 +230,7 @@ public class RadarFragment extends Fragment {
 		baiduMap.setMyLocationEnabled(true);// 开启定位功能
 
 		LayoutInflater.from(activity).inflate(
-				R.layout.radarfragment_btn_location, mapViewContainer, true);
+				R.layout.radar_fragment_btn_location, mapViewContainer, true);
 		btnLocation = (Button) getView().findViewById(R.id.btn_location);
 		btnLocation.setOnClickListener(new OnClickListener() {
 
