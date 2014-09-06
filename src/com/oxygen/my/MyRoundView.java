@@ -139,6 +139,13 @@ public class MyRoundView extends ImageView {
 
 	}
 
+	/**
+	* @param @param bmp
+	* @param @param radius
+	* @param @return
+	* @return Bitmap
+	* @Description 将图像进行剪裁和压缩，设置圆形  
+	*/
 	public Bitmap getCroppedRoundBitmap(Bitmap bmp, int radius) {
 		Bitmap scaledSrcBmp;
 		int diameter = radius * 2;

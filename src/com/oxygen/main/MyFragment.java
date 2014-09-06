@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -64,7 +65,15 @@ public class MyFragment extends Fragment {
 
 	private Activity activity;
 	
-
+	public String myImageFileName;
+	public File file;
+	public Uri imageUri;
+	
+	private final int TAKE_PHOTO = 0;
+	private final int CHOOSE_PHOTO = 1;
+	private final int CROP_PHOTO = 2;
+	
+	
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
@@ -84,14 +93,15 @@ public class MyFragment extends Fragment {
 		midLayoutZan = (LinearLayout) view.findViewById(R.id.my_mid_layout_zan);
 		myListView = (MyListView) view.findViewById(R.id.my_lv);
 
-		SharedPreferences mSP=activity.getPreferences(Activity.MODE_PRIVATE);  
-		if(mSP.getString("MyImgURL",null) != null){
-			String imgFilename = mSP.getString("MyImgURL",null);
+		SharedPreferences mSP = activity.getPreferences(Activity.MODE_PRIVATE);
+		if (mSP.getString("MyImgURL", null) != null) {
+			String imgFilename = mSP.getString("MyImgURL", null);
 			Bitmap bitmap = BitmapFactory.decodeFile(imgFilename);
-         myImage.setImageBitmap(bitmap);// 将图片显示在ImageView里 
+			if (bitmap != null) {// 如果该路径系下的文件不存在，加载默认图片背景
+				myImage.setImageBitmap(bitmap);// 将图片显示在ImageView里
+			}
 		}
-		
-		
+
 		setListView();// 初始化ListView内容
 
 		addSetListener();// 添加监听事件
@@ -102,55 +112,164 @@ public class MyFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		file = new File(Environment.getExternalStorageDirectory()
+				.getPath()
+				+ "/Android/data/"
+				+ activity.getPackageName()
+				+ "/user/userImg");
+		if (!file.exists()) {
+			file.mkdirs();//创建路径mnt/sdcard/Android/data/com.oxygen.wall/user/userImg
+		}
+		imageUri = Uri.fromFile(new File(file.getAbsoluteFile(), "myImage.jpg"));
+	}
 
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		switch(requestCode){
+		case TAKE_PHOTO:
+//			FileOutputStream fos = null;
+//			try {
+//				fos = new FileOutputStream(new File(file.getAbsoluteFile(),"rawImage.jpg"));
+//			} catch (FileNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			Bitmap rawBitmap = BitmapFactory.decodeFile(file.getAbsolutePath()+"/myImage.jpg");
+//			if(fos != null){
+//				rawBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//			}
+			corpImageUri(imageUri, 500, 500, CROP_PHOTO);//跳转至截图
+			break;
+		case CROP_PHOTO:
+			if(imageUri!=null){
+				Bitmap bitmap;
+				try {
+					bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(imageUri));
+					myImage.setImageBitmap(bitmap);
+					myImageFileName = file.getAbsolutePath() + "/myImage.jpg";
+					SharedPreferences mSP = activity
+							.getPreferences(Activity.MODE_PRIVATE);
+					SharedPreferences.Editor mSpEd = mSP.edit();// 用来加载自定义的个人头像
+					mSpEd.putString("MyImgURL", myImageFileName);
+					mSpEd.commit();
+					Toast.makeText(activity, "头像已更新", Toast.LENGTH_SHORT).show();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			break;
+		case CHOOSE_PHOTO:
+			if(imageUri!= null){
+				Bitmap bitmap;
+				try {
+					bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(imageUri));
+					myImage.setImageBitmap(bitmap);
+					myImageFileName = file.getAbsolutePath() + "/myImage.jpg";
+					SharedPreferences mSP = activity
+							.getPreferences(Activity.MODE_PRIVATE);
+					SharedPreferences.Editor mSpEd = mSP.edit();// 用来加载自定义的个人头像
+					mSpEd.putString("MyImgURL", myImageFileName);
+					mSpEd.commit();
+					Toast.makeText(activity, "头像已更新", Toast.LENGTH_SHORT).show();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			break;
+		default:
+			break;
+		}
+		
+		
+/*		
 		if (resultCode == Activity.RESULT_OK && requestCode == 1) {
 			String sdStatus = Environment.getExternalStorageState();
-			if(!sdStatus.equals(Environment.MEDIA_MOUNTED)){
-				Log.i("内存卡加载","未加载");
+			if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
+				Toast.makeText(activity, "SD卡加载失败！", Toast.LENGTH_SHORT).show();
+				Log.i("SDcard", "未加载");
 				return;
 			}
-			String  name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-			Toast.makeText(activity, name, Toast.LENGTH_SHORT).show();
-            Bundle bundle = data.getExtras();  
-            Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式  
-            
-            FileOutputStream b = null;
-            File file = new File("/sdcard/myImage/");
-            file.mkdirs();
-            String fileName = "/sdcard/myImage/" + name;
-            
-            try {  
-                b = new FileOutputStream(fileName);  
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件  
-            } catch (FileNotFoundException e) {  
-                e.printStackTrace();  
-            } finally {  
-                try {  
-                    b.flush();  
-                    b.close();  
-                } catch (IOException e) {  
-                    e.printStackTrace();  
-                }  
-            }  
-            
-            BitmapDrawable bd = new BitmapDrawable(activity.getResources(), bitmap);//Bitmap 转换 Drawable
-//            myImage.setBackgroundDrawable(bd);
-          myImage.setImageBitmap(bitmap);// 将图片显示在ImageView里 
-          SharedPreferences mSP=activity.getPreferences(Activity.MODE_PRIVATE);  
-  		SharedPreferences.Editor mSpEd = mSP.edit();//用来加载自定义的个人头像
-  		mSpEd.putString("MyImgURL", fileName);
-  		mSpEd.commit();
-            
-		}
+			
 
+			
+			// String name = new DateFormat().format("yyyyMMdd_hhmmss",
+			// Calendar.getInstance(Locale.CHINA)) + ".jpg";
+
+//			Bundle bundle = data.getExtras();
+//			Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
+			
+//			if (!file.exists()) {
+//				file.mkdirs();//创建路径mnt/sdcard/Android/data/com.oxygen.wall/user/userImg
+//			}
+			Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath()+"/rawImage.jpg");
+			myImageFileName = file.getAbsolutePath() + "/myImage.jpg";
+			FileOutputStream b = null;
+			try {
+				b = new FileOutputStream(myImageFileName);
+				
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 20, b);// 把压缩的图像输出
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					b.flush();
+					b.close();
+					bitmap.recycle();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+Bitmap myBitmap = BitmapFactory.decodeFile(myImageFileName); 
+			if (myBitmap != null) {
+				myImage.setImageBitmap(myBitmap);// 将图片显示在ImageView里
+				SharedPreferences mSP = activity
+						.getPreferences(Activity.MODE_PRIVATE);
+				SharedPreferences.Editor mSpEd = mSP.edit();// 用来加载自定义的个人头像
+				mSpEd.putString("MyImgURL", myImageFileName);
+				mSpEd.commit();
+				Toast.makeText(activity, "头像已更新", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(activity, "头像更新失败", Toast.LENGTH_SHORT).show();
+			}
+		}
+*/
 	}
 
+	/**
+	* @param @param uri
+	* @param @param outputX
+	* @param @param outputY
+	* @param @param requestCode
+	* @return void
+	* @Description 截图选框  
+	*/
+	public void corpImageUri(Uri uri, int outputX, int outputY, int requestCode){
+		Intent intent  = new Intent("com.android.camera.action.CROP");
+		intent.setDataAndType(uri, "image/*");
+		intent.putExtra("crop", "true");
+		intent.putExtra("aspectX", 1);
+		intent.putExtra("aspectY", 1);
+		intent.putExtra("outputX", outputX);
+		intent.putExtra("outputY", outputY);
+		intent.putExtra("scale", true);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+		intent.putExtra("return-data", false);
+		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+		intent.putExtra("noFaceDetection", true);
+		startActivityForResult(intent, requestCode);
+		
+	}
+	
 	/**
 	 * @param
 	 * @return void
@@ -169,12 +288,29 @@ public class MyFragment extends Fragment {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						myPopWindow.dismiss();
+						myPopWindow.dismiss();//收回PopWindow
 						switch (v.getId()) {
 						case R.id.my_pop_btn_camera:
+							
 							Intent intent = new Intent(
 									MediaStore.ACTION_IMAGE_CAPTURE); // 打开相机
-							startActivityForResult(intent, 1);// requestCode 1
+							intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+							startActivityForResult(intent, TAKE_PHOTO);// requestCode TAKE_PHOTO
+							break;
+						case R.id.my_pop_btn_select_photo:
+							intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+							intent.setType("image/*");
+							intent.putExtra("crop", "true");
+							intent.putExtra("aspectX", 1);
+							intent.putExtra("aspectY", 1);
+							intent.putExtra("outputX", 500);
+							intent.putExtra("outputY", 500);
+							intent.putExtra("scale", true);
+							intent.putExtra("return-data", false);
+							intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+							intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+							intent.putExtra("noFaceDetection", false); // no face detection
+							startActivityForResult(intent, CHOOSE_PHOTO);
 							break;
 						case R.id.my_pop_btn_cancel:
 							break;
@@ -232,11 +368,11 @@ public class MyFragment extends Fragment {
 		listData = new ArrayList<Map<String, Object>>();
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("text", "留言");
+		map.put("text", "留言板");
 		listData.add(map);
 
 		map = new HashMap<String, Object>();
-		map.put("text", "留言板");
+		map.put("text", "评论");
 		listData.add(map);
 
 		map = new HashMap<String, Object>();
