@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_info_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_end_bg" >
+
+    <ListView
+        android:id="@+id/my_info_lv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:background="#00000000"
+        android:cacheColorHint="#00000000"
+        android:divider="#ADD8E6"
+        android:dividerHeight="1px" >
+    </ListView>
+    
+    <TextView 
+        android:id="@+id/my_info_login_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginBottom="15dip"
+        android:text="用户注册"
+        android:textSize="18sp"
+        android:textColor="#2D2D2D"
+        android:background="@drawable/my_info_login_btn_selector"/>
+
+</RelativeLayout>
