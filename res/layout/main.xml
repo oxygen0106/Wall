@@ -19,14 +19,20 @@
         android:background="#AEAEAE" >
 
         <fragment
-            android:id="@+id/wallfragment"
-            android:name="com.oxygen.main.WallFragment"
+            android:id="@+id/wallsquarefragment"
+            android:name="com.oxygen.main.WallSquareFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
 
         <fragment
-            android:id="@+id/favourfragment"
-            android:name="com.oxygen.main.FavourFragment"
+            android:id="@+id/wallnearbyfragment"
+            android:name="com.oxygen.main.WallNearbyFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        
+        <fragment
+            android:id="@+id/explorefragment"
+            android:name="com.oxygen.main.ExploreFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
 
@@ -79,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="1dp"
-                    android:text="Walls"
+                    android:text="留言板"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
 
@@ -112,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="1dp"
-                    android:text="Radar"
+                    android:text="雷达"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
 
@@ -174,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="1dp"
-                    android:text="Favour"
+                    android:text="探索"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
 
@@ -207,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|center"
                     android:layout_marginBottom="1dp"
-                    android:text="My"
+                    android:text="我的"
                     android:textColor="#ffffff"
                     android:textSize="12sp" />
 

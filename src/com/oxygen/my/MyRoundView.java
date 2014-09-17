@@ -1,9 +1,16 @@
 package com.oxygen.my;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -13,6 +20,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +29,7 @@ public class MyRoundView extends ImageView {
 
 	Paint circlePaint;
 	int i;
+	String path;
 
 	/**
 	 * Constructor
@@ -29,6 +38,7 @@ public class MyRoundView extends ImageView {
 	 */
 	public MyRoundView(Context context) {
 		super(context);
+		setDrawingCacheEnabled(true);
 	}
 
 	/**
@@ -39,7 +49,7 @@ public class MyRoundView extends ImageView {
 	 */
 	public MyRoundView(Context context, AttributeSet att) {
 		this(context, att, 0);
-
+		setDrawingCacheEnabled(true);
 		initMyView();
 	}
 
@@ -52,6 +62,7 @@ public class MyRoundView extends ImageView {
 	 */
 	public MyRoundView(Context context, AttributeSet att, int defStyle) {
 		super(context, att, defStyle);
+		setDrawingCacheEnabled(true);
 		initMyView();
 	}
 
@@ -99,7 +110,7 @@ public class MyRoundView extends ImageView {
 		} else {// MeasureSpec.EXACTLY 给出了明确的限定范围
 			result = specSize;
 		}
-		return result;
+		return 250;
 	}
 
 	@Override
@@ -117,26 +128,40 @@ public class MyRoundView extends ImageView {
 
 		Drawable drawable = getDrawable();
 		if (drawable == null) {
-			canvas.drawLine(0, height / 2, width, height / 2, circlePaint);
+canvas.drawLine(0, height / 2, width, height / 2, circlePaint);
 			return;
 		}
 		if (width == 0 || height == 0) {
 			return;
 		}
-		Bitmap b = ((BitmapDrawable) drawable).getBitmap();// 将背景图像转换成Bitmap
-		if (null == b) {
-			canvas.drawLine(0, height / 2, width, height / 2, circlePaint);
+		Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();// 将背景图像转换成Bitmap
+		if (null == bitmap) {
+canvas.drawLine(0, height / 2, width, height / 2, circlePaint);
 			return;
 		}
-		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);// 按32位图复制
+//		Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);// 按32位图复制
 
+		
 		Bitmap roundBitmap = getCroppedRoundBitmap(bitmap, radius);
 
 		canvas.drawBitmap(roundBitmap, 0, 0, null);
 
 		canvas.translate(radius, radius);
-		canvas.drawCircle(0, 0, radius - 2, circlePaint);// 绘制扫描区域
+		canvas.drawCircle(0, 0, radius - 2, circlePaint);// 绘制白圈区域
+		
+		try {//保存到sdcard
+			path = Environment.getExternalStorageDirectory().getPath()
+					+ "/Android/data/" + getContext().getPackageName()
+					+ "/user/userImg/myImage.png";
+			getDrawingCache().compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(new File(path)));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		roundBitmap.recycle();
+		System.gc();
+		
 	}
 
 	/**
@@ -157,6 +182,7 @@ public class MyRoundView extends ImageView {
 		int bmpWidth = bmp.getWidth();
 		int bmpHeight = bmp.getHeight();
 
+		
 		if (bmpHeight > bmpWidth) {// 高大于宽，取宽
 		// if(bmpWidth>diameter)
 			squareWidth = squareHeight = bmpWidth;
@@ -175,7 +201,8 @@ public class MyRoundView extends ImageView {
 		} else {
 			squareBitmap = bmp;
 		}
-
+		
+		
 		Matrix matrix = new Matrix();// 缩放比例矩阵
 		float scaleWidth = ((float) diameter) / squareBitmap.getWidth();//此时Width == Height
 		matrix.postScale(scaleWidth, scaleWidth);
@@ -212,7 +239,7 @@ public class MyRoundView extends ImageView {
 		// bmp.recycle();
 		// squareBitmap.recycle();
 		// scaledSrcBmp.recycle();
-		bmp = null;
+		
 		squareBitmap = null;
 		scaledSrcBmp = null;
 		return output;

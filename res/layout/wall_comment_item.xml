@@ -1,61 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+   	android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
     android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" >
 
+         <ImageView
+            android:id="@+id/commenter_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/my_image_round" />
+         
+         <TextView
+            android:id="@+id/commenter_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/commenter_image"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="评论者"
+            android:textSize="14sp"
+            android:textColor="#f0000000" />
+           
         <TextView
-            android:id="@+id/commentRank"
+            android:id="@+id/comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/commenter_name"
+            android:layout_below="@id/commenter_name"
+            android:layout_marginRight="5dp"
+            android:text="09/15/2014"
+            android:textSize="10sp"
+            android:textColor="#808080" />
+        
+        <TextView 
+            android:id="@+id/comment_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="楼层" />
-
-        <ImageView
-            android:id="@+id/commenterImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:padding="5dp"
-            android:src="@drawable/btn_location" />
-
-        <TextView
-            android:id="@+id/commenterName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageView1"
-            android:text="评论者" />
+            android:layout_marginRight="10dp"
+            android:layout_alignTop="@id/commenter_image"
+            android:text="1"
+            android:textSize="10sp"
+            android:textColor="#ffffff"/>
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/commentContent"
+        android:id="@+id/comment_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="内容" />
-
-   <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/commentCreateTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="时间" />
-        
-   
-
-    </RelativeLayout>
+        android:layout_margin="5dp"
+        android:text="内容"
+        android:textColor="#f0000000"
+        android:textSize="16sp" />
+    <View 
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#50808080"/>
 
 </LinearLayout>

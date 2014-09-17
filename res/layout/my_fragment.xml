@@ -36,12 +36,12 @@
                     android:layout_height="fill_parent"
                     android:gravity="center" >
 
-                    <com.oxygen.my.MyRoundView
+                    <ImageView
                         android:id="@+id/my_image"
-                        android:layout_width="fill_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/my_image" />
+                        android:src="@drawable/my_image_round" />
                 </RelativeLayout>
             </LinearLayout>
             <!-- 名字信息 -->

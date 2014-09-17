@@ -8,7 +8,9 @@ import java.util.Map;
 import com.oxygen.wall.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -21,7 +23,7 @@ import android.widget.TextView;
 * @email oxygen0106@163.com
 * @date 2014-9-2 上午10:02:42
 */
-public class MyTimeLine extends Activity {
+public class MyTimeLineActivity extends Activity {
 	
 	private ListView lv;
 	private List<HashMap<String, String>> listData = null;
@@ -33,11 +35,20 @@ public class MyTimeLine extends Activity {
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);// 自定义标题栏模式
 		this.setContentView(R.layout.my_timeline);
 		this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-				R.layout.my_title_bar);// 加载自定义标题栏
+				R.layout.my_timeline_title_bar);// 加载自定义标题栏
 		
 		lv = (ListView)findViewById(R.id.my_timeline_lv);
 		setListView();
 		
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+            this.finish();
+        }
+		return super.onKeyDown(keyCode, event);
 	}
 	
 	

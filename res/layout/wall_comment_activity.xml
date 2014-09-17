@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:background="@drawable/my_end_bg"
     android:orientation="vertical" >
-    
-    <include layout="@layout/wall_list_item"
-        	android:id="@+id/wall_item"
-        />
-	<ListView android:id="@+id/comment_list"
-	    	  android:layout_width="wrap_content"
-	    	  android:layout_height="wrap_content"
-	    ></ListView>
+
+    <ListView
+        android:id="@+id/comment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+	    android:scrollbarStyle="insideOverlay"
+	   	android:divider="#00000000"
+	   	android:background="#ffffff">
+      
+    </ListView>
+
 </LinearLayout>

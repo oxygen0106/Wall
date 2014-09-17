@@ -381,7 +381,7 @@ public class RadarFragment extends Fragment {
 				LayoutInflater inflater = LayoutInflater.from(activity);
 				ViewGroup root = (ViewGroup) getView().findViewById(
 						R.id.mapview_container);
-				View v = inflater.inflate(R.layout.marker_popup, root, false);
+				View v = inflater.inflate(R.layout.radar_marker_popup, root, false);
 
 				markerPopupWindow = (LinearLayout) v
 						.findViewById(R.id.marker_popup_container);
@@ -434,7 +434,7 @@ public class RadarFragment extends Fragment {
 
 		LayoutInflater inflater = LayoutInflater
 				.from(activity.getApplication());
-		View v = inflater.inflate(R.layout.radar_view, mapViewContainer, true);
+		View v = inflater.inflate(R.layout.radar_radarview, mapViewContainer, true);
 		radarViewLayout = (LinearLayout) v.findViewById(R.id.radarViewLayout);
 		radarViewLayout.getBackground().setAlpha(10);
 		radarView = (RadarView) getView().findViewById(R.id.RadarView);// 实例化radarView

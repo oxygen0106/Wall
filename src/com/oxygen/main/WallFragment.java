@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.oxygen.data.WallInfo;
 import com.oxygen.wall.R;
-import com.oxygen.wall.WallInfoActivity;
+import com.oxygen.wall.WallCommentActivity;
 import com.oxygen.wall.WallListView;
 
 import android.app.Activity;
@@ -62,15 +62,10 @@ public class WallFragment extends Fragment {
 	
 	
 	@Override
-	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
-		super.onAttach(activity);
-	}
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View v=inflater.inflate(R.layout.wall_frgment, container);
+		View v=inflater.inflate(R.layout.wall_fragment, container);
 		mListView=(WallListView)v.findViewById(R.id.wall_listview);
 		return v;
 	}
@@ -102,6 +97,7 @@ public class WallFragment extends Fragment {
 					protected void onPostExecute(Void result) {
 						mListView.onRefreshComplete();
 						mAdapter.notifyDataSetChanged();
+						mListView.changeRefreshFlag();
 					}
 
 				}.execute();
@@ -122,6 +118,7 @@ public class WallFragment extends Fragment {
 					protected void onPostExecute(Void result) {
 						//mListView.onRefreshComplete();
 						mAdapter.notifyDataSetChanged();
+						mListView.changeIncreaseFlag();
 					}
 
 				}.execute();
@@ -190,12 +187,9 @@ public class WallFragment extends Fragment {
 		}
 
 		private void bindView(int position, View view) {
-			Log.v(null, "bindView");
 			TextView distance = ((TextView) view.findViewById(R.id.distance));
-			Log.v("Distance", String.valueOf(mData.get(position).getDistance()));
 			distance.setText(String.valueOf(mData.get(position).getDistance()));
-			Log.v(null, "distance");
-			Button support = (Button) view.findViewById(R.id.support);
+			LinearLayout support = (LinearLayout) view.findViewById(R.id.support);
 			
 			support.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -209,15 +203,11 @@ public class WallFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Log.v(null, "getTag");
 					WallInfo w=(WallInfo)mData.get((Integer)v.getTag());
-					Log.v(null, "AfterTag");
-					Log.v("测试获取", String.valueOf(w.getDistance()));
-					Intent intent=new Intent(getActivity(),WallInfoActivity.class);
+
+					Intent intent=new Intent(getActivity(),WallCommentActivity.class);
 					intent.putExtra("Info", w);
-					Log.v(null, "startActivity");
 					startActivity(intent);
-					Log.v("View", "click");
 				}
 			});
 		}

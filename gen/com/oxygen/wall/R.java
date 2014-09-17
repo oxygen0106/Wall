@@ -15,14 +15,38 @@ public final class R {
         public static final int radar_anim_exit=0x7f040003;
     }
     public static final class attr {
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>left_top</code></td><td>0</td><td></td></tr>
+<tr><td><code>right_top</code></td><td>1</td><td></td></tr>
+<tr><td><code>right_bottom</code></td><td>2</td><td></td></tr>
+<tr><td><code>left_bottom</code></td><td>3</td><td></td></tr>
+<tr><td><code>bottom</code></td><td>4</td><td></td></tr>
+</table>
+         */
+        public static final int position=0x7f010000;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int radius=0x7f010001;
     }
     public static final class color {
-        public static final int circle_color=0x7f050000;
-        public static final int end_color=0x7f050002;
-        public static final int start_color=0x7f050001;
-        public static final int wall_list_head_gold=0x7f050005;
-        public static final int wall_list_head_transparent=0x7f050004;
-        public static final int wall_list_head_white=0x7f050003;
+        public static final int circle_color=0x7f060000;
+        public static final int end_color=0x7f060002;
+        public static final int start_color=0x7f060001;
+        public static final int wall_list_head_gold=0x7f060005;
+        public static final int wall_list_head_transparent=0x7f060004;
+        public static final int wall_list_head_white=0x7f060003;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -31,222 +55,301 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f060000;
-        public static final int activity_vertical_margin=0x7f060001;
+        public static final int activity_horizontal_margin=0x7f070000;
+        public static final int activity_vertical_margin=0x7f070001;
     }
     public static final class drawable {
         public static final int arrow=0x7f020000;
         public static final int btn_location=0x7f020001;
         public static final int btn_location_click=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int ic_pulltorefresh_arrow=0x7f020004;
-        public static final int marker_arrow=0x7f020005;
-        public static final int my_end_bg=0x7f020006;
-        public static final int my_image=0x7f020007;
-        public static final int my_image_bg=0x7f020008;
-        public static final int my_image_setting=0x7f020009;
-        public static final int my_lv_2_end_round=0x7f02000a;
-        public static final int my_lv_2_end_round_click=0x7f02000b;
-        public static final int my_lv_2_top_round=0x7f02000c;
-        public static final int my_lv_2_top_round_click=0x7f02000d;
-        public static final int my_lv_4_round=0x7f02000e;
-        public static final int my_lv_4_round_click=0x7f02000f;
-        public static final int my_lv_arrow=0x7f020010;
-        public static final int my_lv_bg=0x7f020011;
-        public static final int my_lv_item_2_end_selector=0x7f020012;
-        public static final int my_lv_item_2_top_selector=0x7f020013;
-        public static final int my_lv_item_4_selector=0x7f020014;
-        public static final int my_lv_item_mid_selector=0x7f020015;
-        public static final int my_lv_mid_round=0x7f020016;
-        public static final int my_lv_mid_round_click=0x7f020017;
-        public static final int my_mid_bg=0x7f020018;
-        public static final int my_mid_bg_click=0x7f020019;
-        public static final int my_mid_btn_1=0x7f02001a;
-        public static final int my_mid_layout_selector=0x7f02001b;
-        public static final int my_msg=0x7f02001c;
-        public static final int my_msg_click=0x7f02001d;
-        public static final int my_msg_selector=0x7f02001e;
-        public static final int my_other_user_info_name_tv=0x7f02001f;
-        public static final int my_pop_btn=0x7f020020;
-        public static final int my_pop_btn_click=0x7f020021;
-        public static final int my_pop_btn_selector=0x7f020022;
-        public static final int my_road=0x7f020023;
-        public static final int my_road_click=0x7f020024;
-        public static final int my_road_selector=0x7f020025;
-        public static final int my_timeline_info_num_7=0x7f020026;
-        public static final int my_timeline_lv_item_date_tv=0x7f020027;
-        public static final int my_timeline_lv_item_left_0=0x7f020028;
-        public static final int my_timeline_lv_item_left_1=0x7f020029;
-        public static final int my_timeline_lv_item_left_2=0x7f02002a;
-        public static final int my_timeline_lv_item_left_3=0x7f02002b;
-        public static final int my_timeline_lv_item_right_0=0x7f02002c;
-        public static final int my_timeline_lv_item_right_1=0x7f02002d;
-        public static final int my_timeline_lv_item_right_2=0x7f02002e;
-        public static final int my_timeline_lv_item_right_3=0x7f02002f;
-        public static final int my_timeline_mid_round_white=0x7f020030;
-        public static final int my_zan=0x7f020031;
-        public static final int my_zan_click=0x7f020032;
-        public static final int my_zan_selector=0x7f020033;
-        public static final int popup=0x7f020034;
-        public static final int radarfragment_btn_location=0x7f020035;
-        public static final int route_map_icon_nav=0x7f020036;
-        public static final int skin_tabbar_bg=0x7f020037;
-        public static final int skin_tabbar_bg_click=0x7f020038;
-        public static final int skin_tabbar_bg_middle_black=0x7f020039;
-        public static final int skin_tabbar_btn_middle_white=0x7f02003a;
-        public static final int skin_tabbar_icon_ar=0x7f02003b;
-        public static final int skin_tabbar_icon_ar_click=0x7f02003c;
-        public static final int skin_tabbar_icon_favour=0x7f02003d;
-        public static final int skin_tabbar_icon_favour_click=0x7f02003e;
-        public static final int skin_tabbar_icon_my=0x7f02003f;
-        public static final int skin_tabbar_icon_my_click=0x7f020040;
-        public static final int skin_tabbar_icon_radar=0x7f020041;
-        public static final int skin_tabbar_icon_radar_click=0x7f020042;
-        public static final int skin_tabbar_icon_walls=0x7f020043;
-        public static final int skin_tabbar_icon_walls_click=0x7f020044;
-        public static final int tab_bg_line=0x7f020045;
-        public static final int tab_bg_line_click=0x7f020046;
-        public static final int tab_bg_line_selector=0x7f020047;
-        public static final int tab_favour_btn=0x7f020048;
-        public static final int tab_framelayout_btn=0x7f020049;
-        public static final int tab_middle_btn=0x7f02004a;
-        public static final int tab_my_btn=0x7f02004b;
-        public static final int tab_radar_btn=0x7f02004c;
-        public static final int tab_walls_btn=0x7f02004d;
-        public static final int wall_marker=0x7f02004e;
+        public static final int composer_button=0x7f020003;
+        public static final int composer_camera=0x7f020004;
+        public static final int composer_icn_plus=0x7f020005;
+        public static final int composer_music=0x7f020006;
+        public static final int composer_place=0x7f020007;
+        public static final int composer_sleep=0x7f020008;
+        public static final int composer_sun=0x7f020009;
+        public static final int composer_thought=0x7f02000a;
+        public static final int composer_with=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int ic_pulltorefresh_arrow=0x7f02000d;
+        public static final int marker_arrow=0x7f02000e;
+        public static final int my_btn_slip_off=0x7f02000f;
+        public static final int my_btn_slip_on=0x7f020010;
+        public static final int my_end_bg=0x7f020011;
+        public static final int my_image=0x7f020012;
+        public static final int my_image_bg=0x7f020013;
+        public static final int my_image_round=0x7f020014;
+        public static final int my_image_setting=0x7f020015;
+        public static final int my_info_login=0x7f020016;
+        public static final int my_info_login_btn_selector=0x7f020017;
+        public static final int my_info_login_click=0x7f020018;
+        public static final int my_lv_2_end_round=0x7f020019;
+        public static final int my_lv_2_end_round_click=0x7f02001a;
+        public static final int my_lv_2_top_round=0x7f02001b;
+        public static final int my_lv_2_top_round_click=0x7f02001c;
+        public static final int my_lv_4_round=0x7f02001d;
+        public static final int my_lv_4_round_click=0x7f02001e;
+        public static final int my_lv_arrow=0x7f02001f;
+        public static final int my_lv_bg=0x7f020020;
+        public static final int my_lv_item_2_end_selector=0x7f020021;
+        public static final int my_lv_item_2_top_selector=0x7f020022;
+        public static final int my_lv_item_4_selector=0x7f020023;
+        public static final int my_lv_item_mid_selector=0x7f020024;
+        public static final int my_lv_mid_round=0x7f020025;
+        public static final int my_lv_mid_round_click=0x7f020026;
+        public static final int my_mid_bg=0x7f020027;
+        public static final int my_mid_bg_click=0x7f020028;
+        public static final int my_mid_btn_1=0x7f020029;
+        public static final int my_mid_layout_selector=0x7f02002a;
+        public static final int my_msg=0x7f02002b;
+        public static final int my_msg_click=0x7f02002c;
+        public static final int my_msg_selector=0x7f02002d;
+        public static final int my_other_user_info_name_tv=0x7f02002e;
+        public static final int my_pop_btn=0x7f02002f;
+        public static final int my_pop_btn_click=0x7f020030;
+        public static final int my_pop_btn_selector=0x7f020031;
+        public static final int my_road=0x7f020032;
+        public static final int my_road_click=0x7f020033;
+        public static final int my_road_selector=0x7f020034;
+        public static final int my_setting=0x7f020035;
+        public static final int my_setting_click=0x7f020036;
+        public static final int my_setting_return=0x7f020037;
+        public static final int my_setting_return_click=0x7f020038;
+        public static final int my_setting_selector=0x7f020039;
+        public static final int my_timeline_info_num_7=0x7f02003a;
+        public static final int my_timeline_lv_item_date_tv=0x7f02003b;
+        public static final int my_timeline_lv_item_left_0=0x7f02003c;
+        public static final int my_timeline_lv_item_left_1=0x7f02003d;
+        public static final int my_timeline_lv_item_left_2=0x7f02003e;
+        public static final int my_timeline_lv_item_left_3=0x7f02003f;
+        public static final int my_timeline_lv_item_right_0=0x7f020040;
+        public static final int my_timeline_lv_item_right_1=0x7f020041;
+        public static final int my_timeline_lv_item_right_2=0x7f020042;
+        public static final int my_timeline_lv_item_right_3=0x7f020043;
+        public static final int my_timeline_mid_round_white=0x7f020044;
+        public static final int my_zan=0x7f020045;
+        public static final int my_zan_click=0x7f020046;
+        public static final int my_zan_selector=0x7f020047;
+        public static final int popup=0x7f020048;
+        public static final int radarfragment_btn_location=0x7f020049;
+        public static final int return_selector=0x7f02004a;
+        public static final int route_map_icon_nav=0x7f02004b;
+        public static final int skin_tabbar_bg=0x7f02004c;
+        public static final int skin_tabbar_bg_click=0x7f02004d;
+        public static final int skin_tabbar_bg_middle_black=0x7f02004e;
+        public static final int skin_tabbar_btn_middle_white=0x7f02004f;
+        public static final int skin_tabbar_icon_ar=0x7f020050;
+        public static final int skin_tabbar_icon_ar_click=0x7f020051;
+        public static final int skin_tabbar_icon_favour=0x7f020052;
+        public static final int skin_tabbar_icon_favour_click=0x7f020053;
+        public static final int skin_tabbar_icon_my=0x7f020054;
+        public static final int skin_tabbar_icon_my_click=0x7f020055;
+        public static final int skin_tabbar_icon_radar=0x7f020056;
+        public static final int skin_tabbar_icon_radar_click=0x7f020057;
+        public static final int skin_tabbar_icon_walls=0x7f020058;
+        public static final int skin_tabbar_icon_walls_click=0x7f020059;
+        public static final int tab_bg_line=0x7f02005a;
+        public static final int tab_bg_line_click=0x7f02005b;
+        public static final int tab_bg_line_selector=0x7f02005c;
+        public static final int tab_favour_btn=0x7f02005d;
+        public static final int tab_framelayout_btn=0x7f02005e;
+        public static final int tab_middle_btn=0x7f02005f;
+        public static final int tab_my_btn=0x7f020060;
+        public static final int tab_radar_btn=0x7f020061;
+        public static final int tab_walls_btn=0x7f020062;
+        public static final int wall_item_bg=0x7f020063;
+        public static final int wall_item_distance_bg=0x7f020064;
+        public static final int wall_list_img=0x7f020065;
+        public static final int wall_list_item_comment_icon=0x7f020066;
+        public static final int wall_list_item_content_bg=0x7f020067;
+        public static final int wall_list_item_distance_bg=0x7f020068;
+        public static final int wall_list_item_share_icon=0x7f020069;
+        public static final int wall_list_item_zan_icon=0x7f02006a;
+        public static final int wall_marker=0x7f02006b;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f090056;
-        public static final int RadarView=0x7f090044;
-        public static final int RelativeLayout1=0x7f090059;
-        public static final int authorImage=0x7f090057;
-        public static final int authorName=0x7f090058;
-        public static final int btn_location=0x7f090042;
-        public static final int comment=0x7f090060;
-        public static final int commentContent=0x7f09004c;
-        public static final int commentCreateTime=0x7f09004d;
-        public static final int commentRank=0x7f090048;
-        public static final int comment_list=0x7f090047;
-        public static final int commenterImage=0x7f090049;
-        public static final int commenterName=0x7f09004a;
-        public static final int content=0x7f09005c;
-        public static final int contentImage=0x7f09005d;
-        public static final int distance=0x7f09005b;
-        public static final int favorite=0x7f09005f;
-        public static final int favour_image_line=0x7f090015;
-        public static final int favourfragment=0x7f090004;
-        public static final int foot_TextView=0x7f090050;
-        public static final int foot_progressBar=0x7f09004f;
-        public static final int fragment_container=0x7f090002;
-        public static final int frameLayout_tab=0x7f090006;
-        public static final int framelayout_ar=0x7f090010;
-        public static final int framelayout_favour=0x7f090012;
-        public static final int framelayout_my=0x7f090016;
-        public static final int framelayout_radar=0x7f09000c;
-        public static final int framelayout_wall=0x7f090008;
-        public static final int head_arrowImageView=0x7f090052;
-        public static final int head_contentLayout=0x7f090051;
-        public static final int head_lastUpdatedTextView=0x7f090055;
-        public static final int head_progressBar=0x7f090053;
-        public static final int head_tipsTextView=0x7f090054;
-        public static final int imageView1=0x7f09004b;
-        public static final int image_ar=0x7f090011;
-        public static final int image_favour=0x7f090013;
-        public static final int image_my=0x7f090017;
-        public static final int image_radar=0x7f09000d;
-        public static final int image_wall=0x7f090009;
-        public static final int layout_btn_location=0x7f090041;
-        public static final int layout_my_image=0x7f09001d;
-        public static final int linearlayout=0x7f090007;
-        public static final int main_layout=0x7f090001;
-        public static final int mapview_container=0x7f090040;
-        public static final int marker_arrow=0x7f09001c;
-        public static final int marker_popup_container=0x7f09001a;
-        public static final int my_image=0x7f09001e;
-        public static final int my_image_line=0x7f090019;
-        public static final int my_lv=0x7f09002a;
-        public static final int my_lv_arrow=0x7f09002c;
-        public static final int my_lv_item_tv=0x7f09002b;
-        public static final int my_mid_btn_msg=0x7f090022;
-        public static final int my_mid_btn_road=0x7f090025;
-        public static final int my_mid_btn_zan=0x7f090028;
-        public static final int my_mid_layout=0x7f090020;
-        public static final int my_mid_layout_msg=0x7f090021;
-        public static final int my_mid_layout_road=0x7f090024;
-        public static final int my_mid_layout_zan=0x7f090027;
-        public static final int my_mid_tv_msg=0x7f090023;
-        public static final int my_mid_tv_road=0x7f090026;
-        public static final int my_mid_tv_zan=0x7f090029;
-        public static final int my_other_user_info_image=0x7f09002d;
-        public static final int my_other_user_info_lv=0x7f09002f;
-        public static final int my_other_user_info_name_tv=0x7f09002e;
-        public static final int my_pop_btn_camera=0x7f090032;
-        public static final int my_pop_btn_cancel=0x7f090034;
-        public static final int my_pop_btn_select_photo=0x7f090033;
-        public static final int my_timeline_info_date=0x7f090039;
-        public static final int my_timeline_info_num_layout=0x7f090037;
-        public static final int my_timeline_info_other=0x7f090038;
-        public static final int my_timeline_lv=0x7f09003c;
-        public static final int my_timeline_lv_item_date_tv=0x7f09003f;
-        public static final int my_timeline_lv_item_mid=0x7f09003e;
-        public static final int my_timeline_lv_item_tv=0x7f09003d;
-        public static final int my_timeline_lv_layout=0x7f09003b;
-        public static final int my_timeline_mid_line=0x7f09003a;
-        public static final int my_timeline_user_img=0x7f090036;
-        public static final int my_timeline_user_layout=0x7f090035;
-        public static final int my_title_tv=0x7f090030;
-        public static final int myfragment=0x7f090005;
-        public static final int pop_layout=0x7f090031;
-        public static final int radarViewLayout=0x7f090043;
-        public static final int radar_image_line=0x7f09000f;
-        public static final int share=0x7f090061;
-        public static final int support=0x7f09005e;
-        public static final int title=0x7f09005a;
-        public static final int title_tv=0x7f090045;
-        public static final int tv=0x7f090000;
-        public static final int tv_favour=0x7f090014;
-        public static final int tv_my=0x7f090018;
-        public static final int tv_name=0x7f09001f;
-        public static final int tv_radar=0x7f09000e;
-        public static final int tv_wall=0x7f09000a;
-        public static final int tv_wallId=0x7f09001b;
-        public static final int wall_image_line=0x7f09000b;
-        public static final int wall_item=0x7f090046;
-        public static final int wall_listview=0x7f09004e;
-        public static final int wallfragment=0x7f090003;
+        public static final int LinearLayout1=0x7f05007a;
+        public static final int RadarView=0x7f050066;
+        public static final int RelativeLayout1=0x7f05006e;
+        public static final int ar_pop_btn_camera=0x7f050007;
+        public static final int ar_pop_btn_cancel=0x7f050008;
+        public static final int ar_pop_btn_wall=0x7f050006;
+        public static final int authorImage=0x7f05007c;
+        public static final int authorName=0x7f05007d;
+        public static final int back=0x7f05006d;
+        public static final int bottom=0x7f050004;
+        public static final int btn_location=0x7f050061;
+        public static final int comment_content=0x7f05006c;
+        public static final int comment_list=0x7f050067;
+        public static final int comment_rank=0x7f05006b;
+        public static final int comment_time=0x7f05006a;
+        public static final int commenter_image=0x7f050068;
+        public static final int commenter_name=0x7f050069;
+        public static final int content=0x7f050080;
+        public static final int contentImage=0x7f050081;
+        public static final int content_layout=0x7f05007b;
+        public static final int distance=0x7f05007f;
+        public static final int explore_lv=0x7f050009;
+        public static final int explore_lv_item_tv=0x7f05000a;
+        public static final int explorefragment=0x7f05000f;
+        public static final int favour_image_line=0x7f050020;
+        public static final int foot_TextView=0x7f050074;
+        public static final int foot_progressBar=0x7f050073;
+        public static final int fragment_container=0x7f05000c;
+        public static final int frameLayout_tab=0x7f050011;
+        public static final int framelayout_ar=0x7f05001b;
+        public static final int framelayout_favour=0x7f05001d;
+        public static final int framelayout_my=0x7f050021;
+        public static final int framelayout_radar=0x7f050017;
+        public static final int framelayout_wall=0x7f050013;
+        public static final int head_arrowImageView=0x7f050076;
+        public static final int head_contentLayout=0x7f050075;
+        public static final int head_lastUpdatedTextView=0x7f050079;
+        public static final int head_progressBar=0x7f050077;
+        public static final int head_tipsTextView=0x7f050078;
+        public static final int id_arcmenu1=0x7f050041;
+        public static final int id_button=0x7f050042;
+        public static final int image_ar=0x7f05001c;
+        public static final int image_favour=0x7f05001e;
+        public static final int image_my=0x7f050022;
+        public static final int image_radar=0x7f050018;
+        public static final int image_wall=0x7f050014;
+        public static final int layout_btn_location=0x7f050060;
+        public static final int layout_my_image=0x7f05002b;
+        public static final int left_bottom=0x7f050003;
+        public static final int left_top=0x7f050000;
+        public static final int linearlayout=0x7f050012;
+        public static final int main_layout=0x7f05000b;
+        public static final int mapview_container=0x7f05005f;
+        public static final int marker_arrow=0x7f050064;
+        public static final int marker_popup_container=0x7f050062;
+        public static final int my_about_title_tv=0x7f05002a;
+        public static final int my_image=0x7f05002c;
+        public static final int my_image_line=0x7f050024;
+        public static final int my_info_layout=0x7f050039;
+        public static final int my_info_login_btn=0x7f05003b;
+        public static final int my_info_lv=0x7f05003a;
+        public static final int my_info_lv_image=0x7f05003d;
+        public static final int my_info_lv_image_item_tv=0x7f05003c;
+        public static final int my_info_lv_other_content_tv=0x7f05003f;
+        public static final int my_info_lv_other_item_tv=0x7f05003e;
+        public static final int my_info_title_tv=0x7f050040;
+        public static final int my_lv=0x7f050038;
+        public static final int my_lv_arrow=0x7f050044;
+        public static final int my_lv_item_tv=0x7f050043;
+        public static final int my_mid_btn_msg=0x7f050030;
+        public static final int my_mid_btn_road=0x7f050033;
+        public static final int my_mid_btn_zan=0x7f050036;
+        public static final int my_mid_layout=0x7f05002e;
+        public static final int my_mid_layout_msg=0x7f05002f;
+        public static final int my_mid_layout_road=0x7f050032;
+        public static final int my_mid_layout_zan=0x7f050035;
+        public static final int my_mid_tv_msg=0x7f050031;
+        public static final int my_mid_tv_road=0x7f050034;
+        public static final int my_mid_tv_zan=0x7f050037;
+        public static final int my_other_user_info_image=0x7f050045;
+        public static final int my_other_user_info_lv=0x7f050047;
+        public static final int my_other_user_info_name_tv=0x7f050046;
+        public static final int my_pop_btn_camera=0x7f050049;
+        public static final int my_pop_btn_cancel=0x7f05004b;
+        public static final int my_pop_btn_select_photo=0x7f05004a;
+        public static final int my_setting=0x7f050029;
+        public static final int my_setting_clear_cache_lv=0x7f05004e;
+        public static final int my_setting_lv_arrow=0x7f050052;
+        public static final int my_setting_lv_item_tv=0x7f050051;
+        public static final int my_setting_other_lv=0x7f05004d;
+        public static final int my_setting_return=0x7f05004f;
+        public static final int my_setting_title_tv=0x7f050050;
+        public static final int my_setting_user_info_lv=0x7f05004c;
+        public static final int my_timeline_info_date=0x7f050057;
+        public static final int my_timeline_info_num_layout=0x7f050055;
+        public static final int my_timeline_info_other=0x7f050056;
+        public static final int my_timeline_lv=0x7f05005a;
+        public static final int my_timeline_lv_item_date_tv=0x7f05005d;
+        public static final int my_timeline_lv_item_mid=0x7f05005c;
+        public static final int my_timeline_lv_item_tv=0x7f05005b;
+        public static final int my_timeline_lv_layout=0x7f050059;
+        public static final int my_timeline_mid_line=0x7f050058;
+        public static final int my_timeline_user_img=0x7f050054;
+        public static final int my_timeline_user_layout=0x7f050053;
+        public static final int my_title_tv=0x7f050048;
+        public static final int my_user_guide_title_tv=0x7f05005e;
+        public static final int myfragment=0x7f050010;
+        public static final int picture=0x7f050070;
+        public static final int pop_layout=0x7f050005;
+        public static final int post_time=0x7f05007e;
+        public static final int publish=0x7f050071;
+        public static final int radarViewLayout=0x7f050065;
+        public static final int radar_image_line=0x7f05001a;
+        public static final int right_bottom=0x7f050002;
+        public static final int right_top=0x7f050001;
+        public static final int share=0x7f050083;
+        public static final int support=0x7f050082;
+        public static final int title_tv=0x7f050025;
+        public static final int tv_favour=0x7f05001f;
+        public static final int tv_my=0x7f050023;
+        public static final int tv_name=0x7f05002d;
+        public static final int tv_radar=0x7f050019;
+        public static final int tv_wall=0x7f050015;
+        public static final int tv_wallId=0x7f050063;
+        public static final int wall_content=0x7f05006f;
+        public static final int wall_image_line=0x7f050016;
+        public static final int wall_listview=0x7f050072;
+        public static final int wall_nearby=0x7f050028;
+        public static final int wall_square=0x7f050027;
+        public static final int wall_tab=0x7f050026;
+        public static final int wallnearbyfragment=0x7f05000e;
+        public static final int wallsquarefragment=0x7f05000d;
     }
     public static final class layout {
-        public static final int favour_fragment=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int marker_popup=0x7f030002;
-        public static final int my_fragment=0x7f030003;
-        public static final int my_lv_item=0x7f030004;
-        public static final int my_other_user_info=0x7f030005;
-        public static final int my_other_user_info_title_bar=0x7f030006;
-        public static final int my_popwindow=0x7f030007;
-        public static final int my_timeline=0x7f030008;
-        public static final int my_timeline_lv_left_item=0x7f030009;
-        public static final int my_timeline_lv_right_item=0x7f03000a;
-        public static final int my_title_bar=0x7f03000b;
-        public static final int radar_fragment=0x7f03000c;
-        public static final int radar_fragment_btn_location=0x7f03000d;
-        public static final int radar_view=0x7f03000e;
-        public static final int title_bar=0x7f03000f;
-        public static final int wall_comment_activity=0x7f030010;
-        public static final int wall_comment_item=0x7f030011;
-        public static final int wall_fragment=0x7f030012;
-        public static final int wall_frgment=0x7f030013;
-        public static final int wall_list_foot=0x7f030014;
-        public static final int wall_list_head=0x7f030015;
-        public static final int wall_list_item=0x7f030016;
+        public static final int ar_popwindow=0x7f030000;
+        public static final int explore_fragment=0x7f030001;
+        public static final int explore_lv_item=0x7f030002;
+        public static final int main=0x7f030003;
+        public static final int main_title_bar=0x7f030004;
+        public static final int my_about=0x7f030005;
+        public static final int my_about_title_bar=0x7f030006;
+        public static final int my_fragment=0x7f030007;
+        public static final int my_info=0x7f030008;
+        public static final int my_info_lv_image_item=0x7f030009;
+        public static final int my_info_lv_other_item=0x7f03000a;
+        public static final int my_info_title_bar=0x7f03000b;
+        public static final int my_login=0x7f03000c;
+        public static final int my_lv_item=0x7f03000d;
+        public static final int my_other_user_info=0x7f03000e;
+        public static final int my_other_user_info_title_bar=0x7f03000f;
+        public static final int my_popwindow=0x7f030010;
+        public static final int my_setting=0x7f030011;
+        public static final int my_setting_title_bar=0x7f030012;
+        public static final int my_setting_user_info_item=0x7f030013;
+        public static final int my_timeline=0x7f030014;
+        public static final int my_timeline_lv_left_item=0x7f030015;
+        public static final int my_timeline_lv_right_item=0x7f030016;
+        public static final int my_timeline_title_bar=0x7f030017;
+        public static final int my_user_guide=0x7f030018;
+        public static final int my_user_guide_title_bar=0x7f030019;
+        public static final int radar_fragment=0x7f03001a;
+        public static final int radar_fragment_btn_location=0x7f03001b;
+        public static final int radar_marker_popup=0x7f03001c;
+        public static final int radar_radarview=0x7f03001d;
+        public static final int wall_comment_activity=0x7f03001e;
+        public static final int wall_comment_item=0x7f03001f;
+        public static final int wall_comment_title_bar=0x7f030020;
+        public static final int wall_create_activity=0x7f030021;
+        public static final int wall_create_title_bar=0x7f030022;
+        public static final int wall_fragment=0x7f030023;
+        public static final int wall_list_foot=0x7f030024;
+        public static final int wall_list_head=0x7f030025;
+        public static final int wall_list_item=0x7f030026;
     }
     public static final class string {
-        public static final int app_name=0x7f070000;
-        public static final int noTitle=0x7f070001;
-        public static final int pull_to_refresh_pull_label=0x7f070004;
-        public static final int pull_to_refresh_refreshing_label=0x7f070005;
-        public static final int pull_to_refresh_release_label=0x7f070003;
-        public static final int pull_to_refresh_tap_label=0x7f070002;
+        public static final int app_name=0x7f080000;
+        public static final int noTitle=0x7f080001;
+        public static final int pull_to_refresh_pull_label=0x7f080004;
+        public static final int pull_to_refresh_refreshing_label=0x7f080005;
+        public static final int pull_to_refresh_release_label=0x7f080003;
+        public static final int pull_to_refresh_tap_label=0x7f080002;
     }
     public static final class style {
         /** 
@@ -276,17 +379,70 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
+        public static final int AppTheme=0x7f090001;
         /**  自定义标题栏 
          */
-        public static final int CustomWindowTitleBackground=0x7f080002;
-        public static final int myTheme=0x7f080003;
+        public static final int CustomWindowTitleBackground=0x7f090002;
+        public static final int myTheme=0x7f090003;
         /**  MyFragment PopupWindow 动画 
          */
-        public static final int my_pop_anim=0x7f080004;
+        public static final int my_pop_anim=0x7f090004;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a ARArcMenu.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #ARArcMenu_position com.oxygen.wall:position}</code></td><td></td></tr>
+           <tr><td><code>{@link #ARArcMenu_radius com.oxygen.wall:radius}</code></td><td></td></tr>
+           </table>
+           @see #ARArcMenu_position
+           @see #ARArcMenu_radius
+         */
+        public static final int[] ARArcMenu = {
+            0x7f010000, 0x7f010001
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.oxygen.wall.R.attr#position}
+          attribute's value can be found in the {@link #ARArcMenu} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>left_top</code></td><td>0</td><td></td></tr>
+<tr><td><code>right_top</code></td><td>1</td><td></td></tr>
+<tr><td><code>right_bottom</code></td><td>2</td><td></td></tr>
+<tr><td><code>left_bottom</code></td><td>3</td><td></td></tr>
+<tr><td><code>bottom</code></td><td>4</td><td></td></tr>
+</table>
+          @attr name com.oxygen.wall:position
+        */
+        public static final int ARArcMenu_position = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.oxygen.wall.R.attr#radius}
+          attribute's value can be found in the {@link #ARArcMenu} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.oxygen.wall:radius
+        */
+        public static final int ARArcMenu_radius = 1;
+    };
 }

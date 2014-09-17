@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.util.Log;
 
+import com.avos.avoscloud.AVObject;
 import com.baidu.mapapi.model.LatLng;
 
 /**
@@ -15,7 +16,7 @@ import com.baidu.mapapi.model.LatLng;
  * @email oxygen0106@163.com
  * @date 2014-8-18 下午4:30:32
  */
-public class WallInfo implements Serializable {
+public class WallInfo extends AVObject implements Serializable {
 
 	public static final long serialVersionUID = 1L;// 序列化ID
 

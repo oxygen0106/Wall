@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/my_end_bg" >
-
-    <com.oxygen.wall.WallListView
-        android:id="@+id/wall_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    
+    <ListView 
+        android:id="@+id/explore_lv"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:divider="#00000000"
-        android:scrollbarStyle="insideOverlay" >
-    </com.oxygen.wall.WallListView>
-
+        ></ListView>
+    
 </LinearLayout>

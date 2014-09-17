@@ -14,7 +14,7 @@ import android.view.Window;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class MyCheckOtherUserInfo extends Activity {
+public class UserInfoActivity extends Activity {
 	
 	private List<Map<String,Object>> listData;
 	private MyListView listView;

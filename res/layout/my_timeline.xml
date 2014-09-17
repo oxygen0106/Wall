@@ -19,13 +19,13 @@
             android:layout_height="fill_parent"
             android:layout_weight="1" 
             >
-            <com.oxygen.my.MyRoundView
+            <ImageView
             android:id="@+id/my_timeline_user_img"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="50dip"
             android:layout_marginTop="5dip"
-            android:src="@drawable/my_image" />
+            android:src="@drawable/my_image_round" />
         </RelativeLayout>
         
 

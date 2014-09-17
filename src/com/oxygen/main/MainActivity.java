@@ -1,20 +1,31 @@
 package com.oxygen.main;
 
+import com.oxygen.ar.ARPopWindow;
+import com.oxygen.ar.ARWallCreateActivity;
+import com.oxygen.my.MyPopWindow;
+import com.oxygen.my.MySettingActivity;
 import com.oxygen.wall.R;
 
 import android.app.ActionBar;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Debug;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @ClassName MainActivity
@@ -26,11 +37,13 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity implements
 		View.OnClickListener {
 
-	public Fragment wallFragment;
+	public Fragment wallSquareFragment;
+	public Fragment wallNearbyFragment;
 	public RadarFragment radarFragment;
-//	public Fragment radarFragment;
+	// public Fragment radarFragment;
 	public Fragment favourFragment;
 	public Fragment myFragment;
+	
 
 	public FrameLayout wallFrameLayout;
 	public FrameLayout radarFrameLayout;
@@ -51,24 +64,38 @@ public class MainActivity extends FragmentActivity implements
 	public ImageView myImageLine;
 
 	public TextView titleText;
+	private ImageView mySetting;
+	private TextView wallSquare;
+	private TextView wallNearby;
+	
+	private ARPopWindow arPopWindow;
 
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
-	
+
 	LinearLayout layoutRadarFragment;
 
+	LinearLayout layoutWallBar;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);// 自定义标题栏模式
 		setContentView(R.layout.main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-				R.layout.title_bar);// 加载自定义标题栏
-//		ActionBar actionBar = getActionBar();//API Level 11
-		
-		titleText = (TextView) findViewById(R.id.title_tv);// 标题栏TextView
-		titleText.setText("Wall");// 设置TitleBar的TextView
+				R.layout.main_title_bar);// 加载自定义标题栏
+		// ActionBar actionBar = getActionBar();//API Level 11
 
+		titleText = (TextView) findViewById(R.id.title_tv);// 标题栏TextView
+	
+		mySetting = (ImageView) findViewById(R.id.my_setting);// 用户界面TitleBar
+																// 设置按钮
+		wallSquare=(TextView)findViewById(R.id.wall_square);
+		wallNearby=(TextView)findViewById(R.id.wall_nearby);
+		
+		titleText.setText("留言板");// 设置TitleBar的TextView
+
+		layoutWallBar=(LinearLayout)findViewById(R.id.wall_tab);
 		wallFrameLayout = (FrameLayout) findViewById(R.id.framelayout_wall);// 菜单按钮
 		radarFrameLayout = (FrameLayout) findViewById(R.id.framelayout_radar);
 		favourFrameLayout = (FrameLayout) findViewById(R.id.framelayout_favour);
@@ -85,6 +112,11 @@ public class MainActivity extends FragmentActivity implements
 		myFrameLayout.setOnClickListener(this);
 		arFrameLayout.setTag(5);
 		arFrameLayout.setOnClickListener(this);
+		wallSquare.setTag(6);
+		wallSquare.setOnClickListener(this);
+		wallNearby.setTag(7);
+		wallNearby.setOnClickListener(this);
+		
 
 		wallImageView = (ImageView) findViewById(R.id.image_wall);// 按钮图片
 		radarImageView = (ImageView) findViewById(R.id.image_radar);
@@ -97,37 +129,37 @@ public class MainActivity extends FragmentActivity implements
 		favourImageLine = (ImageView) findViewById(R.id.favour_image_line);
 		myImageLine = (ImageView) findViewById(R.id.my_image_line);
 
-		radarFragment = new RadarFragment();
-		
-		
+		clickWallFrameLayout();// 默认菜单点击留言板
+
 		fragmentManager = getSupportFragmentManager();// 获得FragmentManager
-		wallFragment = fragmentManager.findFragmentById(R.id.wallfragment);// 加载Fragment
-//		radarFragment = fragmentManager.findFragmentById(R.id.radarfragment);
-		favourFragment = fragmentManager.findFragmentById(R.id.favourfragment);
+		wallSquareFragment = fragmentManager.findFragmentById(R.id.wallsquarefragment);// 加载Fragment
+		wallNearbyFragment = fragmentManager.findFragmentById(R.id.wallnearbyfragment);
+		radarFragment = new RadarFragment();
+		favourFragment = fragmentManager.findFragmentById(R.id.explorefragment);
 		myFragment = fragmentManager.findFragmentById(R.id.myfragment);
-		
+
 		fragmentTransaction = fragmentManager.beginTransaction()
-				.hide(wallFragment).hide(favourFragment)
-				.hide(myFragment);//隐藏Fragment
-		fragmentTransaction.show(wallFragment).commit();//默认显示wallFragment
+				.hide(wallSquareFragment).hide(wallNearbyFragment).hide(favourFragment).hide(myFragment);// 隐藏Fragment
+		fragmentTransaction.show(wallSquareFragment).commit();// 默认显示wallFragment
 	}
 
 	/**
-	* @Description 菜单按钮监听事件回调方法  
-	*/
+	 * @Description 菜单按钮监听事件回调方法
+	 */
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		int tag = (Integer) v.getTag();
 		// 一个fragmentTransaction对象只能commit()一次,此处重新获得一个对象来commit()
 		fragmentTransaction = fragmentManager.beginTransaction()
-				.hide(wallFragment).hide(radarFragment).hide(favourFragment)
+				.hide(wallSquareFragment).hide(wallNearbyFragment).hide(radarFragment).hide(favourFragment)
 				.hide(myFragment);
 		switch (tag) {
 		case 1:
 			clickWallFrameLayout();
 
-			fragmentTransaction.show(wallFragment).commit();
+			
+			fragmentTransaction.show(wallSquareFragment).commit();
 			break;
 		case 2:
 			clickRadarFrameLayout();
@@ -149,23 +181,33 @@ public class MainActivity extends FragmentActivity implements
 			clickMyFrameLayout();
 
 			fragmentTransaction.show(myFragment).commit();
+			setMySettingListener();
 			break;
 		case 5:
 			clickARFrameLayout();
-			// TODO
+			setARPopWindow();
+			break;
+		case 6:
+			fragmentTransaction.show(wallSquareFragment).commit();
+			break;
+		case 7:
+			fragmentTransaction.show(wallNearbyFragment).commit();
 			break;
 		}
 
 	}
 
 	/**
-	* @param 
-	* @return void
-	* @Description WallFrameLayout按钮背景图片切换
-	*/
+	 * @param
+	 * @return void
+	 * @Description WallFrameLayout菜单按钮背景图片切换，TitleBar切换
+	 */
 	private void clickWallFrameLayout() {
-		titleText.setText("Wall");
-
+		//titleText.setText("留言板");
+		titleText.setVisibility(View.GONE);
+		mySetting.setVisibility(View.GONE);
+		layoutWallBar.setVisibility(View.VISIBLE);
+		
 		wallFrameLayout.setSelected(true);
 		wallImageView.setSelected(true);
 		wallImageLine.setSelected(true);
@@ -182,13 +224,15 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	* @param 
-	* @return void
-	* @Description RadarFrameLayout按钮背景图片切换
-	*/
+	 * @param
+	 * @return void
+	 * @Description RadarFrameLayout菜单按钮背景图片切换，TitleBar切换
+	 */
 	private void clickRadarFrameLayout() {
-		titleText.setText("Radar");
-
+		titleText.setText("雷达");
+		mySetting.setVisibility(View.GONE);
+		layoutWallBar.setVisibility(View.GONE);
+		
 		radarFrameLayout.setSelected(true);
 		radarImageView.setSelected(true);
 		radarImageLine.setSelected(true);
@@ -205,12 +249,14 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	* @param 
-	* @return void
-	* @Description FavourFrameLayout按钮背景图片切换  
-	*/
+	 * @param
+	 * @return void
+	 * @Description FavourFrameLayout菜单按钮背景图片切换，TitleBar切换
+	 */
 	private void clickFavourFrameLayout() {
-		titleText.setText("Favour");
+		titleText.setText("探索");
+		mySetting.setVisibility(View.GONE);
+		layoutWallBar.setVisibility(View.GONE);
 
 		favourFrameLayout.setSelected(true);
 		favourImageView.setSelected(true);
@@ -228,12 +274,14 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	* @param 
-	* @return void
-	* @Description MyFrameLayout按钮背景图片切换   
-	*/
+	 * @param
+	 * @return void
+	 * @Description MyFrameLayout菜单按钮背景图片切换，TitleBar切换
+	 */
 	private void clickMyFrameLayout() {
-		titleText.setText("My");
+		titleText.setText("我的");
+		mySetting.setVisibility(View.VISIBLE);
+		layoutWallBar.setVisibility(View.GONE);
 
 		myFrameLayout.setSelected(true);
 		myImageView.setSelected(true);
@@ -251,12 +299,14 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	/**
-	* @param 
-	* @return void
-	* @Description ARFrameLayout  
-	*/
+	 * @param
+	 * @return void
+	 * @Description ARFrameLayout菜单按钮背景图片切换，TitleBar切换
+	 */
 	private void clickARFrameLayout() {
-		titleText.setText("AR");
+//		titleText.setText("AR");
+		mySetting.setVisibility(View.GONE);
+		layoutWallBar.setVisibility(View.GONE);
 
 		arImageView.setSelected(true);
 		myFrameLayout.setSelected(false);
@@ -277,6 +327,55 @@ public class MainActivity extends FragmentActivity implements
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+
+	}
+
+	// 设置Title Bar Setting按钮监听事件
+	public void setMySettingListener() {
+		mySetting.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this,
+						MySettingActivity.class);
+				startActivity(intent);
+			}
+		});
+	}
+	
+	private void setARPopWindow(){
+		// 创建itemOnClick对象，初始化popWindow
+		OnClickListener itemsOnClick = new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				arPopWindow.dismiss();// 收回PopWindow
+				switch (v.getId()) {
+				case R.id.ar_pop_btn_camera:
+
+Toast.makeText(MainActivity.this, "待添加AR方法", Toast.LENGTH_SHORT).show();
+					//TODO AR拍摄方法
+					break;
+				
+				case R.id.ar_pop_btn_cancel:
+					break;
+				case R.id.ar_pop_btn_wall:
+					Intent intent=new Intent(MainActivity.this,ARWallCreateActivity.class);
+					startActivity(intent);
+					break;
+				default:
+					break;
+				}
+			}
+		};
+
+		arPopWindow = new ARPopWindow(MainActivity.this, itemsOnClick);
+		// 设置layout在PopupWindow中显示的位置
+		arPopWindow.showAtLocation(
+				MainActivity.this.findViewById(R.id.main_layout), Gravity.BOTTOM
+						| Gravity.CENTER_HORIZONTAL, 0, 0);
+
 	}
 }

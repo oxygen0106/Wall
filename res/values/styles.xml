@@ -33,5 +33,6 @@
         <item name="android:windowEnterAnimation">@anim/my_pop_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/my_pop_exit_anim</item>
     </style>
-
+    
+    
 </resources>
