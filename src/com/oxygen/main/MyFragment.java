@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.avos.avoscloud.AVUser;
+import com.oxygen.data.UserInfo;
 import com.oxygen.my.MyInfoActivity;
 import com.oxygen.my.UserInfoActivity;
 import com.oxygen.my.MyListView;
@@ -19,6 +21,7 @@ import com.oxygen.my.MyTimeLineActivity;
 import com.oxygen.wall.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -42,6 +45,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -54,22 +58,24 @@ import android.widget.Toast;
  */
 public class MyFragment extends Fragment {
 
+	private boolean userStatus;
+	private String userName;
+
 	private ImageView myImage;
 	private MyListView myListView;
 	private LinearLayout midLayoutMsg;
 	private LinearLayout midLayoutRoad;
 	private LinearLayout midLayoutZan;
+	private TextView userNameText;
 
 	private List<Map<String, Object>> listData = null;
 	private SimpleAdapter adapter = null;
 
 	private Activity activity;
 
-	public String myImageFileName;
+	public String userImagePath;
 	public File file;
 	public Uri imageUri;
-
-
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -89,6 +95,9 @@ public class MyFragment extends Fragment {
 				.findViewById(R.id.my_mid_layout_road);
 		midLayoutZan = (LinearLayout) view.findViewById(R.id.my_mid_layout_zan);
 		myListView = (MyListView) view.findViewById(R.id.my_lv);
+		userNameText = (TextView) view.findViewById(R.id.my_name_tv);
+
+		currentUserStatus();// 检测当前用户身份
 
 		SharedPreferences mSP = PreferenceManager
 				.getDefaultSharedPreferences(activity);
@@ -110,7 +119,7 @@ public class MyFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 	}
 
 	@Override
@@ -123,9 +132,8 @@ public class MyFragment extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		
-	}
 
+	}
 
 	/**
 	 * @param
@@ -160,7 +168,8 @@ public class MyFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(getActivity(), MyTimeLineActivity.class);
+				Intent intent = new Intent(getActivity(),
+						MyTimeLineActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -219,7 +228,8 @@ public class MyFragment extends Fragment {
 					Toast.makeText(activity, "收藏", Toast.LENGTH_SHORT).show();
 				}
 				if (arg3 == 3) {
-					Intent intent = new Intent(activity, MySettingActivity.class);
+					Intent intent = new Intent(activity,
+							MySettingActivity.class);
 					startActivity(intent);
 				}
 
@@ -227,4 +237,31 @@ public class MyFragment extends Fragment {
 		});
 	}
 
+	/**
+	 * @param
+	 * @return void
+	 * @Description 判断当前用户身份,设置用户名，建立路径
+	 */
+	private void currentUserStatus() {
+		AVUser currentUser = AVUser.getCurrentUser();
+		if (currentUser.isAnonymous()) {
+			userStatus = false;
+			userNameText.setText("游客");
+			
+		} else {
+			userStatus = true;
+			userNameText.setText(currentUser.getString(UserInfo.USER_NAME));
+			userImagePath = Environment.getExternalStorageDirectory()
+					.getAbsolutePath()
+					+ "/Android/data/"
+					+ activity.getPackageName() + "/user/myImage.png";
+			file = new File(userImagePath);
+			if(file.exists()){
+				Bitmap bitmap = BitmapFactory.decodeFile(userImagePath);
+				if (bitmap != null) {// 如果该路径系下的文件不存在，加载默认图片背景
+					myImage.setImageBitmap(bitmap);// 将图片显示在ImageView里
+				}
+			}
+		}
+	}
 }

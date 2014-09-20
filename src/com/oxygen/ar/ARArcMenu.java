@@ -230,7 +230,7 @@ public class ARArcMenu extends ViewGroup implements OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
-		mButton = findViewById(R.id.id_button);
+//		mButton = findViewById(R.id.id_button);
 		if (mButton == null) {
 			mButton = getChildAt(0);
 		}

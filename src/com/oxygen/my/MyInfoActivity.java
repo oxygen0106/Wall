@@ -12,11 +12,13 @@ import java.util.Map;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.oxygen.data.UserInfo;
 import com.oxygen.wall.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -62,7 +64,8 @@ public class MyInfoActivity extends Activity {
 	private MyInfoAdapter adapter = null;
 	
 	private TextView loginBtn;
-
+	
+	private SharedPreferences sp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -84,9 +87,15 @@ public class MyInfoActivity extends Activity {
 		setListView();
 		
 		loginBtn = (TextView) findViewById(R.id.my_info_login_btn);
-		setLoginListener();
+		
 	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		changeLoginButton();//设置登录按钮样式
+	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -96,45 +105,6 @@ public class MyInfoActivity extends Activity {
 	}
 
 	void setData(){
-		
-
-		
-		
-
-		/*
-		new AsyncTask<Void,Void,Void>() {
-			String i;
-			protected  Void doInBackground(Void... params) {
-//				AVQuery<AVObject>  query = new AVQuery<AVObject>(UserInfo.USER_CLASS_NAME);
-				AVQuery<UserInfo>  query = new AVQuery<UserInfo>(UserInfo.USER_CLASS_NAME);
-				UserInfo user = null;
-				List<UserInfo> data = null;
-				query.whereEqualTo(UserInfo.USER_NAME, "X1");
-				try {
-					data = query.find();
-					if(data==null){
-					System.out.println("~!~~~~~~~~~~NULL~~~");	
-					}else{
-
-					user = data.get(0);
-					}
-				} catch (AVException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+i);
-				return null;
-			};
-			
-			@Override
-			protected void onPostExecute(Void result) {
-				// TODO Auto-generated method stub
-				super.onPostExecute(result);
-			System.out.println("---------------------post~~~~~~~~~~~~~~~~~~"+i);
-			}
-			
-		}.execute();
-*/
 		
 	}
 	
@@ -453,16 +423,38 @@ public class MyInfoActivity extends Activity {
 			updateMyImage(bitmap);
 		}
 	}
-	
-	private void setLoginListener(){
-		loginBtn.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(MyInfoActivity.this, MyLoginActivity.class);
-				startActivity(intent);
-			}
-		});
+		
+	/**
+	* @param 
+	* @return void
+	* @Description 修改登录按钮内容  
+	*/
+	private void changeLoginButton(){
+		sp = MyInfoActivity.this.getSharedPreferences("user", Context.MODE_PRIVATE);
+		if(sp.getBoolean("userStatus", false)){//判断是否为已登录的注册用户
+			loginBtn.setText("退出");
+			loginBtn.setBackgroundResource(R.drawable.my_logout_btn_selector);
+			loginBtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					SharedPreferences.Editor editor = sp.edit();
+					editor.clear();
+					editor.commit();
+					AVUser.logOut(); 
+					startActivity(new Intent(MyInfoActivity.this, MyLoginActivity.class));
+				}
+			});
+		}else{
+			loginBtn.setText("登录/注册");
+			loginBtn.setBackgroundResource(R.drawable.my_login_btn_selector);
+			loginBtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					startActivity(new Intent(MyInfoActivity.this, MyLoginActivity.class));
+				}
+			});
+		}
 	}
 }

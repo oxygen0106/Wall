@@ -1,17 +1,24 @@
 package com.oxygen.main;
 
+import java.io.File;
+
+import com.avos.avoscloud.AVUser;
 import com.oxygen.ar.ARPopWindow;
 import com.oxygen.ar.ARWallCreateActivity;
+import com.oxygen.data.UserInfo;
 import com.oxygen.my.MyPopWindow;
 import com.oxygen.my.MySettingActivity;
 import com.oxygen.wall.R;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Debug;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -86,6 +93,8 @@ public class MainActivity extends FragmentActivity implements
 				R.layout.main_title_bar);// 加载自定义标题栏
 		// ActionBar actionBar = getActionBar();//API Level 11
 
+		checkUserStatus();//检测用户身份
+		
 		titleText = (TextView) findViewById(R.id.title_tv);// 标题栏TextView
 	
 		mySetting = (ImageView) findViewById(R.id.my_setting);// 用户界面TitleBar
@@ -377,5 +386,56 @@ Toast.makeText(MainActivity.this, "待添加AR方法", Toast.LENGTH_SHORT).show(
 				MainActivity.this.findViewById(R.id.main_layout), Gravity.BOTTOM
 						| Gravity.CENTER_HORIZONTAL, 0, 0);
 
+	}
+	
+	/**
+	* @param 
+	* @return void
+	* @Description 根据当前用户状态，创建文件夹路径  
+	*/
+	private void checkUserStatus(){
+		AVUser currentUser = AVUser.getCurrentUser();
+		if(currentUser!=null&&currentUser.isAnonymous()){
+			File userFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/default/user");
+			File wallFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/default/wall");
+			if(userFile.exists()&&wallFile.exists()){
+				return;
+			}else if(userFile.exists()&&!wallFile.exists()){
+				wallFile.mkdirs();
+				return;
+			}else if(!userFile.exists()&&wallFile.exists()){
+				userFile.mkdirs();
+				return;
+			}else{
+				userFile.mkdirs();
+				wallFile.mkdirs();
+			}
+		}else if(currentUser!=null&&!currentUser.isAnonymous()){
+			String userName = currentUser.getString(UserInfo.USER_NAME);
+			File userFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/"+userName+"/user");
+			File wallFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/"+userName+"/wall");
+			if(userFile.exists()&&wallFile.exists()){
+				return;
+			}else if(userFile.exists()&&!wallFile.exists()){
+				wallFile.mkdirs();
+				return;
+			}else if(!userFile.exists()&&wallFile.exists()){
+				userFile.mkdirs();
+				return;
+			}else{
+				userFile.mkdirs();
+				wallFile.mkdirs();
+			}
+		}
+		
+		SharedPreferences sp = this.getSharedPreferences("user",
+				Context.MODE_PRIVATE);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+sp.getBoolean("userStatus", true));
+		if(sp.getBoolean("userStatus", true)){
+
+			Toast.makeText(this, "尊敬的用户，欢迎回来！",Toast.LENGTH_LONG).show();
+		}else{
+			Toast.makeText(this, "游客止步！",Toast.LENGTH_LONG).show();
+		}
 	}
 }

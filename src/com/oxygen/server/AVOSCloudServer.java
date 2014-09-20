@@ -7,7 +7,7 @@ import com.avos.avoscloud.*;
 import com.avos.avoscloud.search.AVSearchQuery;
 
 import com.oxygen.data.UserInfo;
-import com.oxygen.data.WallInfo;
+import com.oxygen.data.WallInfoDownload;;
 
 /**
 * @ClassName AVOSInit

@@ -38,7 +38,7 @@ public class MySettingActivity extends Activity {
 	MySlipButton slipButton;
 
 	private TextView titleText;
-	private ImageView returnBtn;
+	private ImageView backBtn;
 
 	private MyListView myInfoList;
 	private MyListView otherList;
@@ -62,7 +62,7 @@ public class MySettingActivity extends Activity {
 				R.layout.my_setting_title_bar);
 
 		titleText = (TextView) findViewById(R.id.my_setting_title_tv);
-		returnBtn = (ImageView) findViewById(R.id.my_setting_return);
+		backBtn = (ImageView) findViewById(R.id.my_setting_title_bar_back_btn);
 		titleText.setText("设置");// 设置TitleBar的TextView
 
 		myInfoList = (MyListView) findViewById(R.id.my_setting_user_info_lv);
@@ -256,7 +256,7 @@ public class MySettingActivity extends Activity {
 	}
 	
 	private void setReturnListener(){
-		returnBtn.setOnClickListener(new View.OnClickListener() {
+		backBtn.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

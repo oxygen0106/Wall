@@ -29,7 +29,7 @@ import com.baidu.mapapi.map.SupportMapFragment;
 import com.baidu.mapapi.model.LatLng;
 import com.oxygen.map.RadarView;
 import com.oxygen.wall.R;
-import com.oxygen.data.WallInfo;
+import com.oxygen.data.WallInfoDownload;
 //import com.oxygen.map.MyOrientationListener;
 //import com.oxygen.map.MyOrientationListener.OnOrientationListener;
 
@@ -88,7 +88,7 @@ public class RadarFragment extends Fragment {
 	BitmapDescriptor wallMarkerIcon = BitmapDescriptorFactory
 			.fromResource(R.drawable.wall_marker);// 留言板标记图标bitmap
 	Marker[] wallMarker;// 附件留言板在地图上的标记
-	List<WallInfo> aroundWalls;// 附近留言板信息
+	List<WallInfoDownload> aroundWalls;// 附近留言板信息
 	private InfoWindow mInfoWindow;// 地图弹窗
 	LinearLayout markerPopupWindow;// 弹窗Layout
 	TextView tvPopup;// 弹窗内TextView
@@ -330,15 +330,15 @@ public class RadarFragment extends Fragment {
 	 * @Description 获取模拟附近留言板信息 ，本地模拟
 	 */
 	public void getWallsInfo() {
-		aroundWalls = new ArrayList<WallInfo>();
+		aroundWalls = new ArrayList<WallInfoDownload>();
 		// aroundWalls.add(new WallInfo(1, 007, new LatLng(39.98871, 116.43234),
 		// 1000));//天安门坐标
 		// aroundWalls.add(new WallInfo(1, 007, new LatLng(29.536881,
 		// 106.611048), 1000));//信科坐标
-		aroundWalls.add(new WallInfo(1, "", 29.533881, 106.611048,"",0,0,0));
-		aroundWalls.add(new WallInfo(1, "", 29.539881, 106.611048,"",0,0,0));
-		aroundWalls.add(new WallInfo(3, "", 29.536881, 106.608048,"",0,0,0));
-		aroundWalls.add(new WallInfo(4, "", 29.536881, 106.614048,"",0,0,0));
+		aroundWalls.add(new WallInfoDownload("1", "", 29.533881, 106.611048,"","0",0,0));
+		aroundWalls.add(new WallInfoDownload("1", "", 29.539881, 106.611048,"","0",0,0));
+		aroundWalls.add(new WallInfoDownload("3", "", 29.536881, 106.608048,"","0",0,0));
+		aroundWalls.add(new WallInfoDownload("4", "", 29.536881, 106.614048,"","0",0,0));
 	}
 
 	/**

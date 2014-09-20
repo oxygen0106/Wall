@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.oxygen.data.WallInfo;
+import com.oxygen.data.WallInfoDownload;
 import com.oxygen.wall.R;
 import com.oxygen.wall.WallCommentActivity;
 import com.oxygen.wall.WallListView;
@@ -54,7 +54,7 @@ import android.widget.Toast;
 
 public class WallNearbyFragment extends Fragment {
 
-	private ArrayList<WallInfo> mData;
+	private ArrayList<WallInfoDownload> mData;
 	private int mFirstItem;
 	private int mLastItem;
 	private ItemAdapter mAdapter;
@@ -126,16 +126,16 @@ public class WallNearbyFragment extends Fragment {
 			}
 		});
 	}
-	private ArrayList<WallInfo> getData() {
-		ArrayList<WallInfo> list = new ArrayList<WallInfo>();
+	private ArrayList<WallInfoDownload> getData() {
+		ArrayList<WallInfoDownload> list = new ArrayList<WallInfoDownload>();
 		
-		WallInfo wallInfo=new WallInfo();
+		WallInfoDownload wallInfo=new WallInfoDownload();
 		list.add(wallInfo);
 		
-		wallInfo=new WallInfo();
+		wallInfo=new WallInfoDownload();
 		list.add(wallInfo);
 		
-		wallInfo=new WallInfo();
+		wallInfo=new WallInfoDownload();
 		list.add(wallInfo);
 		
 		return list;
@@ -208,7 +208,7 @@ public class WallNearbyFragment extends Fragment {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					Log.v(null, "getTag");
-					WallInfo w=(WallInfo)mData.get((Integer)v.getTag());
+					WallInfoDownload w=(WallInfoDownload)mData.get((Integer)v.getTag());
 					Log.v(null, "AfterTag");
 					Log.v("测试获取", String.valueOf(w.getDistance()));
 					Intent intent=new Intent(getActivity(),WallCommentActivity.class);

@@ -2,8 +2,8 @@ package com.oxygen.wall;
 
 import java.util.ArrayList;
 
-import com.oxygen.data.WallComment;
-import com.oxygen.data.WallInfo;
+import com.oxygen.data.WallCommentDownload;
+import com.oxygen.data.WallInfoDownload;
 import com.oxygen.main.MainActivity;
 
 import android.annotation.SuppressLint;
@@ -35,8 +35,8 @@ public class WallCommentActivity extends Activity{
 	
 	private ListView mListView;
 	private ItemAdapter mAdapter;
-	private WallInfo mWallData;
-	private ArrayList<WallComment> mCommentData;
+	private WallInfoDownload mWallData;
+	private ArrayList<WallCommentDownload> mCommentData;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -48,41 +48,41 @@ public class WallCommentActivity extends Activity{
 				R.layout.wall_comment_title_bar);// 加载自定义标题栏
 		Log.v(null, "获取Bundle");
 		Bundle b=getIntent().getExtras();
-		mWallData=(WallInfo)b.get("Info");
+		mWallData=(WallInfoDownload)b.get("Info");
 		Log.v(null, "绑定数据");
 	
-		mCommentData=new ArrayList<WallComment>();
+		mCommentData=new ArrayList<WallCommentDownload>();
 		addComment();
 		mAdapter = new ItemAdapter(this,R.layout.wall_comment_item);
 		mListView = (ListView)findViewById(R.id.comment_list);
 		mListView.setAdapter(mAdapter);
 	}
 	public void addComment(){
-		WallComment w=new WallComment();
+		WallCommentDownload w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
-		w=new WallComment();
+		w=new WallCommentDownload();
 		mCommentData.add(w);
 	}
 	public void clickBack(View v){
