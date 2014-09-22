@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- 上半部分 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/my_image_bg"
+        android:orientation="vertical" >
+
+        <!-- 内容 -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:orientation="vertical" >
+
+            <!-- 个人头像 -->
+
+           <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:orientation="vertical"
+                android:padding="10dip" >
+     
+                <ImageView
+                    android:id="@+id/my_user_info_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/my_image_round" />
+            </LinearLayout>
+            <!-- 名字信息 -->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/my_user_info_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/my_user_name_tv_bg"
+                    android:gravity="center"
+                    android:padding="5dip"
+                    android:text="userName"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#B0C4DE" />
+    <!-- 下半部分 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1.5"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/my_end_bg" >
+
+            <com.oxygen.my.MyListView
+                android:id="@+id/my_user_info_lv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dip"
+                android:layout_marginRight="0dip"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/my_lv_bg"
+                android:cacheColorHint="#00000000"
+                android:divider="#ADD8E6"
+                android:dividerHeight="1px" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

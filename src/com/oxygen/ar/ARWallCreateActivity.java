@@ -117,8 +117,9 @@ public class ARWallCreateActivity extends Activity {
 		  
         ByteArrayOutputStream baos = new ByteArrayOutputStream();  
         image.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        FileOutputStream fos=null;
         try {
-			FileOutputStream fos=new FileOutputStream(mImageUri.getPath());
+			fos=new FileOutputStream(mImageUri.getPath());
 			fos.write(baos.toByteArray());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -126,6 +127,14 @@ public class ARWallCreateActivity extends Activity {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			if(fos!=null)
+				try {
+					fos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		} 
     } 
 	
@@ -161,7 +170,7 @@ public class ARWallCreateActivity extends Activity {
 						userID="1111111111111";
 						//if(userID!=null){
 							Log.v("publish", "userID不为空");
-							WallInfoUpload wallInfoUpload=new WallInfoUpload(mContent.getText().toString(),mImageUri.getPath(),userID,getApplicationContext());
+							WallInfoUpload wallInfoUpload=new WallInfoUpload(mContent.getText().toString(),mImageUri.getPath(),getApplicationContext());
 						
 						//}
 					ARWallCreateActivity.this.finish();

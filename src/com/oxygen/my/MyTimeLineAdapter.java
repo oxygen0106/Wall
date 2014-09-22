@@ -8,6 +8,7 @@ import com.oxygen.wall.R;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class MyTimeLineAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			// 根据type不同的数据类型构造不同的View
-			if (type == 1) {
+			if (type == 0) {
 				convertView = mInflater.inflate(
 						R.layout.my_timeline_lv_left_item, null);
 				TextView itemText = (TextView) convertView
@@ -112,7 +113,7 @@ public class MyTimeLineAdapter extends BaseAdapter {
 			convertView = null;
 			
 			// 根据type不同的数据类型构造不同的View
-			if (type == 1) {
+			if (type == 0) {
 				convertView = mInflater.inflate(
 						R.layout.my_timeline_lv_left_item, null);
 				TextView itemText = (TextView) convertView
@@ -154,11 +155,11 @@ public class MyTimeLineAdapter extends BaseAdapter {
 	/**
 	 * @param @return
 	 * @return int
-	 * @Description 获得0-3的随机数
+	 * @Description 获得0-2的随机数
 	 */
 	private int getRandom() {
 		Random random = new Random();
-		int max = 4;
+		int max = 3;
 		int i = random.nextInt(max);// [0,max)范围
 		return i;
 	}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_fragment_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -13,7 +14,7 @@
         android:background="@drawable/my_image_bg"
         android:orientation="vertical" >
 
-        <!-- 头像+Name-->
+        <!-- 头像+Name -->
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -26,8 +27,8 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
-                android:layout_weight="2"
                 android:layout_marginTop="5dip"
+                android:layout_weight="2"
                 android:orientation="vertical" >
 
                 <RelativeLayout
@@ -56,14 +57,14 @@
                     android:id="@+id/my_name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/my_other_user_info_name_tv"
-                    android:layout_marginTop="10dip"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dip"
+                    android:background="@drawable/my_user_name_tv_bg"
                     android:gravity="center"
-                    android:paddingTop="3dip"
                     android:paddingBottom="3dip"
                     android:paddingLeft="5dip"
                     android:paddingRight="5dip"
+                    android:paddingTop="3dip"
                     android:text="hello,world"
                     android:textColor="#ffffff"
                     android:textSize="14sp" />
@@ -89,19 +90,35 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:id="@+id/my_mid_btn_msg"
+                <FrameLayout
                     android:layout_width="0dip"
                     android:layout_height="fill_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="8dip"
-                    android:layout_marginLeft="8dip"
-                    android:layout_marginTop="9dip"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="6dip"
-                    android:paddingRight="6dip"
-                    android:src="@drawable/my_msg_selector" />
+                    android:layout_weight="1" >
+
+                    <ImageView
+                        android:id="@+id/notify_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="8dip"
+                        android:layout_marginLeft="8dip"
+                        android:layout_marginTop="9dip"
+                        android:src="@drawable/notify_point"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/my_mid_btn_msg"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="8dip"
+                        android:layout_marginLeft="8dip"
+                        android:layout_marginTop="9dip"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="6dip"
+                        android:paddingRight="6dip"
+                        android:src="@drawable/my_msg_selector" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/my_mid_tv_msg"

@@ -5,14 +5,13 @@
     android:background="@drawable/my_end_bg"
     android:orientation="vertical" >
 
-    <ListView
+    <com.oxygen.wall.WallCommentListView
         android:id="@+id/comment_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 	    android:scrollbarStyle="insideOverlay"
 	   	android:divider="#00000000"
-	   	android:background="#ffffff">
+	   	android:background="#ffffff"/>
       
-    </ListView>
 
 </LinearLayout>

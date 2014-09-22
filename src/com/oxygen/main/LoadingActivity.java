@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.avos.avoscloud.AVAnonymousUtils;
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
@@ -51,8 +52,7 @@ public class LoadingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.loading_activity);
 		progressBar = (ProgressBar)findViewById(R.id.progress_bar);
-		setSP();//初始化全局SP
-			
+		setSP();//初始化全局SharePreference
 	}
 	
 	@Override
@@ -332,5 +332,9 @@ public class LoadingActivity extends Activity {
 		          
 		      }
 		    });
+	}
+	
+	private void initPushMessageId(){
+		AVInstallation.getCurrentInstallation().saveInBackground();
 	}
 }

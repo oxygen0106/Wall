@@ -93,7 +93,7 @@ public class MainActivity extends FragmentActivity implements
 				R.layout.main_title_bar);// 加载自定义标题栏
 		// ActionBar actionBar = getActionBar();//API Level 11
 
-		checkUserStatus();//检测用户身份
+		createFile();//检测用户身份
 		
 		titleText = (TextView) findViewById(R.id.title_tv);// 标题栏TextView
 	
@@ -393,11 +393,10 @@ Toast.makeText(MainActivity.this, "待添加AR方法", Toast.LENGTH_SHORT).show(
 	* @return void
 	* @Description 根据当前用户状态，创建文件夹路径  
 	*/
-	private void checkUserStatus(){
-		AVUser currentUser = AVUser.getCurrentUser();
-		if(currentUser!=null&&currentUser.isAnonymous()){
-			File userFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/default/user");
-			File wallFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/default/wall");
+	private void createFile(){
+		if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+			File userFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/user");
+			File wallFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/wall");
 			if(userFile.exists()&&wallFile.exists()){
 				return;
 			}else if(userFile.exists()&&!wallFile.exists()){
@@ -410,24 +409,9 @@ Toast.makeText(MainActivity.this, "待添加AR方法", Toast.LENGTH_SHORT).show(
 				userFile.mkdirs();
 				wallFile.mkdirs();
 			}
-		}else if(currentUser!=null&&!currentUser.isAnonymous()){
-			String userName = currentUser.getString(UserInfo.USER_NAME);
-			File userFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/"+userName+"/user");
-			File wallFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/Android/data/"+this.getPackageName()+"/"+userName+"/wall");
-			if(userFile.exists()&&wallFile.exists()){
-				return;
-			}else if(userFile.exists()&&!wallFile.exists()){
-				wallFile.mkdirs();
-				return;
-			}else if(!userFile.exists()&&wallFile.exists()){
-				userFile.mkdirs();
-				return;
-			}else{
-				userFile.mkdirs();
-				wallFile.mkdirs();
-			}
+		}else{
+			Toast.makeText(this, "未加载SD卡", Toast.LENGTH_LONG).show();
 		}
-		
 		SharedPreferences sp = this.getSharedPreferences("user",
 				Context.MODE_PRIVATE);
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+sp.getBoolean("userStatus", true));

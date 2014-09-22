@@ -13,21 +13,19 @@
         android:layout_weight="1"
         android:orientation="horizontal" >
 
-        
         <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="1" 
-            >
+            android:layout_weight="1" >
+
             <ImageView
-            android:id="@+id/my_timeline_user_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dip"
-            android:layout_marginTop="5dip"
-            android:src="@drawable/my_image_round" />
+                android:id="@+id/my_timeline_user_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dip"
+                android:layout_marginTop="5dip"
+                android:src="@drawable/my_image_round" />
         </RelativeLayout>
-        
 
         <RelativeLayout
             android:layout_width="0dip"
@@ -38,14 +36,9 @@
                 android:id="@+id/my_timeline_info_num_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dip"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="15dip"
                 android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:src="@drawable/my_timeline_info_num_7" />
             </LinearLayout>
 
             <TextView
@@ -63,12 +56,11 @@
                 android:id="@+id/my_timeline_info_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dip"
                 android:layout_below="@id/my_timeline_info_num_layout"
+                android:layout_marginLeft="15dip"
                 android:text="09/02/2014"
                 android:textColor="#e0fff4f4"
                 android:textSize="12sp" />
-
         </RelativeLayout>
     </LinearLayout>
 
@@ -102,6 +94,8 @@
             android:id="@+id/my_timeline_lv"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:listSelector="#00000000"
+            android:background="#00000000"
             android:cacheColorHint="#00000000"
             android:divider="#00000000"
             android:dividerHeight="0dip"

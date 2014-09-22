@@ -1,13 +1,26 @@
 package com.oxygen.data;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.text.format.DateFormat;
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVUser;
 import com.baidu.mapapi.model.LatLng;
+import com.oxygen.main.WallSquareFragment;
+import com.oxygen.map.GetLocation;
 
 /**
  * @ClassName WallInfo
@@ -26,24 +39,61 @@ public class WallInfoDownload implements Serializable {
 	private double mLongitude;// 经度
 	private String mImageURL;
 	private String mUserID;
+	private String mUserName;
+	private String mUserImageURL;
 	private int mSupportCount;
 	private int mCommentCount;
-	private long mWallCreateTime;
-	private double mDistance;//距离，本地计算
+	private String mWallCreateTime;
+	private int mDistance;//距离，本地计算
+	private Bitmap mUserBitmap;
+	private Bitmap mImageBitmap;
 	private ArrayList<WallCommentDownload> mCommentList;
 	
 	public WallInfoDownload() {
 		
 	}
-
+	public WallInfoDownload(AVObject object, AVUser user){
+		mWallID=object.getObjectId();
+		mWallContent=object.getString(WallInfoUpload.CONTENT);
+		mLatitude=object.getDouble(WallInfoUpload.LATITUDE);
+		mLongitude=object.getDouble(WallInfoUpload.LONGITUDE);
+		AVFile image=object.getAVFile(WallInfoUpload.IMAGE);
+		mImageURL=image.getUrl();
+		mUserID=user.getObjectId();
+		AVFile userImage=user.getAVFile(UserInfo.USER_IMG);
+		//mUserImageURL=userImage.getUrl();
+		mUserName=user.getUsername();
+		Log.v("mUserImageURL", userImage.getUrl());
+		mUserImageURL=userImage.getUrl();
+		
+		Log.v("mUserImageURL", mUserImageURL);
+		mSupportCount=object.getInt(WallInfoUpload.SUPPORT);
+		mCommentCount=object.getInt(WallInfoUpload.COMMENT);
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		mWallCreateTime=df.format(object.getCreatedAt());
+		computeDistance();
+	}
 	public WallInfoDownload(String wallContent, String imageURL, String userID){
 		mWallContent=wallContent;
 		mImageURL=imageURL;
 		mUserID=userID;
 	}
+	/**
+	 * 
+	 * @param wallID
+	 * @param wallContent
+	 * @param latitude
+	 * @param longitude
+	 * @param imageURL
+	 * @param userID
+	 * @param userName
+	 * @param userImageURL
+	 * @param supportCount
+	 * @param commentCount
+	 */
 	public WallInfoDownload(String wallID, String wallContent, double latitude,
 			double longitude, String imageURL, String userID,
-			int supportCount, int commentCount) {
+			String userName, String userImageURL, int supportCount, int commentCount) {
 		super();
 		this.mWallID = wallID;
 		this.mWallContent = wallContent;
@@ -51,10 +101,55 @@ public class WallInfoDownload implements Serializable {
 		this.mLongitude = longitude;
 		this.mImageURL = imageURL;
 		this.mUserID = userID;
+		this.mUserName=userName;
+		this.mUserImageURL=userImageURL;
 		this.mSupportCount = supportCount;
 		this.mCommentCount = commentCount;
+		computeDistance();
+	}
+	/*public void downloadImage(){
+		new AsyncTask<Void, Void, Void>(){
+			@Override
+			protected Void doInBackground(Void... params) {
+				// TODO Auto-generated method stub
+				try {
+					Log.v("getImage", "begin");
+					Log.v("getImage", (String)mUserImageURL);
+					mUserBitmap = BitmapFactory.decodeStream(new URL(mUserImageURL).openStream());
+					mImageBitmap = BitmapFactory.decodeStream(new URL(mImageURL).openStream());
+					//mAdapter.notifyDataSetChanged();
+					Log.v("getImage", "done");
+					
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					Log.v("getImage", "error");
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					Log.v("getImage", "error");
+					e.printStackTrace();
+				}  
+				return null;
+			}
+			
+			
+		}.execute();
+	}
+	*/
+	
+	public Bitmap getUserBitmap() {
+		return mUserBitmap;
+	}
+	public void setUserBitmap(Bitmap userBitmap) {
+		mUserBitmap=userBitmap;
 	}
 
+	public Bitmap getImageBitmap() {
+		return mImageBitmap;
+	}
+	public void setImageBitmap(Bitmap imageBitmap) {
+		mImageBitmap=imageBitmap;
+	}
 	public String getWallID() {
 		return mWallID;
 	}
@@ -111,6 +206,23 @@ public class WallInfoDownload implements Serializable {
 	public void setUserID(String userID) {
 		this.mUserID = userID;
 	}
+	
+
+	public String getUserName() {
+		return mUserName;
+	}
+
+	public void setUserName(String userName) {
+		this.mUserName = userName;
+	}
+
+	public String getUserImageURL() {
+		return mUserImageURL;
+	}
+
+	public void setUserImageURL(String userImageURL) {
+		this.mUserImageURL = userImageURL;
+	}
 
 	public int getSupportCount() {
 		return mSupportCount;
@@ -128,19 +240,17 @@ public class WallInfoDownload implements Serializable {
 		this.mCommentCount = commentCount;
 	}
 	
-	public void computeDistance(double latitude,double longitude){
-		
+	public void computeDistance(){
+		mDistance=GetLocation.getDistance(mLatitude, mLongitude);
 	}
 	public double getDistance(){
 		return this.mDistance;
 	}
-
-
-	public long getmWallCreateTime() {
+	public String getmWallCreateTime() {
 		return mWallCreateTime;
 	}
 	
-	public void setWallCreateTime(long wallCreateTime) {
+	public void setWallCreateTime(String wallCreateTime) {
 		this.mWallCreateTime = wallCreateTime;
 	}
 	public ArrayList<WallCommentDownload> getWallComment(){
@@ -152,12 +262,5 @@ public class WallInfoDownload implements Serializable {
 		}else{
 			mCommentList.addAll(wallComment);
 		}
-	}
-	public void getAVObject(){
-		AVObject avObject=new AVObject("WallInfo");
-		avObject.put("content", mWallContent);
-		avObject.put("latitude", mLatitude);
-		avObject.put("longitude", mLongitude);
-		avObject.put("userID", mUserID);
 	}
 }

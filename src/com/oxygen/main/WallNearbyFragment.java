@@ -188,18 +188,13 @@ public class WallNearbyFragment extends Fragment {
 		}
 
 		private void bindView(int position, View view) {
-			Log.v(null, "bindView");
 			TextView distance = ((TextView) view.findViewById(R.id.distance));
-			Log.v("Distance", String.valueOf(mData.get(position).getDistance()));
 			distance.setText(String.valueOf(mData.get(position).getDistance()));
-			Log.v(null, "distance");
-			LinearLayout support = (LinearLayout) view.findViewById(R.id.support);
-			
+			LinearLayout support = (LinearLayout) view.findViewById(R.id.support_linear);
 			support.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Log.v("Suport", "click");
 				}
 			});
 			view.setTag(position);

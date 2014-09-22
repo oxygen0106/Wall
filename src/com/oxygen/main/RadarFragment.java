@@ -335,10 +335,10 @@ public class RadarFragment extends Fragment {
 		// 1000));//天安门坐标
 		// aroundWalls.add(new WallInfo(1, 007, new LatLng(29.536881,
 		// 106.611048), 1000));//信科坐标
-		aroundWalls.add(new WallInfoDownload("1", "", 29.533881, 106.611048,"","0",0,0));
+		/*aroundWalls.add(new WallInfoDownload("1", "", 29.533881, 106.611048,"","0",0,0));
 		aroundWalls.add(new WallInfoDownload("1", "", 29.539881, 106.611048,"","0",0,0));
 		aroundWalls.add(new WallInfoDownload("3", "", 29.536881, 106.608048,"","0",0,0));
-		aroundWalls.add(new WallInfoDownload("4", "", 29.536881, 106.614048,"","0",0,0));
+		aroundWalls.add(new WallInfoDownload("4", "", 29.536881, 106.614048,"","0",0,0));*/
 	}
 
 	/**

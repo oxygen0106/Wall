@@ -186,7 +186,7 @@ public class MySettingActivity extends Activity {
 				}
 				if (arg3 == 1) {
 					Intent intent = new Intent(MySettingActivity.this,
-							MyAbout.class);
+							MyAboutActivity.class);
 					startActivity(intent);
 				}
 			}

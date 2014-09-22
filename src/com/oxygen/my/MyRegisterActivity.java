@@ -46,12 +46,16 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MyRegisterActivity extends Activity implements OnClickListener{
+	
+	private TextView titleText; 
+	private ImageView backBtn;
 	
 	private String userID;
 	private String userName;
@@ -61,8 +65,6 @@ public class MyRegisterActivity extends Activity implements OnClickListener{
 	private String IMEI;
 	private String userImage;
 	private String userNote;
-	
-	private TextView titleText;
 	
 	private EditText userNameText;
 	private EditText passWordText;
@@ -78,10 +80,12 @@ public class MyRegisterActivity extends Activity implements OnClickListener{
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		this.setContentView(R.layout.my_register);
 		this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-				R.layout.my_info_title_bar);
+				R.layout.my_setting_title_bar);
 		
-		titleText = (TextView) findViewById(R.id.my_info_title_tv);
-		titleText.setText("注册");// 设置TitleBar的TextView
+		titleText = (TextView)findViewById(R.id.my_setting_title_tv);
+		backBtn = (ImageView)findViewById(R.id.my_setting_title_bar_back_btn);
+		titleText.setText("注册");
+		setBackBtnListener();
 		
 		userNameText = (EditText)findViewById(R.id.my_register_username);
 		passWordText = (EditText)findViewById(R.id.my_register_password);
@@ -292,4 +296,16 @@ public class MyRegisterActivity extends Activity implements OnClickListener{
 		window.setAttributes(lp);
 		progressDialog.show();
 	}
+	
+	private void setBackBtnListener(){
+		backBtn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MyRegisterActivity.this.finish();
+			}
+		});
+	}
+	
 }

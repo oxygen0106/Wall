@@ -1,7 +1,12 @@
 package com.oxygen.wall;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
 import com.oxygen.data.WallCommentDownload;
 import com.oxygen.data.WallInfoDownload;
 import com.oxygen.main.MainActivity;
@@ -14,29 +19,37 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.Toast;
 
 public class WallCommentActivity extends Activity{
 	
-	private ListView mListView;
+	
+	private WallCommentListView mListView;
 	private ItemAdapter mAdapter;
 	private WallInfoDownload mWallData;
 	private ArrayList<WallCommentDownload> mCommentData;
+	private ClickListener mClickListener;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -47,17 +60,62 @@ public class WallCommentActivity extends Activity{
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
 				R.layout.wall_comment_title_bar);// 加载自定义标题栏
 		Log.v(null, "获取Bundle");
+		
+		
 		Bundle b=getIntent().getExtras();
 		mWallData=(WallInfoDownload)b.get("Info");
 		Log.v(null, "绑定数据");
 	
+		mClickListener=new ClickListener();
 		mCommentData=new ArrayList<WallCommentDownload>();
 		addComment();
 		mAdapter = new ItemAdapter(this,R.layout.wall_comment_item);
-		mListView = (ListView)findViewById(R.id.comment_list);
+		mListView = (WallCommentListView)findViewById(R.id.comment_list);
 		mListView.setAdapter(mAdapter);
+		
+		mListView.setonRefreshListener(new WallCommentListView.OnRefreshListener() {
+			public void onIncrease(){
+				new AsyncTask<Void, Void, Void>() {
+					protected Void doInBackground(Void... params) {
+						try {
+							Thread.sleep(10000);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						addComment();
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void result) {
+						//mListView.onRefreshComplete();
+						mAdapter.notifyDataSetChanged();
+						mListView.changeIncreaseFlag();
+					}
+
+				}.execute();
+			}
+		});
 	}
+	
 	public void addComment(){
+		/*String wallID=mWallData.getWallID();
+		AVQuery<AVObject> query= new AVQuery<AVObject>("WallCommentInfo");
+		query.whereEqualTo("wallID", wallID);
+		query.orderByAscending("createdAt");
+		query.findInBackground(new FindCallback<AVObject>() {
+			@Override
+			public void done(List<AVObject> arg0, AVException arg1) {
+				// TODO Auto-generated method stub
+				if(arg1==null){
+					
+				}else{
+					
+				}
+			}
+		});
+		*/
+		
 		WallCommentDownload w=new WallCommentDownload();
 		mCommentData.add(w);
 		w=new WallCommentDownload();
@@ -88,15 +146,6 @@ public class WallCommentActivity extends Activity{
 	public void clickBack(View v){
 		this.finish();
 	}
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		
-		 MenuInflater inflater = getMenuInflater();  
-		 inflater.inflate(R.menu.main_activity, menu);  
-		 return true;  
-	}*/
-	
 	
 	private class ItemAdapter extends BaseAdapter{
 		
@@ -137,7 +186,12 @@ public class WallCommentActivity extends Activity{
 			if(position==0){
 				v=mInflater.inflate(R.layout.wall_list_item, null);
 				TextView t=(TextView)v.findViewById(R.id.distance);
-				t.setText(String.valueOf(mWallData.getDistance()));
+				LinearLayout comment=(LinearLayout)v.findViewById(R.id.comment_linear);
+				comment.setOnClickListener(mClickListener);
+				LinearLayout share=(LinearLayout)v.findViewById(R.id.share_linear);
+				share.setOnClickListener(mClickListener);
+				LinearLayout support=(LinearLayout)v.findViewById(R.id.support_linear);
+				support.setOnClickListener(mClickListener);
 			}else {
 				Log.v(null, "position!=0");
 				Log.v(null, convertView.toString());
@@ -154,15 +208,10 @@ public class WallCommentActivity extends Activity{
 			return v;
 		}
 		private void bindView(int position, View view) {
-			Log.v(null, "WallCommentListbindView");
 			TextView commenterName = ((TextView) view.findViewById(R.id.commenter_name));
 			commenterName.setText(mCommentData.get(position).getCommenterName());
-			//Log.v(null, mCommentData.get(position).getCommenterName());
-			Log.v(null, "WallCommentListbindView1");
 			TextView commentRank = (TextView) view.findViewById(R.id.comment_rank);
-			Log.v(null, "WallCommentListbindView2");
 			commentRank.setText(String.valueOf(position));
-			Log.v(null, "WallCommentListbindView3");
 			//添加头像
 			//ImageView commenterImage = ((ImageView) view.findViewById(R.id.commenterImage));
 			TextView commentContent = (TextView) view.findViewById(R.id.comment_content);
@@ -178,5 +227,22 @@ public class WallCommentActivity extends Activity{
 				}
 			});*/
 		}
+	}
+	private class ClickListener implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			switch(v.getId()){
+			case R.id.share_linear:
+				break;
+			case R.id.support_linear:
+				break;
+			case R.id.comment_linear:
+				Toast.makeText(getApplicationContext(), "Comment", 1000).show();
+				break;
+			}
+		}
+		
 	}
 }

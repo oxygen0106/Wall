@@ -14,6 +14,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.LogUtil.log;
@@ -32,25 +33,24 @@ public class WallInfoUpload {
 	private int mSupportCount;
 	private int mCommentCount;
 
-	private static final String CONTENT = "content";
-	private static final String USERID = "userID";
-	private static final String IMAGE = "image";
-	private static final String LATITUDE = "latitude";
-	private static final String LONGITUDE = "longitude";
-	private static final String IMAGEURL = "imageURL";
-	private static final String SUPPORT = "supportCount";
-	private static final String COMMENT = "commentCount";
+	public static final String CONTENT = "content";
+	public static final String USER = "user";
+	public static final String IMAGE = "image";
+	public static final String LATITUDE = "latitude";
+	public static final String LONGITUDE = "longitude";
+	public static final String IMAGEURL = "imageURL";
+	public static final String SUPPORT = "supportCount";
+	public static final String COMMENT = "commentCount";
 
 	private AVObject avObject;
 	private AVFile avFile;
 	private Context mContext;
 
 	public WallInfoUpload(String wallContent, String imageURL,
-			final String userID, Context context) {
+			Context context) {
 		if (GetLocation.isLocationDone()) {
 			mWallContent = wallContent;
 			mImageURL = imageURL;
-			mUserID = userID;
 			mContext = context;
 			try {
 				uploadeData();
@@ -68,10 +68,11 @@ public class WallInfoUpload {
 
 	private void uploadeData() throws FileNotFoundException, IOException {
 		avObject = new AVObject("WallInfo");
+		AVUser user=AVUser.getCurrentUser();
+		avObject.put("user", user);
 		avFile = AVFile.withAbsoluteLocalPath("image.png", mImageURL);
 		avObject.put(IMAGE, avFile);
 		avObject.put(CONTENT, mWallContent);
-		avObject.put(USERID, mUserID);
 		avObject.put(LATITUDE, GetLocation.mCurrentLantitude);
 		avObject.put(LONGITUDE, GetLocation.mCurrentLongitude);
 		avObject.put(SUPPORT, 0);
@@ -81,10 +82,14 @@ public class WallInfoUpload {
 			public void done(AVException e) {
 				if (e == null) {
 					// 保存成功
+					GetLocation getLocation = new GetLocation();
+					getLocation.getAddress();//上传地址
+					
 					Log.v("publish", "保存成功");
 					Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
 					AVQuery<AVObject> query = new AVQuery<AVObject>("WallInfo");
-					query.whereEqualTo(USERID, mUserID);
+					AVUser user=AVUser.getCurrentUser();
+					query.whereEqualTo(USER, user);
 					query.orderByDescending("createdAt");
 					query.getFirstInBackground(new GetCallback<AVObject>() {
 						@Override
@@ -94,8 +99,6 @@ public class WallInfoUpload {
 								String objectId = arg0.getObjectId();
 								Log.v("publish",objectId);	
 								objectID=objectId;
-											
-								
 								new AsyncTask<Void, Void, Void>() {
 									protected Void doInBackground(Void... params) {
 										try {

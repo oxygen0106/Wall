@@ -1,12 +1,27 @@
 package com.oxygen.main;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.callback.Callback;
+
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVRelation;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.GetDataCallback;
+import com.oxygen.data.UserInfo;
 import com.oxygen.data.WallInfoDownload;
+import com.oxygen.data.WallInfoUpload;
 import com.oxygen.wall.R;
 import com.oxygen.wall.WallCommentActivity;
 import com.oxygen.wall.WallListView;
@@ -14,6 +29,8 @@ import com.oxygen.wall.WallListView;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -77,7 +94,7 @@ public class WallSquareFragment extends Fragment {
 	}
 	private void init(){
 		
-		mData = getData();
+		mData = new ArrayList<WallInfoDownload>();
 		mAdapter = new ItemAdapter(this.getActivity(), R.layout.wall_list_item);
 		//listview.setOnScrollListener(this);
 		mListView.setAdapter(mAdapter);
@@ -86,11 +103,10 @@ public class WallSquareFragment extends Fragment {
 				new AsyncTask<Void, Void, Void>() {
 					protected Void doInBackground(Void... params) {
 						try {
-							Thread.sleep(1000);
+							//getData();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						mData.addAll(getData());
 						return null;
 					}
 
@@ -107,11 +123,11 @@ public class WallSquareFragment extends Fragment {
 				new AsyncTask<Void, Void, Void>() {
 					protected Void doInBackground(Void... params) {
 						try {
-							Thread.sleep(10000);
+							getData();
+							
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						mData.addAll(getData());
 						return null;
 					}
 
@@ -127,16 +143,90 @@ public class WallSquareFragment extends Fragment {
 		});
 	}
 	private ArrayList<WallInfoDownload> getData() {
-		ArrayList<WallInfoDownload> list = new ArrayList<WallInfoDownload>();
+		final ArrayList<WallInfoDownload> list = new ArrayList<WallInfoDownload>();
+
+		/*user.findInBackground(new FindCallback() {
+		});*/
+		//AVUser user=new AVUser();
+		AVQuery<AVObject> query = new AVQuery<AVObject>("WallInfo");
+		//query.include("User.username");
+		//query.include("User.userImage");
+		query.include(WallInfoUpload.USER);
+		query.addDescendingOrder("createdAt");
+		query.addDescendingOrder("supportCount");
 		
-		WallInfoDownload wallInfo=new WallInfoDownload();
+		query.setCachePolicy(AVQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		query.findInBackground(new FindCallback<AVObject>(){
+
+			@Override
+			public void done(List<AVObject> arg0, AVException arg1) {
+				// TODO Auto-generated method stub
+				if(arg1==null){
+					if(arg0!=null&&arg0.size()>0){
+						AVObject object;
+						for(int i=0;i<arg0.size();i++){
+							object=arg0.get(i);
+							AVUser user=(AVUser)object.get(WallInfoUpload.USER);
+							String name=user.getUsername();
+							Log.v("query name", name);
+							WallInfoDownload wid=new WallInfoDownload(object,user);
+							mData.add(wid);
+							new AsyncTask<Object, Void, Void>(){
+								@Override
+								protected Void doInBackground(Object... params) {
+									// TODO Auto-generated method stub
+									try {
+										WallInfoDownload wid=(WallInfoDownload)params[0];
+										Log.v("getImage", "beginaaa");
+				
+											wid.setUserBitmap(BitmapFactory.decodeStream(new URL(wid.getUserImageURL()).openStream()));
+										//wid.setImageBitmap(BitmapFactory.decodeStream(new URL(wid.getImageURL()).openStream()));
+										//mAdapter.notifyDataSetChanged();
+											Log.v("getImage", "done");
+									
+									} catch (MalformedURLException e) {
+										// TODO Auto-generated catch block
+										Log.v("getImage", "error");
+										e.printStackTrace();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										Log.v("getImage", "error");
+										e.printStackTrace();
+									}  
+									return null;
+								}
+								@Override
+								protected void onPostExecute(Void result) {
+									// TODO Auto-generated method stub
+									super.onPostExecute(result);
+									mAdapter.notifyDataSetChanged();
+								}
+							}.execute(wid);
+						}
+					}else
+						Log.v("query", "zero");
+				}else{
+					Log.v("query", "error");
+					Log.v("query", arg1.getMessage());
+				}
+			}
+			
+		});
+		
+		
+		
+		/*WallInfoDownload wallInfo=new WallInfoDownload();
 		list.add(wallInfo);
 		
 		wallInfo=new WallInfoDownload();
 		list.add(wallInfo);
 		
 		wallInfo=new WallInfoDownload();
-		list.add(wallInfo);
+		list.add(wallInfo);*/
+		
+		
+		
+		
 		
 		return list;
 	}
@@ -189,11 +279,24 @@ public class WallSquareFragment extends Fragment {
 
 		private void bindView(int position, View view) {
 			Log.v(null, "bindView");
+			WallInfoDownload wid=mData.get(position);
+			TextView username = (TextView) view.findViewById(R.id.authorName);
+			username.setText(wid.getUserName());
+			ImageView image = (ImageView)view.findViewById(R.id.authorImage);
+			if(wid.getUserBitmap()!=null)
+				image.setImageBitmap(wid.getUserBitmap());
+			Log.v("userName",wid.getUserName());
+			TextView posttime = (TextView) view.findViewById(R.id.post_time);
+			posttime.setText(wid.getmWallCreateTime());
 			TextView distance = ((TextView) view.findViewById(R.id.distance));
-			Log.v("Distance", String.valueOf(mData.get(position).getDistance()));
-			distance.setText(String.valueOf(mData.get(position).getDistance()));
-			Log.v(null, "distance");
-			LinearLayout  support = (LinearLayout) view.findViewById(R.id.support);
+			distance.setText(String.valueOf(wid.getDistance()));
+			TextView content = (TextView) view.findViewById(R.id.content);
+			content.setText(wid.getWallContent());
+			/*TextView username = (TextView) view.findViewById(R.id.authorName);
+			username.setText(wid.getUserName());*/
+			
+			
+			LinearLayout  support = (LinearLayout) view.findViewById(R.id.support_linear);
 			
 			support.setOnClickListener(new View.OnClickListener() {
 				@Override

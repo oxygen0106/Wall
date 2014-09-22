@@ -148,7 +148,7 @@ public class MyRoundImageTool {
 		canvas.drawCircle(0, 0, radius - 2, circlePaint);// 绘制白圈区域
 		
 		try {//保存到sdcard
-			output.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(new File(path)));
+			output.compress(Bitmap.CompressFormat.PNG, 1, new FileOutputStream(new File(path)));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

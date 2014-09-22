@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="horizontal" 
+    android:background="#00ffffff">
 
     
     <TextView
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@drawable/my_timeline_lv_item_left_0"
-        android:text="null" />
+        android:text="null" 
+        android:textColor="#b0000000"/>
     
     
     
@@ -20,7 +22,8 @@
 
     <RelativeLayout
         android:layout_width="10dip"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:background="#00000000" >
 
         <View
             android:layout_width="1px"
@@ -41,7 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="left|center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#00000000">
         
         <TextView
         android:id="@+id/my_timeline_lv_item_date_tv"

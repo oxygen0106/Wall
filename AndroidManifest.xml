@@ -44,82 +44,79 @@
 
         <activity
             android:name="com.oxygen.main.MainActivity"
-            android:theme="@style/myTheme"
             android:label="@string/app_name"
-             >
+            android:theme="@style/myTheme" >
         </activity>
-        
         <activity
             android:name="com.oxygen.main.LoadingActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:label="@string/app_name"
-             >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="com.oxygen.wall.WallCommentActivity"
-            android:theme="@style/myTheme"
-             >
+            android:theme="@style/myTheme" >
         </activity>
-        
-         <activity
+        <activity
             android:name="com.oxygen.my.MyTimeLineActivity"
-            android:theme="@style/myTheme"
-             >
+            android:theme="@style/myTheme" >
+        </activity>
+        <activity
+            android:name="com.oxygen.my.MyUserInfoActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        <activity
+            android:name="com.oxygen.my.MySettingActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        <activity
+            android:name="com.oxygen.my.MyInfoActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        <activity
+            android:name="com.oxygen.my.MyAboutActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        <activity
+            android:name="com.oxygen.my.MyUserGuide"
+            android:theme="@style/myTheme" >
+        </activity>
+        <activity
+            android:name="com.oxygen.my.MyLoginActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        <activity
+            android:name="com.oxygen.my.MyRegisterActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        <activity
+            android:name="com.oxygen.my.MyWallInfoActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.oxygen.my.MyMessageActivity"
+            android:theme="@style/myTheme" >
         </activity>
         
          <activity
-            android:name="com.oxygen.my.UserInfoActivity"
-            android:theme="@style/myTheme"
-             >
+            android:name="com.oxygen.my.MyZanActivity"
+            android:theme="@style/myTheme" >
         </activity>
         
           <activity
-            android:name="com.oxygen.my.MySettingActivity"
-            android:theme="@style/myTheme"
-             >
+            android:name="com.oxygen.my.MyCommentActivity"
+            android:theme="@style/myTheme" >
         </activity>
         
-          <activity
-            android:name="com.oxygen.my.MyInfoActivity"
-            android:theme="@style/myTheme"
-             >
-        </activity>
-        
-          <activity
-            android:name="com.oxygen.my.MyAbout"
-            android:theme="@style/myTheme"
-             >
-        </activity>
-        
-          <activity
-            android:name="com.oxygen.my.MyUserGuide"
-            android:theme="@style/myTheme"
-             >
-        </activity>
-        
-          <activity
-            android:name="com.oxygen.my.MyLoginActivity"
-            android:theme="@style/myTheme"
-             >
-        </activity>
-        
-           <activity
-            android:name="com.oxygen.my.MyRegisterActivity"
-            android:theme="@style/myTheme"
-             >
-        </activity>
-        
-          <activity
+        <activity
             android:name="com.oxygen.ar.ARWallCreateActivity"
-            android:windowSoftInputMode="adjustResize"
             android:theme="@style/myTheme"
-             >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
 
         <!-- 定位服务组件 -->
@@ -133,7 +130,6 @@
                 </action>
             </intent-filter>
         </service>
-        
     </application>
 
 </manifest>

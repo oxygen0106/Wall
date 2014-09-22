@@ -31,6 +31,7 @@
 				style="?android:attr/progressBarStyleSmall"
 				android:layout_gravity="center" 
 				android:id="@+id/head_progressBar"
+				android:indeterminateDrawable="@anim/progressbar_anim"
 				android:visibility="gone" />
 		</FrameLayout>
 

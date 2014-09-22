@@ -12,7 +12,8 @@
 		<ProgressBar android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
 				style="?android:attr/progressBarStyleSmall"
-				android:id="@+id/foot_progressBar"/>
+				android:id="@+id/foot_progressBar"
+				android:indeterminateDrawable="@anim/progressbar_anim"/>
 		<TextView android:layout_width="wrap_content"
 				android:layout_height="wrap_content" 
 				android:text="上拉加载更多"
