@@ -1,56 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
+    android:id="@+id/pop_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/pop_layout"
+        android:id="@+id/ar_pop_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="#A0000000"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/ar_pop_btn_wall"
-            android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="20dip"
-            android:background="@drawable/my_pop_btn_selector"
-            android:text="创建Wall"
-            android:textColor="#D1EEEE"
-            android:textSize="20sp" />
-        <Button
-            android:id="@+id/ar_pop_btn_camera"
-            android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="20dip"
-            android:background="@drawable/my_pop_btn_selector"
-            android:text="AR拍照"
-            android:textColor="#D1EEEE"
-            android:textSize="20sp" />
+        <LinearLayout
+            android:id="@+id/ar_pop_create_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ar_pop_create"
+                android:tag="Camera" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="新建留言板"
+                android:textColor="#ffffff" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/ar_pop_btn_cancel"
-            android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:layout_marginBottom="15dip"
-            android:layout_marginLeft="20dip"
-            android:layout_marginRight="20dip"
-            android:layout_marginTop="25dip"
-            android:background="@drawable/my_pop_btn_selector"
-            android:text="取  消"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+        <LinearLayout
+            android:id="@+id/ar_pop_scan_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ar_pop_sacn"
+                android:tag="Camera" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="AR识别"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ar_pop_location_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ar_pop_location"
+                android:tag="Camera" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="附近"
+                android:textColor="#ffffff" />
+        </LinearLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff" >
+
+        <ImageView
+            android:id="@+id/ar_pop_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ar_pop_cancel" />
+    </RelativeLayout>
 
 </RelativeLayout>

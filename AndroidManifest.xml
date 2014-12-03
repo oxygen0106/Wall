@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -31,11 +32,16 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 允许应用读取低级别的系统日志文件 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
+    
+    <uses-permission android:name="android.permission.VIBRATE" />  <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />        <!-- 使用照相机权限 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" />   <!-- 自动聚焦权限 -->
 
     <application
         android:name="com.oxygen.server.MainApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
         <meta-data
@@ -44,6 +50,12 @@
 
         <activity
             android:name="com.oxygen.main.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/myTheme" >
+        </activity>
+        
+        <activity
+            android:name="com.oxygen.main.WelcomeActivity"
             android:label="@string/app_name"
             android:theme="@style/myTheme" >
         </activity>
@@ -82,7 +94,7 @@
             android:theme="@style/myTheme" >
         </activity>
         <activity
-            android:name="com.oxygen.my.MyUserGuide"
+            android:name="com.oxygen.my.MyUserGuideActivity"
             android:theme="@style/myTheme" >
         </activity>
         <activity
@@ -113,10 +125,77 @@
             android:theme="@style/myTheme" >
         </activity>
         
+          <activity
+            android:name="com.oxygen.my.MyFeedbackActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        
+          <activity
+            android:name="com.oxygen.explore.ExploreLaunchPlaneActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+          
+        <activity
+            android:name="com.oxygen.explore.ExploreLaunchResultActivity"
+            android:theme="@style/myTheme" >
+        </activity>  
+        
+         <activity
+            android:name="com.oxygen.explore.ExplorePickPlaneActivity"
+            android:theme="@style/myTheme" >
+        </activity> 
+        
+         <activity
+            android:name="com.oxygen.explore.ExploreAttendanceActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        
+         <activity
+            android:name="com.oxygen.explore.ExploreAttendanceQRActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        
+           <activity
+            android:name="com.oxygen.explore.ExploreSignUpActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        
+         <activity
+            android:name="com.oxygen.explore.ExploreSignUpResultActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        
+         <activity
+            android:name="com.oxygen.explore.ExploreSignUPDataActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        
+         <activity
+            android:name="com.oxygen.explore.ExploreSignUPDataDetailActivity"
+            android:theme="@style/myTheme" >
+        </activity>
+        
         <activity
             android:name="com.oxygen.ar.ARWallCreateActivity"
             android:theme="@style/myTheme"
             android:windowSoftInputMode="adjustResize" >
+        </activity>
+        
+        <activity 
+            android:name="com.oxygen.ar.cloudrecognition.CloudReco"
+            >
+        </activity>
+        
+        <activity 
+            android:name="com.oxygen.image.ImagePagerActivity"
+            android:theme="@style/myTheme"
+          >
+        </activity>
+        
+        <activity 
+            android:name="com.oxygen.wall.WallCommentCreate"
+            android:theme="@style/myTheme"
+          >
         </activity>
 
         <!-- 定位服务组件 -->

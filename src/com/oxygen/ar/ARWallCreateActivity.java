@@ -34,8 +34,8 @@ import android.widget.TextView;
 
 public class ARWallCreateActivity extends Activity {
 	
-	private TextView mPublish;
-	private TextView mBack;
+	private ImageView mPublish;
+	//private TextView mBack;
 	private EditText mContent;
 	private ImageView mPicture;
 	private ImageView mCamera;
@@ -58,14 +58,14 @@ public class ARWallCreateActivity extends Activity {
 		createDir();
 		mClickListener=new ClickListener();
 		
-		mPublish=(TextView)findViewById(R.id.publish);
+		mPublish=(ImageView)findViewById(R.id.publish);
 		mPicture=(ImageView)findViewById(R.id.picture);
 		mContent=(EditText)findViewById(R.id.wall_content);
 		mCamera=(ImageView)findViewById(R.id.camera);
 		mCamera.setOnClickListener(mClickListener);
 		mPublish.setOnClickListener(mClickListener);
-		mBack=(TextView)findViewById(R.id.back);
-		mBack.setOnClickListener(mClickListener);
+		//mBack=(TextView)findViewById(R.id.back);
+		//mBack.setOnClickListener(mClickListener);
 		hasPicture=false;
 	}
 	
@@ -112,7 +112,9 @@ public class ARWallCreateActivity extends Activity {
 		}
 	}
 	
-	
+	public void clickBack(View v){
+		this.finish();
+	}
 	private void compressImage(Bitmap image) {  
 		  
         ByteArrayOutputStream baos = new ByteArrayOutputStream();  
@@ -147,6 +149,9 @@ public class ARWallCreateActivity extends Activity {
 		mImageUri = Uri
 				.fromFile(new File(mFile.getAbsoluteFile(), "wallImage.png"));
 	}
+	public void clickBack(){
+		ARWallCreateActivity.this.finish();
+	}
 	private class ClickListener implements OnClickListener{
 
 		@Override
@@ -164,20 +169,9 @@ public class ARWallCreateActivity extends Activity {
 					if(mContent.getText().toString().equals("")&&!hasPicture){
 						
 					}else{
-						Log.v("publish", "content不为空");
-						SharedPreferences sp=getSharedPreferences("user", MODE_PRIVATE);
-						String userID=sp.getString("userID", null);
-						userID="1111111111111";
-						//if(userID!=null){
-							Log.v("publish", "userID不为空");
-							WallInfoUpload wallInfoUpload=new WallInfoUpload(mContent.getText().toString(),mImageUri.getPath(),getApplicationContext());
-						
-						//}
-					ARWallCreateActivity.this.finish();
+						WallInfoUpload wallInfoUpload=new WallInfoUpload(mContent.getText().toString(),mImageUri.getPath(),getApplicationContext());
+						ARWallCreateActivity.this.finish();
 					}		
-					break;
-				case R.id.back:
-					ARWallCreateActivity.this.finish();
 					break;
 			}
 		}

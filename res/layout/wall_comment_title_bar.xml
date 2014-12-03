@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
-    
-    <ImageView 
+    android:layout_height="match_parent" >
+
+    <ImageView
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/return_selector"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="10dip"
+        android:background="@drawable/return_selector"
         android:contentDescription="返回"
-        android:onClick="clickBack"
-        />
+        android:onClick="clickBack" />
+	
+    <ImageView 
+        android:id="@+id/ar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text=""
+    	android:textSize="20sp"
+        android:src="@drawable/wall_comment_ar_catch"/>
+    
+    <!-- <TextView
+        android:id="@+id/ar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/back"
+    	android:text="捕捉"
+    	android:textSize="20sp"
+        android:layout_marginRight="10dip" >
+    </TextView> -->
 
-</LinearLayout>
+</RelativeLayout>

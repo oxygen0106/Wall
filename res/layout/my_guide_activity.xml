@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_end_bg"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:src="@drawable/icon" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/explore_launch_edittext_bg"
+        android:gravity="top|left"
+        android:padding="5dip"
+        android:singleLine="false"
+        android:text="创建留言板：\n      点击主界面的“+”按钮，选择“创建留言板”，在创建界面写下你要发表的内容，然后点击相机按钮，拍摄下你的AR场景，选择提交，创建成功。"
+        android:textColor="#a0000000"
+        android:textSize="16sp" />
+    
+     <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/explore_launch_edittext_bg"
+        android:gravity="top|left"
+        android:padding="5dip"
+        android:singleLine="false"
+        android:text="评论留言板：  \n      评论的成功与否，要满足两个必要条件，即：\n1. 地理位置坐标上的同步；\n2. AR识别的场景和创建者所提交的场景关键帧相吻合。"
+        android:textColor="#a0000000"
+        android:textSize="16sp" />
+     
+     <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/explore_launch_edittext_bg"
+        android:gravity="top|left"
+        android:padding="5dip"
+        android:singleLine="false"
+        android:text="AR识别：  \n      留言板创建成功后，等待3-5分钟，服务器处理图像数据结束。点击主界面的“+”按钮，选择“AR识别”，启动AR扫描，将摄像头对准要识别的场景，待显示AR场景后，出现提示信息，即识别成功。"
+        android:textColor="#a0000000"
+        android:textSize="16sp" />
+
+</LinearLayout>

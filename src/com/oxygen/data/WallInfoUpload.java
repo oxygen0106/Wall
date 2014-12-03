@@ -83,7 +83,7 @@ public class WallInfoUpload {
 				if (e == null) {
 					// 保存成功
 					GetLocation getLocation = new GetLocation();
-					getLocation.getAddress();//上传地址
+					//getLocation.getAddress();//上传地址
 					
 					Log.v("publish", "保存成功");
 					Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();

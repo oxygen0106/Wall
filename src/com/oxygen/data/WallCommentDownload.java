@@ -1,21 +1,61 @@
 package com.oxygen.data;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import android.graphics.Bitmap;
+import android.util.Log;
+
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
+
 public class WallCommentDownload {
-	private long mCommentID;
+	private static final String TAG="WallCommentActivity";
+	
+	private String mCommentID;
 	private String mCommentContent;
 	private String mCommentCreateTime;
 	private String mCommenterName;
-	private String mCommenterImage;
-	private long mUserID;
+	private String mCommenterImageURL;
+	private String mCommenterID;
+	private Bitmap mCommenterImageBitmap;
+	private AVUser user;
+	
+	public WallCommentDownload(AVObject comment){
+		Log.v(TAG, "WallCommentDownload1");
+	
 
-	public long getCommentID() {
+		mCommentID=comment.getObjectId();
+
+		mCommentContent=comment.getString(WallCommentUpload.COMMENT);
+
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		mCommentCreateTime=df.format(comment.getCreatedAt());
+		user=(AVUser) comment.get(WallCommentUpload.USER);
+		mCommenterID=user.getString("objectId");
+		AVFile userImage=user.getAVFile(UserInfo.USER_IMG);
+		if(userImage!=null){
+			mCommenterImageURL=userImage.getUrl();
+		}else{
+			mCommenterImageURL = null;
+		}
+		if(user.getEmail()!=null){
+			mCommenterName=user.getUsername();
+		}else{
+			mCommenterName = "游客";
+		}
+
+	}
+	public String getCommentID() {
 		return mCommentID;
 	}
-
-	public void setCommentID(long commentID) {
-		this.mCommentID = commentID;
+	public String getCommenterID() {
+		return mCommenterID;
 	}
-
 	public String getCommentContent() {
 		return mCommentContent;
 	}
@@ -41,19 +81,12 @@ public class WallCommentDownload {
 	}
 
 	public String getCommenterImage() {
-		return mCommenterImage;
+		return mCommenterImageURL;
 	}
-
-	public void setCommenterImage(String commenterImage) {
-		this.mCommenterImage = commenterImage;
+	public Bitmap getCommenterImageBitmap(){
+		return mCommenterImageBitmap;
 	}
-
-	public long getUserID() {
-		return mUserID;
+	public void setCommenterImageBitmap(Bitmap b){
+		mCommenterImageBitmap = b;;
 	}
-
-	public void setUserID(long userID) {
-		this.mUserID = userID;
-	}
-
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#7EC0EE"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/my_about_dream" 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:background="#ffffff">
+        <ImageView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:src="@drawable/my_about_dream"/>
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="梦想是一定要有的\n               万一实现了呢"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:textStyle="italic"/>
+    </RelativeLayout>
+    
+    
+    
+    
+
+    
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		android:layout_below="@id/my_about_dream"
+		android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:gravity="top"
+        android:text="      该APP为《2014全国高校移动互联网应用开发创新大赛》参赛作品，感谢这次为这次比赛付出努力的主办方，评委老师以及工作人员。\n      感谢百度地图API，高通Vuforia云API，AVOS Cloud的技术支持。\n      如有任何疑问请联系我们。\n      联系方式：arwall@163.com" 
+        android:paddingTop="30dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:background="@drawable/my_about_tv_bg"/>
+    
+</RelativeLayout>

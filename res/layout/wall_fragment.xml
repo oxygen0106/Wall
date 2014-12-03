@@ -7,9 +7,10 @@
     <com.oxygen.wall.WallListView
         android:id="@+id/wall_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:divider="#00000000"
         android:scrollbarStyle="insideOverlay" >
     </com.oxygen.wall.WallListView>
+
 
 </LinearLayout>

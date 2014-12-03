@@ -17,11 +17,12 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <!-- 自定义标题栏 -->
+    <!-- 自定义标题栏背景颜色 -->
     <style name="CustomWindowTitleBackground">
         <item name="android:background">#32394A</item>
     </style>
 
+    <!-- 自定义标题栏主题 -->
     <style name="myTheme" parent="android:Theme">
         <item name="android:windowTitleSize">45dp</item>
         <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBackground</item>

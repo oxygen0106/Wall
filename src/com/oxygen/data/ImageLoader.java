@@ -10,6 +10,7 @@ import java.util.HashMap;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.ImageView;
 
 /**
 * @ClassName ImageLoader
@@ -26,7 +27,7 @@ public class ImageLoader {
             imageCache = new HashMap<String, SoftReference<Drawable>>();  
         }  
        
-        public Drawable loadDrawable(final String imageUrl, final ImageCallback imageCallback) {  
+        public Drawable loadDrawable(final String imageUrl, final ImageView imageView,final ImageCallback imageCallback) {  
             if (imageCache.containsKey(imageUrl)) {  
                 SoftReference<Drawable> softReference = imageCache.get(imageUrl);  
                 Drawable drawable = softReference.get();  
@@ -36,7 +37,7 @@ public class ImageLoader {
             }  
             final Handler handler = new Handler() {  
                 public void handleMessage(Message message) {  
-                    imageCallback.imageLoaded((Drawable) message.obj, imageUrl);  
+                    imageCallback.imageLoaded((Drawable) message.obj, imageView);  
                 }  
             };  
             new Thread() {  
@@ -67,7 +68,7 @@ public class ImageLoader {
        }  
        
         public interface ImageCallback {  
-            public void imageLoaded(Drawable imageDrawable, String imageUrl);  
+            public void imageLoaded(Drawable imageDrawable, ImageView imageView);  
         }  
  
 }  

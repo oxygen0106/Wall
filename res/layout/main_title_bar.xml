@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:background="#292F3D" >
 
     <TextView
         android:id="@+id/title_tv"
@@ -12,39 +13,63 @@
         android:text=""
         android:textColor="#ffffff"
         android:textSize="20sp" />
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:id="@+id/wall_tab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        >
-        <TextView 
+        android:background="@drawable/wall_titile_bar_layout_bg"
+         >
+
+        <TextView
             android:id="@+id/wall_square"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="1dp"
+            android:gravity="center"
+            android:background="@drawable/wall_titile_bar_tv_left_selector"
             android:text="广场"
-            android:textSize="20sp"
-                        />
-             <TextView 
+            android:textColor="#F5FFFA"
+            android:textSize="14sp" />
+		<View 
+		    android:layout_width="1px"
+		    android:layout_height="fill_parent"
+		    android:layout_marginTop="2px"
+		    android:layout_marginBottom="2px"
+		    android:background="#50808080"/>
+        <TextView
             android:id="@+id/wall_nearby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="2dp"
+            android:gravity="center"
+            android:background="@drawable/wall_titile_bar_tv_right_selector"
             android:text="附近"
-            android:textSize="20sp"
-                        />
-        
-        
+            android:textColor="#F5FFFA"
+            android:textSize="14sp" />
     </LinearLayout>
-	<ImageView 
-	    android:id="@+id/my_setting"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_centerInParent="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_marginRight="10dip" 
-	    android:src="@drawable/my_setting_selector"
-	    android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/my_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="10dip"
+        android:src="@drawable/my_setting_selector"
+        android:visibility="gone" />
     
+    <ImageView
+        android:id="@+id/radar_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dip"
+        android:src="@drawable/radar_location"
+        android:visibility="gone" />
+
 </RelativeLayout>

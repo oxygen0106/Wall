@@ -87,7 +87,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:src="@drawable/my_login_pwd" />
+                android:src="@drawable/my_login_mail" />
 
             <EditText
                 android:id="@+id/my_register_mail"
@@ -95,7 +95,7 @@
                 android:layout_height="fill_parent"
                 android:background="#ffffff"
                 android:hint="邮箱"
-                android:paddingLeft="5dp"
+                android:paddingLeft="4dp"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
@@ -109,7 +109,7 @@
         <Button
             android:id="@+id/my_register_btn"
             android:layout_width="fill_parent"
-            android:layout_height="40dip"
+            android:layout_height="50dip"
             android:layout_marginBottom="15dip"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="20dip"

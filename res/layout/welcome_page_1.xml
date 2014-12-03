@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_end_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/welcome_page_layout_bg"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="我们始终欣赏有一种风景叫文明"
+            android:textColor="#a0000000"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp" >
+
+        <LinearLayout
+            android:id="@+id/welcome_dcyy_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:padding="5dp"
+            android:background="@drawable/welcome_page_layout_bg">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/welcome_dcyy_1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/welcome_dcyy_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/welcome_dcyy_1"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical" 
+             android:padding="5dp"
+            android:background="@drawable/welcome_page_layout_bg">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/welcome_dcyy_2" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

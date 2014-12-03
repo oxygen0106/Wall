@@ -82,20 +82,19 @@ public class MyMessageAdapter extends BaseAdapter {
 			myImage = (ImageView)convertView.findViewById(R.id.my_message_my_image);
 			myImage.setTag(imageUrl);
 				
-			Drawable cachedImage = imageLoader.loadDrawable(imageUrl, new ImageCallback() {  
-				public void imageLoaded(Drawable imageDrawable, String imageUrl) {  
-					ImageView imageViewByTag = (ImageView) listView.findViewWithTag(imageUrl);  
-	                if (imageViewByTag != null) {  
-	                	imageViewByTag.setImageDrawable(imageDrawable);  
-	                 }  
-	            }  
-	        });
-				
-			if (cachedImage == null) {  
-				myImage.setImageResource(R.drawable.my_image_round);  
-	        }else{  
-	            myImage.setImageDrawable(cachedImage);  
-	        }
+			Drawable cachedImage = imageLoader.loadDrawable(imageUrl,myImage,
+					new ImageCallback() {
+						public void imageLoaded(Drawable imageDrawable,
+								ImageView imageView) {
+							imageView.setImageDrawable(imageDrawable);
+						}
+					});
+
+			if (cachedImage == null) {
+				myImage.setImageResource(R.drawable.my_image_round);
+			} else {
+				myImage.setImageDrawable(cachedImage);
+			}
 		}
 		return convertView;
 	}

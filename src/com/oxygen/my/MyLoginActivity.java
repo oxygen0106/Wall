@@ -9,8 +9,7 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.LogInCallback;
-import com.oxygen.ar.ARArcMenu;
-import com.oxygen.ar.ARArcMenu.OnMenuItemClickListener;
+
 import com.oxygen.data.UserInfo;
 import com.oxygen.main.LoadingActivity;
 import com.oxygen.main.MainActivity;
@@ -164,13 +163,14 @@ public class MyLoginActivity extends Activity implements OnClickListener{
 						progressDialog.dismiss();
 						Toast.makeText(MyLoginActivity.this, "登录成功", Toast.LENGTH_LONG).show();
 						startActivity(new Intent(MyLoginActivity.this, MainActivity.class));
+						MyLoginActivity.this.finish();
 					}else{
 						progressDialog.dismiss();
 						Toast.makeText(MyLoginActivity.this, "您输入的帐号或密码有误！", Toast.LENGTH_LONG).show();
 					}
 				}else{
 					progressDialog.dismiss();
-					Toast.makeText(MyLoginActivity.this, arg1.getMessage(), Toast.LENGTH_LONG).show();
+					Toast.makeText(MyLoginActivity.this, "网络异常", Toast.LENGTH_LONG).show();
 				}
 			}
 		});
@@ -191,7 +191,7 @@ public class MyLoginActivity extends Activity implements OnClickListener{
 	/**
 	* @param 
 	* @return void
-	* @Description 与服务器UserInfo用户数据同步  
+	* @Description 登录成功后与服务器UserInfo用户数据同步，由游客转为注册用户  
 	*/
 private void putDataToUserInfo(){
 	
@@ -199,7 +199,7 @@ private void putDataToUserInfo(){
 	query.whereEqualTo(UserInfo.USER_NAME, userName);
 	query.findInBackground(new FindCallback<AVObject>() {
 		public void done(List<AVObject> arg0, AVException arg1) {
-	        if (arg1 == null) {
+	        if (arg1 == null) {//服务器中存在该用户名
 	        	String UserInfoID = arg0.get(0).getObjectId();
 	        	AVQuery<AVObject> query = new AVQuery<AVObject>(UserInfo.USER_CLASS_NAME);
 	        	AVObject avobjectUserInfo;
@@ -219,7 +219,7 @@ private void putDataToUserInfo(){
 					});
 	        		
 	        } else {
-	        	Toast.makeText(MyLoginActivity.this, "arg1!=null", Toast.LENGTH_LONG).show();
+//	        	Toast.makeText(MyLoginActivity.this, "arg1!=null", Toast.LENGTH_LONG).show();
 	        	AVObject avobject = new AVObject(UserInfo.USER_CLASS_NAME);
 	    		avobject.put(UserInfo.USER_NAME, userName);
 	    		avobject.put(UserInfo.IMEI, IMEI);
@@ -266,36 +266,11 @@ private void putDataToUserInfo(){
 	/**
 	* @param 
 	* @return void
-	* @Description 临时在该页面测试弧形菜单按钮  
-	*/
-//	private void initArcButton() {
-//		arcMenu = (ARArcMenu) findViewById(R.id.id_arcmenu1);
-//
-//		ImageView people = new ImageView(this);
-//		people.setImageResource(R.drawable.composer_with);
-//		people.setTag("People");
-//		arcMenu.addView(people);
-//
-//		arcMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-//			@Override
-//			public void onClick(View view, int pos) {
-//				Toast.makeText(MyLoginActivity.this, pos + ":" + view.getTag(),
-//						Toast.LENGTH_SHORT).show();
-//			}
-//		});
-//	}
-	
-	/**
-	* @param 
-	* @return void
 	* @Description 判断返回键状态  
 	*/
 	private void changBackKey(){
-		SharedPreferences sp = MyLoginActivity.this.getSharedPreferences("user", Context.MODE_PRIVATE);
-//		String userName = sp.getString("userName", null);
-//		String imei = sp.getString("IMEI", null);
-		boolean status = sp.getBoolean("userStatus", true);
-		if(status){
+
+		if(isExit()){
 			backBtn.setVisibility(View.GONE);
 			QUIT_BACK = true;
 		}
@@ -309,7 +284,6 @@ private void putDataToUserInfo(){
                      mExitTime = System.currentTimeMillis();
 
              } else {
-            	 System.out.println("!!!!!退出应用");
             	 Toast.makeText(this, "退出应用", Toast.LENGTH_SHORT).show();
             	 android.os.Process.killProcess(android.os.Process.myPid());
                  System.exit(0);
@@ -318,5 +292,14 @@ private void putDataToUserInfo(){
      }
      return super.onKeyDown(keyCode, event);
 }
+	
+	private boolean isExit(){
+		Intent intent = getIntent();
+		if(intent.getBooleanExtra("isExit", false)==true){
+			return true;
+		}else{
+			return false;
+		}
+	}
     
 }

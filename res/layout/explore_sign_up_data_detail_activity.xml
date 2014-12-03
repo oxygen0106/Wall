@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#DEE7F4" >
+    
+	 <com.oxygen.wall.WallListView
+        android:id="@+id/explore_sign_up_data_detail_lv"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="#80808080"
+        android:dividerHeight="1px"
+        android:scrollbars="none" >
+    </com.oxygen.wall.WallListView>
+    
+</LinearLayout>

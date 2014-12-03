@@ -83,7 +83,7 @@ public class PostNewTarget implements TargetStatusListener, Runnable {
 		}
 		byte[] image = FileUtils.readFileToByteArray(imageFile);
 		requestBody.put("name", targetName); // Mandatory
-		requestBody.put("width", 320.0); // Mandatory
+		requestBody.put("width", 480.0); // Mandatory
 		requestBody.put("image", Base64.encodeBase64String(image)); // Mandatory
 		//requestBody.put("active_flag", 1); // Optional
 		//requestBody.put("application_metadata", Base64.encodeBase64String("Vuforia test metadata".getBytes())); // Optional

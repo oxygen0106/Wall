@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
@@ -20,7 +21,12 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.oxygen.data.UserInfo;
 import com.oxygen.data.WallInfoUpload;
+import com.oxygen.image.LoaderListener;
 import com.oxygen.wall.R;
 
 import android.app.Activity;
@@ -54,7 +60,7 @@ import android.widget.Toast;
  */
 public class MyTimeLineActivity extends Activity {
 
-	private String userID;
+	private AVUser currentUser;
 
 	private int wallInfoCount = 0;
 
@@ -67,6 +73,9 @@ public class MyTimeLineActivity extends Activity {
 	private List<HashMap<String, String>> listData = null;
 	private MyTimeLineAdapter adapter = null;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	
+	private ImageLoadingListener animateFirstListener = LoaderListener.loaderListener;
+	private DisplayImageOptions options = LoaderListener.getThumbNailOptions();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +94,7 @@ public class MyTimeLineActivity extends Activity {
 		lv = (ListView) findViewById(R.id.my_timeline_lv);
 		
 		
-		getMyWallInfo();// 得到wallInfoList
+		getCurrentUser();//判断当前用户并加载数据
 		
 	}
 
@@ -126,9 +135,8 @@ public class MyTimeLineActivity extends Activity {
 	 * @return void
 	 * @Description 获取用户所发布wall数量
 	 */
-	private void getMyWallInfo() {
-		AVUser currentUser = AVUser.getCurrentUser();
-		userID = currentUser.getObjectId();
+	private void getMyWallInfo(AVUser currentUser) {
+
 		AVQuery<AVObject> query = new AVQuery<AVObject>("WallInfo");
 		query.whereEqualTo(WallInfoUpload.USER, currentUser);
 		query.orderByDescending("createdAt");
@@ -193,6 +201,14 @@ public class MyTimeLineActivity extends Activity {
 	 * @Description 设置路径
 	 */
 	private void initImageFile() {
+//		AVUser user = AVUser.getCurrentUser();
+//		if(user!=null){
+//			AVFile userImage = user.getAVFile(UserInfo.USER_IMG);
+//			if(userImage !=null){
+//			ImageLoader.getInstance().displayImage(userImage.getUrl(), myImage, options, animateFirstListener);
+//			}
+//		}
+		
 		File file = new File(Environment.getExternalStorageDirectory().getPath()
 				+ "/Android/data/" + this.getPackageName()
 				+ "/user");
@@ -201,6 +217,64 @@ public class MyTimeLineActivity extends Activity {
 		}
 		imageUri = Uri
 				.fromFile(new File(file.getAbsoluteFile(), "myImage.png"));
+	}
+	
+	private String getUserID(){
+		Intent intent = getIntent();
+		String userID= intent.getStringExtra("userID");
+		return userID;
+	}
+	
+	private void getCurrentUser(){
+		
+		setUserImage();
+		if(getUserID()==null||getUserID().equals("")){//当前用户
+			currentUser = AVUser.getCurrentUser();
+			getMyWallInfo(currentUser);
+		}else{
+			AVQuery<AVUser> query = new  AVQuery<AVUser>("_User");
+			query.whereEqualTo("objectId", getUserID());
+			query.findInBackground(new FindCallback<AVUser>() {
+				@Override
+				public void done(List<AVUser> arg0, AVException arg1) {
+					// TODO Auto-generated method stub
+					if(arg1==null){
+						currentUser = arg0.get(0);
+						getMyWallInfo(currentUser);
+					}else{
+						Toast.makeText(MyTimeLineActivity.this, "网络异常", Toast.LENGTH_LONG).show();
+					}
+				}
+			});
+		}
+	}
+	
+	
+	private void setUserImage(){
+		AVUser user = AVUser.getCurrentUser();
+		AVQuery<AVUser> query = new AVQuery<AVUser>("_User");
+		query.whereEqualTo("objectId", user.getObjectId());
+		query.findInBackground(new FindCallback<AVUser>() {
+			@Override
+			public void done(List<AVUser> arg0, AVException arg1) {
+				// TODO Auto-generated method stub
+				if(arg1==null){
+					if(arg0.size()>0){
+						AVUser user = arg0.get(0);
+						if(user!=null){
+							Log.v("10.1", "user != NULL");
+							AVFile userImage = user.getAVFile(UserInfo.USER_IMG);
+							if(userImage !=null){
+								Log.v("10.1", "image != NULL");
+							ImageLoader.getInstance().displayImage(userImage.getUrl(), myImage, options, animateFirstListener);
+							}else{
+								Log.v("10.1", "image == NULL");
+							}
+						}
+					}
+				}
+			}
+		});
 	}
 
 }

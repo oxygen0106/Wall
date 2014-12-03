@@ -4,21 +4,32 @@
     android:layout_height="match_parent" >
     
 
-    <TextView 
+     <ImageView
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="返回"
-        android:textSize="20sp"
-   		android:layout_alignParentLeft="true"
-        />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dip"
+        android:background="@drawable/return_selector"
+        android:contentDescription="返回"
+        android:onClick="clickBack" />
     
-    <TextView 
+   
+     <ImageView 
+        android:id="@+id/publish"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+   		android:layout_alignParentRight="true"
+        android:src="@drawable/wall_create_ok_selector"/>
+   
+   <!--  <TextView 
         android:id="@+id/publish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="发表"
         android:textSize="20sp"
    		android:layout_alignParentRight="true"
-        />
+        /> -->
 </RelativeLayout>

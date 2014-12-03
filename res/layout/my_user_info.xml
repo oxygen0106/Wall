@@ -26,6 +26,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
                 android:padding="10dip" >
      
                 <ImageView
@@ -80,9 +81,9 @@
                 android:id="@+id/my_user_info_lv"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="0dip"
-                android:layout_marginRight="0dip"
-                android:layout_marginTop="10dip"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/my_lv_bg"
                 android:cacheColorHint="#00000000"
                 android:divider="#ADD8E6"

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_end_bg"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#DEE7F4"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/welcome_page_layout_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/welcome_page_layout_bg"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="我们始终相信每一次创新源自需求"
+                android:textColor="#a0000000"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcome_page_layout_title"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/welcome_page_round_bg_small"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="5dp"
+                android:text="LBS"
+                android:textColor="#a0000000"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="96dp"
+                android:layout_height="1px"
+                android:background="#00BFFF" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:gravity="top|center_horizontal"
+                android:paddingTop="5dp"
+                android:text="位置服务"
+                android:textColor="#a0000000"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcome_page_layout_title"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/welcome_page_round_bg_small"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="5dp"
+                android:text="AR"
+                android:textColor="#a0000000"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="96dp"
+                android:layout_height="1px"
+                android:background="#00BFFF" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:gravity="top|center_horizontal"
+                android:paddingTop="5dp"
+                android:text="增强现实"
+                android:textColor="#a0000000"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#00BFFF"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/welcome_page_round_bg"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:gravity="bottom|center_horizontal"
+                android:paddingBottom="8dp"
+                android:text="此地此景"
+                 android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="136dp"
+                android:layout_height="2px"
+                android:background="#ffffff" />
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="70dp"
+                android:gravity="top|center_horizontal"
+                android:paddingTop="8dp"
+                android:text="共同感受"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

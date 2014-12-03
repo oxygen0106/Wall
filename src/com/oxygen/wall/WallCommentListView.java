@@ -44,7 +44,7 @@ public class WallCommentListView extends ListView implements OnScrollListener {
 	private OnRefreshListener refreshListener;
 	private boolean isRefreshable;// 是否可以刷新，在设置刷新监听后为true;
 	private boolean isSlide;
-
+	public boolean hasFootView;
 	public WallCommentListView(Context context) {
 		super(context);
 		init(context);
@@ -59,6 +59,14 @@ public class WallCommentListView extends ListView implements OnScrollListener {
 		setCacheColorHint(context.getResources().getColor(
 				R.color.wall_list_head_transparent));
 		inflater = LayoutInflater.from(context);
+		
+
+		setOnScrollListener(this);
+
+		state = INCREASE_PULL_To_INCREASE;
+		isRefreshable = false;
+	}
+	public void addFootView(){
 		footerView = (LinearLayout) inflater.inflate(R.layout.wall_list_foot,
 				null);
 		footerProgressBar = (ProgressBar) footerView
@@ -66,13 +74,14 @@ public class WallCommentListView extends ListView implements OnScrollListener {
 		footerTextView = (TextView) footerView.findViewById(R.id.foot_TextView);
 		footerProgressBar.setVisibility(View.GONE);
 		addFooterView(footerView);
-
-		setOnScrollListener(this);
-
-		state = INCREASE_PULL_To_INCREASE;
-		isRefreshable = false;
+		hasFootView=true;
 	}
-
+	public void removeFootView(){
+		if(hasFootView){
+			removeFooterView(footerView);
+			hasFootView=false;
+		}
+	}
 	public void onScroll(AbsListView arg0, int firstVisiableItem, int arg2,
 			int arg3) {
 		lastItemIndex = firstVisiableItem + arg2 - 1;
@@ -85,14 +94,14 @@ public class WallCommentListView extends ListView implements OnScrollListener {
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
-		if(state!=DONE){
+		if(state!=DONE&&hasFootView){
 			
 			switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				if (lastItemIndex == totleItemNumber && !isSlide) {
-					isSlide = true;
-					startY = (int) event.getY();
-				}
+//				if (lastItemIndex == totleItemNumber && !isSlide) {
+//					isSlide = true;
+//					startY = (int) event.getY();
+//				}
 				break;
 			case MotionEvent.ACTION_UP:
 				if (state != INCREASE_INCREASING) {

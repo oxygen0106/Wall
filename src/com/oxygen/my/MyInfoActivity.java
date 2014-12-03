@@ -15,12 +15,17 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.oxygen.data.UserInfo;
+import com.oxygen.image.LoaderListener;
 import com.oxygen.wall.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -88,6 +93,9 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 	private TextView loginBtn;
 
 	private SharedPreferences sp;
+	
+	private ImageLoadingListener animateFirstListener = LoaderListener.loaderListener;
+	private DisplayImageOptions options = LoaderListener.getThumbNailOptions();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -204,9 +212,9 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 	 */
 	void setUserData() {
 		AVUser currentUser = AVUser.getCurrentUser();
-		if (currentUser.isAnonymous()) {
+		if (currentUser.getEmail()==null) {
 			userStatus = false;
-			userName = "临时访客";
+			userName = "游客";
 			mail = currentUser.getString(UserInfo.MAIL);
 			userNote = currentUser.getString(UserInfo.NOTE);
 		} else {
@@ -226,6 +234,17 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 	 * @Description 设置路径
 	 */
 	private void initImageFile() {
+		
+//		AVUser user = AVUser.getCurrentUser();
+//		if(user!=null){
+//			AVFile userImage = user.getAVFile(UserInfo.USER_IMG);
+//			if(userImage !=null){
+//			ImageLoader.getInstance().displayImage(userImage.getUrl(), myImage, options, animateFirstListener);
+//			}
+//		}
+//		
+		
+		setUserImage();
 		file = new File(Environment.getExternalStorageDirectory().getPath()
 				+ "/Android/data/" + MyInfoActivity.this.getPackageName()
 				+ "/user");
@@ -535,4 +554,32 @@ public class MyInfoActivity extends Activity implements OnClickListener {
 			}
 		});
 	}
+	
+	private void setUserImage(){
+		AVUser user = AVUser.getCurrentUser();
+		AVQuery<AVUser> query = new AVQuery<AVUser>("_User");
+		query.whereEqualTo("objectId", user.getObjectId());
+		query.findInBackground(new FindCallback<AVUser>() {
+			@Override
+			public void done(List<AVUser> arg0, AVException arg1) {
+				// TODO Auto-generated method stub
+				if(arg1==null){
+					if(arg0.size()>0){
+						AVUser user = arg0.get(0);
+						if(user!=null){
+							Log.v("10.1", "user != NULL");
+							AVFile userImage = user.getAVFile(UserInfo.USER_IMG);
+							if(userImage !=null){
+								Log.v("10.1", "image != NULL");
+							ImageLoader.getInstance().displayImage(userImage.getUrl(), myImage, options, animateFirstListener);
+							}else{
+								Log.v("10.1", "image == NULL");
+							}
+						}
+					}
+				}
+			}
+		});
+	}
+	
 }

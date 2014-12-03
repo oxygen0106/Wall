@@ -1,10 +1,22 @@
 package com.oxygen.my;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVRelation;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 import com.oxygen.data.ImageLoader;
+import com.oxygen.data.UserInfo;
 import com.oxygen.data.ImageLoader.ImageCallback;
+import com.oxygen.explore.Shake;
+import com.oxygen.explore.Shake.ShakeListener;
+import com.oxygen.map.GetLocation;
 import com.oxygen.wall.R;
 import com.oxygen.wall.WallListView;
 
@@ -12,6 +24,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +33,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MyZanActivity extends Activity {
 
@@ -27,7 +41,10 @@ public class MyZanActivity extends Activity {
 	private ImageView backBtn;
 
 	private WallListView listView;
-	private List<HashMap<String,String>> listData;
+	private List<HashMap<String,String>> listData = new ArrayList<HashMap<String, String>>();
+	private AVObject wallAVObject;
+	private ZanAdapter adapter;
+	private String currentUserName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +60,76 @@ public class MyZanActivity extends Activity {
 		titleText.setText("赞");
 		setBackBtnListener();
 
-		listView = (WallListView) findViewById(R.id.wall_listview);
+		listView = (WallListView) findViewById(R.id.my_zan_listview);
+		getListData();
 
 	}
 
-	private void setBackBtnListener() {
-		backBtn.setOnClickListener(new View.OnClickListener() {
+	
+
+	private void getListData() {//待修改
+		AVUser user = AVUser.getCurrentUser();
+		currentUserName = user.getString("username")+":";
+		AVQuery<AVObject> query = AVQuery.getQuery("WallInfo");
+		query.include("user");
+		query.whereEqualTo("user", user);
+		query.addDescendingOrder("createdAt");
+
+		query.findInBackground(new FindCallback<AVObject>() {
 
 			@Override
-			public void onClick(View v) {
+			public void done(List<AVObject> arg0, AVException arg1) {
 				// TODO Auto-generated method stub
-				MyZanActivity.this.finish();
+				if (arg1 == null) {
+					int size = arg0.size();
+					Log.v("zan", size+"我发布过的留言板~~~~");
+					for (int i = 0; i < size; i++) {
+						
+						wallAVObject = arg0.get(i);
+						
+						AVQuery<AVObject> userQuery = AVRelation.reverseQuery("_User","Supports",wallAVObject);
+						userQuery.findInBackground(new FindCallback<AVObject>() {
+						            @Override
+						            public void done(List<AVObject> users, AVException avException) {
+						                if(avException==null){
+						                		if(users.size()>0){
+							                	HashMap<String, String> map = null;
+							                	for(int i = 0;i<users.size();i++){
+							                		Log.v("zan", users.size()+"这个留言板~有~~~得到赞的个数");
+							                		AVUser user = (AVUser)users.get(i);
+							                		map = new HashMap<String, String>();
+
+							                		if(user.getEmail()==null){
+							                			map.put("username","游客");
+							                		}else{
+							                			map.put("username",user.getString("username"));
+							                		}
+							                		AVFile userImage = user.getAVFile(UserInfo.USER_IMG);
+							                		map.put("userImageUrl", userImage.getUrl());
+							                		map.put("content",wallAVObject.getString("content"));
+							                		Log.v("zan", wallAVObject.getString("content")+"---》内容");
+	
+							                		listData.add(map);
+							                		Log.v("zan", listData.size()+"条数据");
+							                	}
+							                	
+							                	Log.v("zan", "开始显示------");
+												Log.v("zan", listData.size()+"条数据-所有");
+												adapter = new ZanAdapter(MyZanActivity.this,
+														listData, listView);
+												listView.setAdapter(adapter);
+							                }
+						                }
+						            }
+						        });
+
+					}
+					
+				}
 			}
 		});
 	}
-
+	
 	/**
 	* @ClassName ZanAdapter
 	* @Description 内部类Adapter
@@ -104,10 +176,9 @@ public class MyZanActivity extends Activity {
 			LayoutInflater mInflater = LayoutInflater.from(context);
 			HashMap<String, String> map = (HashMap<String, String>) list.get(position);
 			TextView nameText;
+			TextView currentUserNameText;
 			TextView contentText;
-			TextView timeText;
 			ImageView myImage;
-			ImageView wallImage;
 			
 			if (convertView == null) {
 				convertView = mInflater.inflate(
@@ -115,55 +186,51 @@ public class MyZanActivity extends Activity {
 					
 			}
 			nameText = (TextView)convertView.findViewById(R.id.my_zan_user_name);
+			currentUserNameText = (TextView)convertView.findViewById(R.id.my_zan_author_name);
 			contentText = (TextView)convertView.findViewById(R.id.my_zan_content);
-			timeText = (TextView)convertView.findViewById(R.id.my_zan_time);
 			myImage = (ImageView)convertView.findViewById(R.id.my_zan_user_image);
-			wallImage = (ImageView)convertView.findViewById(R.id.my_zan_wall_image);
 			nameText.setText(map.get("username"));
 			contentText.setText(map.get("content"));
-			timeText.setText(map.get("time"));
+			currentUserNameText.setText(currentUserName);
 				
 			String userImageUrl = map.get("userImageUrl");
 			if(userImageUrl!=null && !(userImageUrl.equals(""))){
 				
 				myImage.setTag(userImageUrl);
-				Drawable cachedImage = imageLoader.loadDrawable(userImageUrl, new ImageCallback() {  
-					public void imageLoaded(Drawable imageDrawable, String userImageUrl) {  
-						ImageView imageViewByTag = (ImageView) listView.findViewWithTag(userImageUrl);  
-		                if (imageViewByTag != null) {  
-		                	imageViewByTag.setImageDrawable(imageDrawable);  
-		                 }  
-		            }  
-		        });
-					
-				if (cachedImage == null) {  
-					myImage.setImageResource(R.drawable.my_image_round);  
-		        }else{  
-		            myImage.setImageDrawable(cachedImage);  
-		        }
-			}
-			String wallImageUrl = map.get("wallImageUrl");
-			if(wallImageUrl!=null && !(wallImageUrl.equals(""))){
-				
-				wallImage.setTag(wallImageUrl);
-					
-				Drawable cachedImage = imageLoader.loadDrawable(wallImageUrl, new ImageCallback() {  
-					public void imageLoaded(Drawable imageDrawable, String wallImageUrl) {  
-						ImageView imageViewByTag = (ImageView) listView.findViewWithTag(wallImageUrl);  
-		                if (imageViewByTag != null) {  
-		                	imageViewByTag.setImageDrawable(imageDrawable);  
-		                 }  
-		            }  
-		        });
-					
-				if (cachedImage == null) {  
-					wallImage.setImageResource(R.drawable.my_image_round);  
-		        }else{  
-		        	wallImage.setImageDrawable(cachedImage);  
-		        }
+				Drawable cachedImage = imageLoader.loadDrawable(userImageUrl,myImage,
+						new ImageCallback() {
+							public void imageLoaded(Drawable imageDrawable,
+									ImageView imageView) {
+								imageView.setImageDrawable(imageDrawable);
+							}
+						});
+
+				if (cachedImage == null) {
+					myImage.setImageResource(R.drawable.my_image_round);
+				} else {
+					myImage.setImageDrawable(cachedImage);
+				}
 			}
 			
 			return convertView;
 		}
+	}
+	
+	
+	/**
+	* @param 
+	* @return void
+	* @Description 标题栏返回  
+	*/
+	private void setBackBtnListener() {
+		backBtn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MyZanActivity.this.finish();
+				
+			}
+		});
 	}
 }

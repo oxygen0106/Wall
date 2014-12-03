@@ -35,7 +35,7 @@ public class CloudRecoRenderer implements GLSurfaceView.Renderer
 {
     ApplicationSession vuforiaAppSession;
     
-    private static final float OBJECT_SCALE_FLOAT = 3.0f;
+    private static final float OBJECT_SCALE_FLOAT =200.0f;
     
     private int shaderProgramID;
     private int vertexHandle;
@@ -49,11 +49,16 @@ public class CloudRecoRenderer implements GLSurfaceView.Renderer
     private Teapot mTeapot;
     
     private CloudReco mActivity;
-    
-    public CloudRecoRenderer(ApplicationSession session, CloudReco activity)
+    private double[] verts;
+    private double[] norms;
+    private double[] coords;
+    public CloudRecoRenderer(ApplicationSession session, CloudReco activity,double[] v,double[] n,double[] c)
     {
         vuforiaAppSession = session;
         mActivity = activity;
+        verts=v;
+        norms=n;
+        coords=c;
     }
     
     
@@ -122,7 +127,7 @@ public class CloudRecoRenderer implements GLSurfaceView.Renderer
             "modelViewProjectionMatrix");
         texSampler2DHandle = GLES20.glGetUniformLocation(shaderProgramID,
             "texSampler2D");
-        mTeapot = new Teapot();
+        mTeapot = new Teapot(verts,norms,coords);
     }
     
     
@@ -214,9 +219,10 @@ public class CloudRecoRenderer implements GLSurfaceView.Renderer
             modelViewProjection, 0);
         
         // finally draw the teapot
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, mTeapot.getNumObjectIndex(),
-            GLES20.GL_UNSIGNED_SHORT, mTeapot.getIndices());
-        
+        //GLES20.glDrawElements(GLES20.GL_TRIANGLES, mTeapot.getNumObjectIndex(),
+            //GLES20.GL_UNSIGNED_SHORT, mTeapot.getIndices());
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, mTeapot.getNumObjectVertex());
+       // GLES20.
         // disable the enabled arrays
         GLES20.glDisableVertexAttribArray(vertexHandle);
         GLES20.glDisableVertexAttribArray(normalHandle);

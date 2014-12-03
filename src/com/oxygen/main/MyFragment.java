@@ -17,11 +17,19 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.GetCallback;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.oxygen.data.UserInfo;
 import com.oxygen.data.WallInfoUpload;
+import com.oxygen.image.LoaderListener;
 import com.oxygen.map.GetLocation;
+import com.oxygen.my.MyCommentActivity;
+import com.oxygen.my.MyFeedbackActivity;
+import com.oxygen.my.MyInfoActivity;
 import com.oxygen.my.MyMessageActivity;
 import com.oxygen.my.MyRoundImageTool;
+import com.oxygen.my.MyUserGuideActivity;
 import com.oxygen.my.MyWallInfoActivity;
 import com.oxygen.my.MyZanActivity;
 import com.oxygen.my.MyUserInfoActivity;
@@ -98,6 +106,9 @@ public class MyFragment extends Fragment {
 	
 	private ImageView notifyPoint;
 	private final static String publicMsgId = "541ea7ade4b0eabcaeb2e1f8";
+	
+	private ImageLoadingListener animateFirstListener = LoaderListener.loaderListener;
+	private DisplayImageOptions options = LoaderListener.getThumbNailOptions();
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -211,6 +222,9 @@ public class MyFragment extends Fragment {
 	 * @Description 设置路径
 	 */
 	private void initImageFile() {
+		
+		
+		
 		file = new File(Environment.getExternalStorageDirectory().getPath()
 				+ "/Android/data/" + activity.getPackageName()
 				+ "/user");
@@ -252,13 +266,14 @@ public class MyFragment extends Fragment {
 		map = new HashMap<String, Object>();
 		map.put("text", "评论");
 		listData.add(map);
-
+		
+		
 		map = new HashMap<String, Object>();
-		map.put("text", "收藏");
+		map.put("text", "帮助");
 		listData.add(map);
-
+		
 		map = new HashMap<String, Object>();
-		map.put("text", "好友");
+		map.put("text", "反馈");
 		listData.add(map);
 
 		adapter = new SimpleAdapter(activity, listData, R.layout.my_lv_item,
@@ -277,16 +292,15 @@ public class MyFragment extends Fragment {
 					startActivity(intent);
 				}
 				if (arg3 == 1) {
-					Toast.makeText(activity, "评论", Toast.LENGTH_SHORT).show();
+					startActivity(new Intent(getActivity(),MyCommentActivity.class));
 				}
 				if (arg3 == 2) {
-					Toast.makeText(activity, "收藏", Toast.LENGTH_SHORT).show();
+					startActivity(new Intent(getActivity(),MyUserGuideActivity.class));
 				}
 				if (arg3 == 3) {
-					Intent intent = new Intent(activity,
-							MySettingActivity.class);
-					startActivity(intent);
+					startActivity(new Intent(getActivity(),MyFeedbackActivity.class));
 				}
+				
 
 			}
 		});
@@ -509,13 +523,19 @@ public class MyFragment extends Fragment {
 	 */
 	private void currentUserStatus() {
 		AVUser currentUser = AVUser.getCurrentUser();
-		if (currentUser.isAnonymous()) {
-			userStatus = false;
+		if(currentUser!=null){
+			if (currentUser.getString("email")==null) {
+				userStatus = false;
+				userNameText.setText("游客");
+				setUserImage();
+			} else {
+				userStatus = true;
+				userNameText.setText(currentUser.getString(UserInfo.USER_NAME));
+				setUserImage();
+			}
+		}else{
 			userNameText.setText("游客");
-			
-		} else {
-			userStatus = true;
-			userNameText.setText(currentUser.getString(UserInfo.USER_NAME));
+			setUserImage();
 		}
 	}
 	
@@ -564,11 +584,11 @@ public class MyFragment extends Fragment {
 								final String userMsgUpdateTime = currentUser.getDate("msgUpdate").toString();
 								final String adminPushCreatedTime = arg0.get(0).getCreatedAt().toString();
 								
-								Log.v("msg","管理员最近更新消息时间~~~~~~~~~"+adminPushCreatedTime);
-								Log.v("msg","用户最近更新消息时间~~~~~~~~~"+"用户名"+currentUser.getString("username")+"消息更新时间"+userMsgUpdateTime);
+//								Log.v("msg","管理员最近更新消息时间~~~~~~~~~"+adminPushCreatedTime);
+//								Log.v("msg","用户最近更新消息时间~~~~~~~~~"+"用户名"+currentUser.getString("username")+"消息更新时间"+userMsgUpdateTime);
 								
 								if(!userMsgUpdateTime.equals(adminPushCreatedTime)){
-									Log.v("msg","用户最近更新消息时间~~~不相等~~~亮灯~~~");
+//									Log.v("msg","用户最近更新消息时间~~~不相等~~~亮灯~~~");
 									notifyPoint.setVisibility(View.VISIBLE);//点亮 红灯
 								}
 							}
@@ -597,5 +617,33 @@ public class MyFragment extends Fragment {
 			}
 		});
 		
+	}
+	
+	
+	private void setUserImage(){
+		AVUser user = AVUser.getCurrentUser();
+		AVQuery<AVUser> query = new AVQuery<AVUser>("_User");
+		query.whereEqualTo("objectId", user.getObjectId());
+		query.findInBackground(new FindCallback<AVUser>() {
+			@Override
+			public void done(List<AVUser> arg0, AVException arg1) {
+				// TODO Auto-generated method stub
+				if(arg1==null){
+					if(arg0.size()>0){
+						AVUser user = arg0.get(0);
+						if(user!=null){
+							Log.v("10.1", "user != NULL");
+							AVFile userImage = user.getAVFile(UserInfo.USER_IMG);
+							if(userImage !=null){
+								Log.v("10.1", "image != NULL");
+							ImageLoader.getInstance().displayImage(userImage.getUrl(), myImage, options, animateFirstListener);
+							}else{
+								Log.v("10.1", "image == NULL");
+							}
+						}
+					}
+				}
+			}
+		});
 	}
 }

@@ -6,7 +6,7 @@
     android:background="@drawable/my_end_bg" >
 
      <com.oxygen.wall.WallListView
-        android:id="@+id/wall_listview"
+        android:id="@+id/my_zan_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#00000000"

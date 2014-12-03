@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.oxygen.main.WelcomeActivity;
 import com.oxygen.my.MySlipButton.OnChangedListener;
 import com.oxygen.wall.R;
 
@@ -122,11 +123,15 @@ public class MySettingActivity extends Activity {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("text", "使用说明");
 		otherData.add(map);
+		
+		map = new HashMap<String, Object>();
+		map.put("text", "欢迎界面");
+		otherData.add(map);
 
 		map = new HashMap<String, Object>();
 		map.put("text", "关于");
 		otherData.add(map);
-
+		
 		otherAdapter = new SimpleAdapter(this, otherData,
 				R.layout.my_setting_user_info_item, new String[] { "text" },
 				new int[] { R.id.my_setting_lv_item_tv });
@@ -181,14 +186,20 @@ public class MySettingActivity extends Activity {
 
 				if (arg3 == 0) {
 					Intent intent = new Intent(MySettingActivity.this,
-							MyUserGuide.class);
+							MyUserGuideActivity.class);
 					startActivity(intent);
 				}
 				if (arg3 == 1) {
 					Intent intent = new Intent(MySettingActivity.this,
+							WelcomeActivity.class);
+					startActivity(intent);
+				}
+				if (arg3 == 2) {
+					Intent intent = new Intent(MySettingActivity.this,
 							MyAboutActivity.class);
 					startActivity(intent);
 				}
+				
 			}
 		});
 

@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class WallListView extends ListView implements OnScrollListener {
@@ -41,7 +42,7 @@ public class WallListView extends ListView implements OnScrollListener {
 	private ImageView headerArrowImageView;
 	private ProgressBar headerProgressBar;
 
-	private LinearLayout footerView;
+	private RelativeLayout footerView;
 	private TextView footerTextView;
 	private ProgressBar footerProgressBar;
 	private RotateAnimation animation;
@@ -58,6 +59,7 @@ public class WallListView extends ListView implements OnScrollListener {
 	private OnRefreshListener refreshListener;
 	private boolean isRefreshable;// 是否可以刷新，在设置刷新监听后为true;
 	private boolean isSlide;
+	public boolean hasFootView;
 	int i = 1;
 
 	public WallListView(Context context) {
@@ -74,13 +76,7 @@ public class WallListView extends ListView implements OnScrollListener {
 		setCacheColorHint(context.getResources().getColor(
 				R.color.wall_list_head_transparent));
 		inflater = LayoutInflater.from(context);
-		footerView = (LinearLayout) inflater.inflate(R.layout.wall_list_foot,
-				null);
-		footerProgressBar = (ProgressBar) footerView
-				.findViewById(R.id.foot_progressBar);
-		footerTextView = (TextView) footerView.findViewById(R.id.foot_TextView);
-		footerProgressBar.setVisibility(View.GONE);
-		addFooterView(footerView);
+		
 
 		headerView = (LinearLayout) inflater.inflate(R.layout.wall_list_head,
 				null);
@@ -120,6 +116,26 @@ public class WallListView extends ListView implements OnScrollListener {
 		isRefreshable = false;
 	}
 
+	public void addFootView(){
+		footerView = (RelativeLayout) inflater.inflate(R.layout.wall_list_foot,
+				null);
+		footerProgressBar = (ProgressBar) footerView
+				.findViewById(R.id.foot_progressBar);
+		footerTextView = (TextView) footerView.findViewById(R.id.foot_TextView);
+		footerTextView.setVisibility(View.VISIBLE);
+		footerProgressBar.setVisibility(View.GONE);
+		addFooterView(footerView);
+		hasFootView=true;
+	}
+	
+	public void removeFootView(){
+		if(hasFootView){
+			//removeFooterView(footerView);
+			footerTextView .setVisibility(View.GONE);
+			footerProgressBar.setVisibility(View.GONE);
+			hasFootView=false;
+		}
+	}
 	public void onScroll(AbsListView arg0, int firstVisiableItem, int arg2,
 			int arg3) {
 		firstItemIndex = firstVisiableItem;
@@ -159,12 +175,12 @@ public class WallListView extends ListView implements OnScrollListener {
 						onRefresh();
 						refreshFlag=false;
 					}
-					if (state == INCREASE_RELEASE_To_INCREASE) {
+					if (state == INCREASE_RELEASE_To_INCREASE&&hasFootView) {
 						state=INCREASE_INCREASING;
 						changeViewByState();
 						onIncrease();
 						Log.v("action_up", "INCREASE_INCREASING");
-						increaseFlag=false;
+						//increaseFlag=false;
 					}
 					isSlide=false;
 				}
@@ -222,7 +238,7 @@ public class WallListView extends ListView implements OnScrollListener {
 				
 				}
 				if (lastItemIndex == totleItemNumber && (startY - tempY) > 0
-						&& state == DONE) {
+						&& state == DONE&&hasFootView) {
 					Log.v("action_move", "increaseFlag=true");
 					increaseFlag = true;
 					state = INCREASE_PULL_To_INCREASE;
@@ -318,13 +334,9 @@ public class WallListView extends ListView implements OnScrollListener {
 		return super.onTouchEvent(event);
 	}
 
-	public void changeRefreshFlag() {
-		isBack=false;
-		state=DONE;
-		changeViewByState();
-	}
 
-	public void changeIncreaseFlag() {
+	public void onIncreaseComplete() {
+		increaseFlag=false;
 		state=INCREASE_PULL_To_INCREASE;
 		changeViewByState();
 		state=DONE;
@@ -338,9 +350,7 @@ public class WallListView extends ListView implements OnScrollListener {
 			headerTipsTextview.setVisibility(View.VISIBLE);
 			headerArrowImageView.clearAnimation();
 			headerArrowImageView.startAnimation(animation);
-			headerTipsTextview.setText("请释放 刷新");
-			Log.v("@@@@@@", "RELEASE_To_REFRESH 这是第  " + i++ + "步" + 12
-					+ "请释放 刷新");
+			headerTipsTextview.setText("释放后刷新");
 			break;
 		case REFRESH_PULL_To_REFRESH:
 			headerProgressBar.setVisibility(View.GONE);
@@ -355,27 +365,24 @@ public class WallListView extends ListView implements OnScrollListener {
 			} else {
 				headerTipsTextview.setText("isBack  is false ！！！");
 			}
-			Log.v("@@@@@@", "PULL_To_REFRESH 这是第  " + i++ + "步" + 13
-					+ "  changeHeaderViewByState()");
+
 			break;
 		case REFRESH_REFRESHING:
 			headerView.setPadding(0, 0, 0, 0);
 			headerProgressBar.setVisibility(View.VISIBLE);
 			headerArrowImageView.clearAnimation();
 			headerArrowImageView.setVisibility(View.GONE);
-			headerTipsTextview.setText("正在加载中 ...REFRESHING");
-			Log.v("@@@@@@", "REFRESHING 这是第  " + i++ + "步"
-					+ "正在加载中 ...REFRESHING");
+			headerTipsTextview.setText("加载中...");
+
 			break;
 		case DONE:
 			headerView.setPadding(0, -1 * headContentHeight, 0, 0);
 			//headerProgressBar.setVisibility(View.GONE);
 			headerArrowImageView.clearAnimation();
-			headerArrowImageView.setImageResource(R.drawable.arrow);
-			headerTipsTextview.setText("已经加载完毕- DONE ");
+			headerArrowImageView.setImageResource(R.drawable.wall_lv_item_push_arrow);
+			headerTipsTextview.setText("加载完毕");
 			//headerTipsTextview.setVisibility(View.GONE);
 			//headerArrowImageView.setVisibility(View.GONE);
-			Log.v("@@@@@@", "DONE 这是第  " + i++ + "步" + "已经加载完毕- DONE ");
 			break;
 		case INCREASE_PULL_To_INCREASE:
 			footerProgressBar.setVisibility(View.GONE);
@@ -401,8 +408,8 @@ public class WallListView extends ListView implements OnScrollListener {
 
 	public void onRefreshComplete() {
 		state = DONE;
+		isBack=false;
 		changeViewByState();
-		Log.v("@@@@@@", "onRefreshComplete() 被调用。。。");
 	}
 
 	private void onIncrease() {
@@ -414,7 +421,6 @@ public class WallListView extends ListView implements OnScrollListener {
 	private void onRefresh() {
 		if (refreshListener != null) {
 			refreshListener.onRefresh();
-			Log.v("@@@@@@", "onRefresh被调用，这是第  " + i++ + "步");
 		}
 	}
 

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -27,13 +32,18 @@ import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
 import com.baidu.mapapi.map.SupportMapFragment;
 import com.baidu.mapapi.model.LatLng;
+import com.oxygen.map.GetLocation;
 import com.oxygen.map.RadarView;
 import com.oxygen.wall.R;
+import com.oxygen.wall.WallCommentActivity;
+import com.oxygen.wall.WallCurrent;
 import com.oxygen.data.WallInfoDownload;
+import com.oxygen.data.WallInfoUpload;
 //import com.oxygen.map.MyOrientationListener;
 //import com.oxygen.map.MyOrientationListener.OnOrientationListener;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Debug;
@@ -41,6 +51,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +111,9 @@ public class RadarFragment extends Fragment {
 	Animation radarAnimBound;
 	Animation radarAnimEnter;// 雷达载入动画
 	Animation radarAnimExit;// 雷达退出动画
-	Button btnLocation;
+	ImageView btnLocation;
+
+	private ArrayList<WallInfoDownload> mData;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -117,6 +130,7 @@ public class RadarFragment extends Fragment {
 		if (savedInstanceState != null) {
 			mCurrentLantitude = savedInstanceState.getDouble("Lantitude");
 			mCurrentLongitude = savedInstanceState.getDouble("Longitude");
+
 		}
 	}
 
@@ -126,17 +140,16 @@ public class RadarFragment extends Fragment {
 		View view = inflater.inflate(R.layout.radar_fragment, container, false);
 		mapViewContainer = (FrameLayout) view
 				.findViewById(R.id.mapview_container);
-
 		mMapStatus = new MapStatus.Builder()
 				.target(new LatLng(mCurrentLantitude, mCurrentLongitude))
 				.zoom(16f).build();// 设置地图显示的起始位置和默认缩放比例
 		options = new BaiduMapOptions().zoomControlsEnabled(false)
 				.scaleControlEnabled(false).mapStatus(mMapStatus);// 不显示缩放控件和比例尺
 		mapView = SupportMapFragment.newInstance(options);
-		FragmentManager manager = getChildFragmentManager();// 嵌套Fragment
+		FragmentManager manager = this.getChildFragmentManager();// 嵌套Fragment
 		manager.beginTransaction().add(R.id.mapview_container, mapView)
 				.commit();// 显示地图
-
+		Log.v("map", "map onCreateView!");
 		return view;
 	}
 
@@ -160,27 +173,31 @@ public class RadarFragment extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-
+		mapView.onResume();
 		addRadarView();// 显示雷达View动画
-
 		new Thread(new GetWallsInfoThread()).start();// 开启获取服务器留言板线程
-		// Debug.stopMethodTracing();//TraceView调试结束
+		Log.v("map", "map onResume!");
 	}
 
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		baiduMap.setMyLocationEnabled(false);
+		mapView.onPause();
+		if (baiduMap != null) {
+			baiduMap.setMyLocationEnabled(false);
+		}
 		mLocationClient.stop();
+		Log.v("map", "map onPause!");
 	}
 
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		mCurrentMarkerIcon.recycle();// 回收 bitmap 资源
-		wallMarkerIcon.recycle();// 回收 bitmap 资源
+		mapView.onDestroy();
+		// mCurrentMarkerIcon.recycle();// 回收 bitmap 资源
+		// wallMarkerIcon.recycle();// 回收 bitmap 资源
 	}
 
 	private Handler handler = new Handler() {
@@ -229,9 +246,10 @@ public class RadarFragment extends Fragment {
 		baiduMap.setMyLocationConfigeration(config);
 		baiduMap.setMyLocationEnabled(true);// 开启定位功能
 
-		LayoutInflater.from(activity).inflate(
-				R.layout.radar_fragment_btn_location, mapViewContainer, true);
-		btnLocation = (Button) getView().findViewById(R.id.btn_location);
+		// LayoutInflater.from(activity).inflate(
+		// R.layout.radar_fragment_btn_location, mapViewContainer, true);
+		btnLocation = (ImageView) activity.findViewById(R.id.radar_location);
+		btnLocation.setVisibility(View.VISIBLE);
 		btnLocation.setOnClickListener(new OnClickListener() {
 
 			/**
@@ -250,7 +268,14 @@ public class RadarFragment extends Fragment {
 				radarView.startAnimation(radarAnimEnter);// 开始进入动画
 				radarSweepThread = new Thread(new RadarRefresh());// 雷达扫描线程
 				radarSweepThread.start();
-
+				
+				new Thread(){//更新周围留言板的信息
+					public void run() {
+						Message m = Message.obtain();
+						m.what = WALLS_INIT_OK;
+						handler.sendMessage(m);
+					};
+				}.start();
 			}
 		});
 
@@ -318,9 +343,7 @@ public class RadarFragment extends Fragment {
 			getWallsInfo();// 本地模拟数据
 
 			// TODO 添加判断：当获取留言板信息完毕，发送该消息
-			Message m = Message.obtain();
-			m.what = WALLS_INIT_OK;
-			handler.sendMessage(m);
+
 		}
 	}
 
@@ -335,10 +358,17 @@ public class RadarFragment extends Fragment {
 		// 1000));//天安门坐标
 		// aroundWalls.add(new WallInfo(1, 007, new LatLng(29.536881,
 		// 106.611048), 1000));//信科坐标
-		/*aroundWalls.add(new WallInfoDownload("1", "", 29.533881, 106.611048,"","0",0,0));
-		aroundWalls.add(new WallInfoDownload("1", "", 29.539881, 106.611048,"","0",0,0));
-		aroundWalls.add(new WallInfoDownload("3", "", 29.536881, 106.608048,"","0",0,0));
-		aroundWalls.add(new WallInfoDownload("4", "", 29.536881, 106.614048,"","0",0,0));*/
+
+		/*
+		 * aroundWalls.add(new WallInfoDownload("1", "", 29.533881,
+		 * 106.611048,"","0",0,0)); aroundWalls.add(new WallInfoDownload("1",
+		 * "", 29.539881, 106.611048,"","0",0,0)); aroundWalls.add(new
+		 * WallInfoDownload("3", "", 29.536881, 106.608048,"","0",0,0));
+		 * aroundWalls.add(new WallInfoDownload("4", "", 29.536881,
+		 * 106.614048,"","0",0,0));
+		 */
+		getData();
+
 	}
 
 	/**
@@ -356,6 +386,7 @@ public class RadarFragment extends Fragment {
 					.icon(wallMarkerIcon).zIndex(9 - i);// zIndex()在Z轴上的比例
 			wallMarker[i] = (Marker) (baiduMap.addOverlay(oo));// 在地图中添加标记，并实例化Marker
 		}
+		// Log.v("map", "标记添加完成");
 		wallMarkerClickListener();// 添加所有留言板标记Marker的监听事件
 	}
 
@@ -371,9 +402,10 @@ public class RadarFragment extends Fragment {
 	/**
 	 * @param
 	 * @return void
-	 * @Description 留言板标记Marker监听
+	 * @Description 留言板标记Marker点击监听
 	 */
 	public void wallMarkerClickListener() {
+		// Log.v("map", "开始进入坐标点监听");
 		baiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 			@Override
 			public boolean onMarkerClick(final Marker marker) {
@@ -381,7 +413,8 @@ public class RadarFragment extends Fragment {
 				LayoutInflater inflater = LayoutInflater.from(activity);
 				ViewGroup root = (ViewGroup) getView().findViewById(
 						R.id.mapview_container);
-				View v = inflater.inflate(R.layout.radar_marker_popup, root, false);
+				View v = inflater.inflate(R.layout.radar_marker_popup, root,
+						false);
 
 				markerPopupWindow = (LinearLayout) v
 						.findViewById(R.id.marker_popup_container);
@@ -395,11 +428,19 @@ public class RadarFragment extends Fragment {
 				p.y -= 40;// 向上移动至Marker的顶部
 				LatLng llInfo = baiduMap.getProjection().fromScreenLocation(p);// 转换成坐标
 				OnInfoWindowClickListener listener = null;
-
+//				Log.v("map", "wallMarker.length" + wallMarker.length);
+//				Log.v("map", "创建者:" + aroundWalls.get(1).getUserName());
 				for (int i = 0; i < wallMarker.length; i++) {
-					if (marker == wallMarker[i]) {
-						tvPopup.setText("ID: 00"
-								+ aroundWalls.get(i).getWallID());
+//					Log.v("map", "marker.getPosition()"
+//							+ marker.getPosition().toString());
+//					Log.v("map", "wallMarker[i].getPosition()"
+//							+ wallMarker[i].getPosition().toString());
+					if (marker.getPosition().toString()
+							.equals(wallMarker[i].getPosition().toString())) {
+						tvPopup.setText("创建者: "
+								+ aroundWalls.get(i).getUserName());
+//						Log.v("map", "创建者:" + aroundWalls.get(i).getUserName());
+						WallCurrent.wid = aroundWalls.get(i);
 						listener = new OnInfoWindowClickListener() {
 							public void onInfoWindowClick() {// 点击弹窗事件处理
 								clickInfoWindow(); // 弹窗点击事件执行
@@ -423,6 +464,8 @@ public class RadarFragment extends Fragment {
 	public void clickInfoWindow() {
 		// TODO
 		baiduMap.hideInfoWindow();
+		startActivity(new Intent(activity, WallCommentActivity.class));
+
 	}
 
 	/**
@@ -434,7 +477,8 @@ public class RadarFragment extends Fragment {
 
 		LayoutInflater inflater = LayoutInflater
 				.from(activity.getApplication());
-		View v = inflater.inflate(R.layout.radar_radarview, mapViewContainer, true);
+		View v = inflater.inflate(R.layout.radar_radarview, mapViewContainer,
+				true);
 		radarViewLayout = (LinearLayout) v.findViewById(R.id.radarViewLayout);
 		radarViewLayout.getBackground().setAlpha(10);
 		radarView = (RadarView) getView().findViewById(R.id.RadarView);// 实例化radarView
@@ -471,7 +515,7 @@ public class RadarFragment extends Fragment {
 				}
 
 				if (RADAR_SWEEP_STOP == 1 && flag == 0) {// 收到主线程停止扫描消息，设置最后扫描次数
-					i = 1080;
+					i = 900;
 					flag = 1;
 				} else if (RADAR_SWEEP_STOP == 1 && flag == 1) {
 					i--;
@@ -489,8 +533,47 @@ public class RadarFragment extends Fragment {
 
 	}
 
-	
-	
-	
-	
+	/**
+	* @param 
+	* @return void
+	* @Description 获取当前定位范围内的最新最热的10个留言板信息
+	*/
+	private void getData() {
+
+		AVQuery<AVObject> query = new AVQuery<AVObject>("WallInfo");
+		double lantitude = GetLocation.mCurrentLantitude;
+		double longitude = GetLocation.mCurrentLongitude;
+		query.include(WallInfoUpload.USER);
+		query.whereGreaterThan(WallInfoUpload.LATITUDE, lantitude - 0.1);
+		query.whereLessThan(WallInfoUpload.LATITUDE, lantitude + 0.1);
+		query.whereGreaterThan(WallInfoUpload.LONGITUDE, longitude - 0.1);
+		query.whereLessThan(WallInfoUpload.LONGITUDE, longitude + 0.1);
+		query.addDescendingOrder("createdAt");
+		query.addDescendingOrder("supportCount");
+		query.setLimit(10);
+		query.setCachePolicy(AVQuery.CachePolicy.NETWORK_ONLY);
+		query.findInBackground(new FindCallback<AVObject>() {
+			public void done(List<AVObject> arg0, AVException arg1) {
+				// TODO Auto-generated method stub
+				if (arg1 == null) {
+					if (arg0 != null && arg0.size() > 0) {
+						AVObject object;
+						for (int i = 0; i < arg0.size(); i++) {
+							object = arg0.get(i);
+							AVUser user = (AVUser) object
+									.get(WallInfoUpload.USER);
+							String name = user.getUsername();
+							WallInfoDownload wid = new WallInfoDownload(object,
+									user);
+							aroundWalls.add(wid);//保存附近的留言板数据
+							Message m = Message.obtain();
+							m.what = WALLS_INIT_OK;
+							handler.sendMessage(m);
+						}
+					}
+				}
+			}
+		});
+	}
+
 }

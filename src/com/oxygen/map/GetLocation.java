@@ -141,9 +141,9 @@ public class GetLocation implements OnGetGeoCoderResultListener {
 	/**
 	 * @param @param avo
 	 * @return void
-	 * @Description 坐标转换地址
+	 * @Description 留言板坐标转换地址
 	 */
-	public void getAddress() {
+	public void getWallAddress() {
 		initLoactionSearch();
 
 		AVUser user = AVUser.getCurrentUser();
@@ -177,22 +177,26 @@ public class GetLocation implements OnGetGeoCoderResultListener {
 
 	}
 
+	private void saveWallAddress(){
+		AVQuery<AVObject> query = new AVQuery<AVObject>("WallInfo");
+		query.getInBackground(objectID, new GetCallback<AVObject>() {
+			@Override
+			public void done(AVObject arg0, AVException arg1) {
+				// TODO Auto-generated method stub
+				if (arg1 == null) {
+					arg0.put("address", address);
+					arg0.saveInBackground();// 保存地址
+				}
+			}
+		});
+	}
+	
 	@Override
 	public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
 		if (result != null && result.error == SearchResult.ERRORNO.NO_ERROR) {
 			address = result.getAddress();// BaiDu API 解析坐标完成,得到地址结果
 
-			AVQuery<AVObject> query = new AVQuery<AVObject>("WallInfo");
-			query.getInBackground(objectID, new GetCallback<AVObject>() {
-				@Override
-				public void done(AVObject arg0, AVException arg1) {
-					// TODO Auto-generated method stub
-					if (arg1 == null) {
-						arg0.put("address", address);
-						arg0.saveInBackground();// 保存地址
-					}
-				}
-			});
+			saveWallAddress();
 
 		}
 	}

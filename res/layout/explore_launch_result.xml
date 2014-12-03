@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/my_end_bg"
+    android:orientation="vertical" >
+
+   <LinearLayout
+        android:id="@+id/explore_launch_result_map_container"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/explore_launch_result_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="投掷成功"
+            android:textColor="#808080"
+            android:textSize="16sp"
+            android:background="@drawable/explore_launch_edittext_bg" />
+
+        <Button
+            android:id="@+id/explore_launch_again_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="再掷一次"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:background="@drawable/my_info_login_btn_selector" />
+    </LinearLayout>
+
+</LinearLayout>

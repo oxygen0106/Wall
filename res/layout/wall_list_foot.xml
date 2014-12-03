@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
-    
+    android:layout_height="wrap_content" >
+
     <LinearLayout
+        android:id="@+id/wall_lv_foot_item_push_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        >
-		<ProgressBar android:layout_width="wrap_content"
-				android:layout_height="wrap_content" 
-				style="?android:attr/progressBarStyleSmall"
-				android:id="@+id/foot_progressBar"
-				android:indeterminateDrawable="@anim/progressbar_anim"/>
-		<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" 
-				android:text="上拉加载更多"
-				android:textColor="@color/wall_list_head_white" 
-				android:id="@+id/foot_TextView" />
-	</LinearLayout>
-	<TextView android:layout_width="match_parent"
-	    	  android:layout_height="70dp"
-	    />
-</LinearLayout>
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal" >
+
+        <ProgressBar
+            android:id="@+id/foot_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDrawable="@anim/progressbar_anim" />
+
+        <TextView
+            android:id="@+id/foot_TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="上拉加载更多"
+            android:textColor="#808080" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp" 
+        android:layout_below="@id/wall_lv_foot_item_push_layout"/>
+
+</RelativeLayout>

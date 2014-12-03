@@ -50,6 +50,7 @@ public class MyMessageActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.my_message_activity);
 		this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
@@ -115,6 +116,7 @@ public class MyMessageActivity extends Activity {
 //		queries.add(queryAdmin);
 //		AVQuery<AVObject> mainQuery = AVQuery.or(queries);//异常信息，"或查询"不支持include()
 		
+		queryTargetUserIsCurrentUser.setCachePolicy(AVQuery.CachePolicy.CACHE_ELSE_NETWORK);//首先尝试从缓存中获取，如果失败，则从网络获取
 		queryTargetUserIsCurrentUser.findInBackground(new FindCallback<AVObject>() {
 
 			@Override

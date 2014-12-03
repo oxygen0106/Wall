@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Wall</string>
+    <string name="app_name">ARound</string>
 	<string name="noTitle"></string>
 	<string name="pull_to_refresh_tap_label">下拉刷新</string>
 	<string name="pull_to_refresh_release_label">下拉刷新2</string>

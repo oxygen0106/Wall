@@ -5,7 +5,10 @@ import java.io.File;
 import com.avos.avoscloud.AVUser;
 import com.oxygen.ar.ARPopWindow;
 import com.oxygen.ar.ARWallCreateActivity;
+import com.oxygen.ar.cloudrecognition.CloudReco;
+import com.oxygen.data.ImageLoader;
 import com.oxygen.data.UserInfo;
+import com.oxygen.image.ImageLoaderInit;
 import com.oxygen.my.MyPopWindow;
 import com.oxygen.my.MySettingActivity;
 import com.oxygen.wall.R;
@@ -25,8 +28,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -72,8 +80,11 @@ public class MainActivity extends FragmentActivity implements
 
 	public TextView titleText;
 	private ImageView mySetting;
+	private ImageView radarLocation;
 	private TextView wallSquare;
 	private TextView wallNearby;
+	private ImageView squareTitileBarView;
+	private ImageView nearbyTitileBarView;
 	
 	private ARPopWindow arPopWindow;
 
@@ -83,6 +94,8 @@ public class MainActivity extends FragmentActivity implements
 	LinearLayout layoutRadarFragment;
 
 	LinearLayout layoutWallBar;
+	
+	long mExitTime;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,11 +107,13 @@ public class MainActivity extends FragmentActivity implements
 		// ActionBar actionBar = getActionBar();//API Level 11
 
 		createFile();//检测用户身份
-		
+		ImageLoaderInit.initImageLoader(getApplicationContext());
 		titleText = (TextView) findViewById(R.id.title_tv);// 标题栏TextView
 	
 		mySetting = (ImageView) findViewById(R.id.my_setting);// 用户界面TitleBar
-																// 设置按钮
+		radarLocation = (ImageView) findViewById(R.id.radar_location);
+		
+		// 设置按钮
 		wallSquare=(TextView)findViewById(R.id.wall_square);
 		wallNearby=(TextView)findViewById(R.id.wall_nearby);
 		
@@ -197,9 +212,14 @@ public class MainActivity extends FragmentActivity implements
 			setARPopWindow();
 			break;
 		case 6:
+			wallSquare.setSelected(true);
+			wallNearby.setSelected(false);
 			fragmentTransaction.show(wallSquareFragment).commit();
 			break;
 		case 7:
+			wallSquare.setSelected(false);
+			wallNearby.setSelected(true);
+			((WallNearbyFragment)wallNearbyFragment).getData();
 			fragmentTransaction.show(wallNearbyFragment).commit();
 			break;
 		}
@@ -215,8 +235,12 @@ public class MainActivity extends FragmentActivity implements
 		//titleText.setText("留言板");
 		titleText.setVisibility(View.GONE);
 		mySetting.setVisibility(View.GONE);
+		radarLocation.setVisibility(View.GONE);
 		layoutWallBar.setVisibility(View.VISIBLE);
 		
+		
+		wallSquare.setSelected(true);
+		wallNearby.setSelected(false);
 		wallFrameLayout.setSelected(true);
 		wallImageView.setSelected(true);
 		wallImageLine.setSelected(true);
@@ -238,6 +262,8 @@ public class MainActivity extends FragmentActivity implements
 	 * @Description RadarFrameLayout菜单按钮背景图片切换，TitleBar切换
 	 */
 	private void clickRadarFrameLayout() {
+		titleText.setVisibility(View.VISIBLE);
+		radarLocation.setVisibility(View.VISIBLE);
 		titleText.setText("雷达");
 		mySetting.setVisibility(View.GONE);
 		layoutWallBar.setVisibility(View.GONE);
@@ -263,8 +289,10 @@ public class MainActivity extends FragmentActivity implements
 	 * @Description FavourFrameLayout菜单按钮背景图片切换，TitleBar切换
 	 */
 	private void clickFavourFrameLayout() {
+		titleText.setVisibility(View.VISIBLE);
 		titleText.setText("探索");
 		mySetting.setVisibility(View.GONE);
+		radarLocation.setVisibility(View.GONE);
 		layoutWallBar.setVisibility(View.GONE);
 
 		favourFrameLayout.setSelected(true);
@@ -288,8 +316,10 @@ public class MainActivity extends FragmentActivity implements
 	 * @Description MyFrameLayout菜单按钮背景图片切换，TitleBar切换
 	 */
 	private void clickMyFrameLayout() {
+		titleText.setVisibility(View.VISIBLE);
 		titleText.setText("我的");
 		mySetting.setVisibility(View.VISIBLE);
+		radarLocation.setVisibility(View.GONE);
 		layoutWallBar.setVisibility(View.GONE);
 
 		myFrameLayout.setSelected(true);
@@ -313,23 +343,22 @@ public class MainActivity extends FragmentActivity implements
 	 * @Description ARFrameLayout菜单按钮背景图片切换，TitleBar切换
 	 */
 	private void clickARFrameLayout() {
-//		titleText.setText("AR");
-		mySetting.setVisibility(View.GONE);
-		layoutWallBar.setVisibility(View.GONE);
+//		mySetting.setVisibility(View.GONE);
+//		radarLocation.setVisibility(View.GONE);
 
-		arImageView.setSelected(true);
-		myFrameLayout.setSelected(false);
-		myImageView.setSelected(false);
-		myImageLine.setSelected(false);
-		wallFrameLayout.setSelected(false);
-		wallImageView.setSelected(false);
-		wallImageLine.setSelected(false);
-		radarFrameLayout.setSelected(false);
-		radarImageView.setSelected(false);
-		radarImageLine.setSelected(false);
-		favourFrameLayout.setSelected(false);
-		favourImageView.setSelected(false);
-		favourImageLine.setSelected(false);
+//		arImageView.setSelected(true);
+//		myFrameLayout.setSelected(false);
+//		myImageView.setSelected(false);
+//		myImageLine.setSelected(false);
+//		wallFrameLayout.setSelected(false);
+//		wallImageView.setSelected(false);
+//		wallImageLine.setSelected(false);
+//		radarFrameLayout.setSelected(false);
+//		radarImageView.setSelected(false);
+//		radarImageLine.setSelected(false);
+//		favourFrameLayout.setSelected(false);
+//		favourImageView.setSelected(false);
+//		favourImageLine.setSelected(false);
 	}
 
 	@Override
@@ -362,16 +391,28 @@ public class MainActivity extends FragmentActivity implements
 				// TODO Auto-generated method stub
 				arPopWindow.dismiss();// 收回PopWindow
 				switch (v.getId()) {
-				case R.id.ar_pop_btn_camera:
-
-Toast.makeText(MainActivity.this, "待添加AR方法", Toast.LENGTH_SHORT).show();
-					//TODO AR拍摄方法
+				case R.id.ar_pop_scan_btn:
+					
+					Intent intent1=new Intent(MainActivity.this,CloudReco.class);
+					intent1.putExtra("hasWallInfo",false);
+					startActivity(intent1);
 					break;
 				
-				case R.id.ar_pop_btn_cancel:
+				case R.id.ar_pop_location_btn:
+					
+					arPopWindow.dismiss();
+					
+					clickRadarFrameLayout();
+					if (!radarFragment.isAdded()) {// 动态加载
+						fragmentTransaction.add(R.id.fragment_container, radarFragment);
+						fragmentTransaction.show(radarFragment).commit();
+					} else {
+						fragmentTransaction.show(radarFragment).commit();
+					}
+					
 					break;
-				case R.id.ar_pop_btn_wall:
-					Intent intent=new Intent(MainActivity.this,ARWallCreateActivity.class);
+				case R.id.ar_pop_create_btn:
+					Intent intent=new Intent(MainActivity.this, ARWallCreateActivity.class);
 					startActivity(intent);
 					break;
 				default:
@@ -385,6 +426,7 @@ Toast.makeText(MainActivity.this, "待添加AR方法", Toast.LENGTH_SHORT).show(
 		arPopWindow.showAtLocation(
 				MainActivity.this.findViewById(R.id.main_layout), Gravity.BOTTOM
 						| Gravity.CENTER_HORIZONTAL, 0, 0);
+		
 
 	}
 	
@@ -412,14 +454,23 @@ Toast.makeText(MainActivity.this, "待添加AR方法", Toast.LENGTH_SHORT).show(
 		}else{
 			Toast.makeText(this, "未加载SD卡", Toast.LENGTH_LONG).show();
 		}
-		SharedPreferences sp = this.getSharedPreferences("user",
-				Context.MODE_PRIVATE);
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+sp.getBoolean("userStatus", true));
-		if(sp.getBoolean("userStatus", true)){
-
-			Toast.makeText(this, "尊敬的用户，欢迎回来！",Toast.LENGTH_LONG).show();
-		}else{
-			Toast.makeText(this, "游客止步！",Toast.LENGTH_LONG).show();
-		}
 	}
+	
+	 //重写BACK键事件
+	public boolean onKeyDown(int keyCode, KeyEvent event){
+		 if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                    Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    mExitTime = System.currentTimeMillis();
+
+            } else {
+           	 Toast.makeText(this, "退出应用", Toast.LENGTH_SHORT).show();
+           	 android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
+            }
+            return true;
+    }
+    return super.onKeyDown(keyCode, event);
+}
+	
 }

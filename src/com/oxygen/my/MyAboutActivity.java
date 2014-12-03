@@ -20,7 +20,7 @@ public class MyAboutActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		this.setContentView(R.layout.my_about);
+		this.setContentView(R.layout.my_about_activity);
 		this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.my_setting_title_bar);
 		
 		titleText = (TextView)findViewById(R.id.my_setting_title_tv);

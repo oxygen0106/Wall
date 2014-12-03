@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#ffffff" >
+    <ImageView
+        android:id="@+id/explore_sign_up_result_ok_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/explore_sign_up_ok"
+        android:visibility="gone"/>
+    
+    <ImageView
+        android:id="@+id/explore_sign_up_result_fail_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/explore_sign_up_fail"
+        android:visibility="visible"/>
+    <TextView 
+        android:id="@+id/explore_sign_up_result_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp"
+        android:textColor="#d2000000"
+        android:background="@drawable/explore_launch_tip_bg"/>
+</LinearLayout>
